@@ -1,0 +1,69 @@
+body {
+	color: #99f;
+	font-family: 'Faster One', serif;
+	font-size: 13px;
+	text-align:center;
+	background-color: #33e;
+	margin: 0px;
+	overflow: hidden;
+}
+
+.hidden { display: none; }
+
+#container { width: 100%; }
+
+canvas {
+	width: 100%;
+	height: 100%;
+}
+
+#instructions {
+	position: absolute;
+	top: 45%;
+	width: 100%;
+	color: #a50;
+	text-align: center;
+	font-size: 18px;
+	cursor: pointer;
+}
+
+#messages {
+	top: 40%;
+	color: #800;
+	text-align: left;
+	font-size: 16px;
+}
+
+#ammo {
+	bottom: 5%;
+}
+
+#plane {
+	bottom: 5%;
+}
+
+.hud {
+	position: absolute;
+	padding: 10px;
+	font-size: 32px;
+	list-style-position: outside;
+	list-style-type: none;
+}
+
+.hud-left {
+	left: 20px;
+	text-align: left;
+	-webkit-transform: perspective(500px) rotateY(40deg);
+	-moz-transform: perspective(500px) rotateY(40deg);
+	-o-transform: perspective(500px) rotateY(40deg);
+	transform: perspective(500px) rotateY(40deg);
+}
+
+.hud-right {
+	right: 20px;
+	text-align: right;
+	-webkit-transform: perspective(500px) rotateY(-40deg);
+	-moz-transform: perspective(500px) rotateY(-40deg);
+	-o-transform: perspective(500px) rotateY(-40deg);
+	transform: perspective(500px) rotateY(-40deg);
+}
