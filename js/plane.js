@@ -1,0 +1,34 @@
+
+function Plane() {
+	THREE.Object3D.call(this);
+
+	this.minSpeed = 10;
+	this.maxSpeed = 100;
+	this.speed = this.minSpeed;
+	this.acceleration = 10.0;
+	this.turnRate = Math.PI / 2;
+
+	this.fuel = 100;
+	this.hull = 100;
+	this.ammo = {
+		mg: 1000,
+		cannon: 100,
+		rockets: 20,
+		agm: 4,
+		aam: 6
+	};
+
+	var geometry = new THREE.CubeGeometry(8, 5, 1);
+	var material = new THREE.MeshBasicMaterial({ color: 0x888888 });
+	this.mesh = new THREE.Mesh(geometry, material);
+	this.add(this.mesh);
+}
+
+Plane.prototype = Object.create(THREE.Object3D.prototype);
+
+
+Plane.prototype.update = function(dt) {
+	var angle = this.rotation.z;
+	this.position.x += Math.cos(angle) * this.speed * dt;
+	this.position.y += Math.sin(angle) * this.speed * dt;
+};
