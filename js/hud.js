@@ -5,7 +5,13 @@ function HUD(object) {
 	for (var i = 0; i < elems.length; ++i)
 		dom[elems[i]] = document.getElementById(elems[i]);
 
+	var renderStats = new Stats();
+	renderStats.domElement.style.position = 'absolute';
+	renderStats.domElement.style.top = '0px';
+	container.appendChild(renderStats.domElement);
+
 	this.update = function() {
+		renderStats.update();
 		dom.mg.innerHTML = object.ammo.mg;
 		dom.rockets.innerHTML = object.ammo.rockets;
 		dom.aam.innerHTML = object.ammo.aam;
