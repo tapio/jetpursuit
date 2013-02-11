@@ -2,7 +2,7 @@ body {
 	color: #99f;
 	font-family: 'Faster One', serif;
 	font-size: 13px;
-	text-align:center;
+	text-align: center;
 	background-color: #33e;
 	margin: 0px;
 	overflow: hidden;
@@ -19,12 +19,15 @@ canvas {
 
 #instructions {
 	position: absolute;
-	top: 45%;
-	width: 100%;
+	top: 0;
+	right: 0;
 	color: #a50;
-	text-align: center;
-	font-size: 18px;
-	cursor: pointer;
+	font-size: 14px;
+	text-align: right;
+	opacity: 0.33;
+}
+#instructions:hover {
+	opacity: 1.0;
 }
 
 #messages {
@@ -48,6 +51,7 @@ canvas {
 	font-size: 32px;
 	list-style-position: outside;
 	list-style-type: none;
+	opacity: 0.9;
 }
 
 .hud-left {

@@ -14,7 +14,7 @@ function Controls(object) {
 	document.addEventListener('keyup', onKeyUp, false);
 
 	this.update = function(dt) {
-		// Thorttle
+		// Throttle
 		if (pressed[38]) { // Up
 			object.speed += object.acceleration * dt;
 		} else if (pressed[40]) { // Down
