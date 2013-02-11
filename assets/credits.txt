@@ -1,5 +1,9 @@
+* cloud.png
+	- Daniel Gregory Benoy
+	- CC-BY-SA 3.0
+	- http://opengameart.org/content/fluffy-clouds
 * water.jpg
 	- Jattenalle - www.godsandidols.org
 	- CC-BY 3.0
-	- http://opengameart.org/node/10510
+	- http://opengameart.org/content/texture-water
 
