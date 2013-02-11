@@ -1,6 +1,7 @@
 
 function Plane() {
 	THREE.Object3D.call(this);
+	this.position.z = 1520;
 
 	this.minSpeed = 30;
 	this.maxSpeed = 660;

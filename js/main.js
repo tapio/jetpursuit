@@ -4,7 +4,6 @@
 	var scene = new THREE.Scene();
 
 	var pl = new Plane();
-	pl.position.z = 1520;
 	scene.add(pl);
 
 	var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 5000);
@@ -25,6 +24,7 @@
 
 		controls.update(dt);
 		pl.update(dt);
+		world.update(pl.position);
 		hud.update();
 
 		camera.position.copy(pl.position);
