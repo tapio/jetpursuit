@@ -12,6 +12,8 @@
 	var controls = new Controls(pl);
 	var hud = new HUD(pl);
 
+	var world = new World(scene);
+
 	renderer = new THREE.WebGLRenderer({ antialias: true });
 	renderer.setSize(window.innerWidth, window.innerHeight);
 	document.body.appendChild(renderer.domElement);
