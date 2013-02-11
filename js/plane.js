@@ -9,7 +9,9 @@ function Plane() {
 	this.turnRate = Math.PI / 2;
 
 	this.fuel = 100;
+	this.maxFuel = 100;
 	this.hull = 100;
+	this.maxHull = 100;
 	this.ammo = {
 		mg: 1000,
 		cannon: 100,

@@ -11,6 +11,7 @@
 	//pl.add(camera);
 
 	var controls = new Controls(pl);
+	var hud = new HUD(pl);
 
 	renderer = new THREE.WebGLRenderer({ antialias: true });
 	renderer.setSize(window.innerWidth, window.innerHeight);
@@ -23,6 +24,7 @@
 
 		controls.update(dt);
 		pl.update(dt);
+		hud.update();
 
 		renderer.render(scene, camera);
 	}
