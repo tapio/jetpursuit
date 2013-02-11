@@ -26,6 +26,10 @@ function Controls(object) {
 		} else if (pressed[39]) { // Right
 			object.rotation.z -= object.turnRate * dt;
 		}
+		// Shoot
+		if (pressed[32]) { // Space
+			object.shoot();
+		}
 		// Limit speed
 		object.speed = Math.max(object.speed, object.minSpeed);
 		object.speed = Math.min(object.speed, object.maxSpeed);

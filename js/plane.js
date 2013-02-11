@@ -1,6 +1,7 @@
 
-function Plane() {
+function Plane(bulletManager) {
 	THREE.Object3D.call(this);
+	this.bulletManager = bulletManager;
 	this.position.z = 1520;
 
 	this.minSpeed = 30;
@@ -29,6 +30,9 @@ function Plane() {
 
 Plane.prototype = Object.create(THREE.Object3D.prototype);
 
+Plane.prototype.shoot = function() {
+	this.bulletManager.add(new Bullet(this, 100));
+}
 
 Plane.prototype.update = function(dt) {
 	var angle = this.rotation.z;

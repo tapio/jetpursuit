@@ -3,7 +3,9 @@
 	var clock = new THREE.Clock();
 	var scene = new THREE.Scene();
 
-	var pl = new Plane();
+	var bulletManager = new BulletManager(scene);
+
+	var pl = new Plane(bulletManager);
 	scene.add(pl);
 
 	var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 5000);
@@ -24,6 +26,7 @@
 
 		controls.update(dt);
 		pl.update(dt);
+		bulletManager.update(dt);
 		world.update(pl.position);
 		hud.update();
 
