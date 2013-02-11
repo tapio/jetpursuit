@@ -1,14 +1,13 @@
 
 (function() {
 	var clock = new THREE.Clock();
-	var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-	camera.position.z = 100;
-
 	var scene = new THREE.Scene();
 
 	var pl = new Plane();
+	pl.position.z = 1520;
 	scene.add(pl);
-	//pl.add(camera);
+
+	var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 5000);
 
 	var controls = new Controls(pl);
 	var hud = new HUD(pl);
@@ -26,6 +25,8 @@
 		pl.update(dt);
 		hud.update();
 
+		camera.position.copy(pl.position);
+		camera.position.z += 100;
 		renderer.render(scene, camera);
 	}
 	render();

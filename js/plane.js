@@ -2,10 +2,10 @@
 function Plane() {
 	THREE.Object3D.call(this);
 
-	this.minSpeed = 10;
-	this.maxSpeed = 100;
+	this.minSpeed = 30;
+	this.maxSpeed = 660;
 	this.speed = this.minSpeed;
-	this.acceleration = 10.0;
+	this.acceleration = 30;
 	this.turnRate = Math.PI / 2;
 
 	this.fuel = 100;
