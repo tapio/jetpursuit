@@ -30,9 +30,6 @@ function Controls(object) {
 		if (pressed[32]) { // Space
 			object.shoot();
 		}
-		// Limit speed
-		object.speed = Math.max(object.speed, object.minSpeed);
-		object.speed = Math.min(object.speed, object.maxSpeed);
 	}
 
 }

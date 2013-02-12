@@ -37,6 +37,8 @@ Plane.prototype.shoot = function() {
 }
 
 Plane.prototype.update = function(dt) {
+	this.speed = THREE.Math.clamp(this.speed, this.minSpeed, this.maxSpeed);
+
 	var angle = this.rotation.z;
 	this.position.x += Math.cos(angle) * this.speed * dt;
 	this.position.y += Math.sin(angle) * this.speed * dt;
