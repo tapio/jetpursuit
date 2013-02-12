@@ -29,7 +29,7 @@ var game = new Game();
 		hud.update();
 
 		camera.position.copy(pl.position);
-		camera.position.z += 100;
+		camera.position.z += THREE.Math.mapLinear(pl.speed, pl.minSpeed, pl.maxSpeed, 100, 200);
 		renderer.render(scene, camera);
 	}
 

@@ -36,7 +36,7 @@ function World(scene) {
 		vertex.y = Math.random() * 2 * cloudDist - cloudDist;
 		vertex.z = Math.random() * 2000 + 1000;
 		for (var j = 0; j < 4; ++j) {
-			v.set(Math.random() * 50, Math.random() * 50, 0);
+			v.set(Math.random() * 50, Math.random() * 50, j);
 			cloudGeo.vertices.push(vertex.clone().add(v));
 		}
 	}
