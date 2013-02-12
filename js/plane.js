@@ -42,12 +42,12 @@ Plane.prototype = Object.create(THREE.Object3D.prototype);
 Plane.prototype.cycleWeapons = function() {
 	this.curWeapon = (this.curWeapon + 1) % this.weapons.length;
 	this.dirtyStatus = true;
-}
+};
 
 Plane.prototype.shoot = function() {
 	this.weapons[this.curWeapon].shoot(this);
 	this.dirtyStatus = true;
-}
+};
 
 Plane.prototype.testHit = function(pos, radius) {
 	var distSq = this.position.distanceToSquared(pos);
@@ -55,7 +55,7 @@ Plane.prototype.testHit = function(pos, radius) {
 	thresholdSq *= thresholdSq;
 	if (distSq < thresholdSq) return true;
 	else return false;
-}
+};
 
 Plane.prototype.update = function(dt) {
 	this.speed = THREE.Math.clamp(this.speed, this.minSpeed, this.maxSpeed);

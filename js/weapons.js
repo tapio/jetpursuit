@@ -73,7 +73,7 @@ Weapon.prototype.update = function(dt) {
 		bullet.update(dt);
 		// Remove the bullet if it's dead
 		if (bullet.range <= 0) {
-			scene.remove(bullet)
+			scene.remove(bullet);
 			this.bullets.splice(i, 1);
 		}
 	}

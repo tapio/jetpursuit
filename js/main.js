@@ -37,7 +37,7 @@ var game = new Game();
 		camera.aspect = window.innerWidth / window.innerHeight;
 		camera.updateProjectionMatrix();
 		renderer.setSize(window.innerWidth, window.innerHeight);
-	};
+	}
 	window.addEventListener('resize', onWindowResize, false);
 
 	function onKeyPress(event) {
@@ -47,7 +47,7 @@ var game = new Game();
 			game.add(bot);
 			addMessage("Bot added.");
 		}
-	};
+	}
 	document.addEventListener('keypress', onKeyPress, false);
 
 	render();

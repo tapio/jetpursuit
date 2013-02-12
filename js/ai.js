@@ -38,4 +38,4 @@ function updateAI(bot, dt) {
 	var speedCorr = speedError * 10; // Apply gain
 	speedCorr = THREE.Math.clamp(speedCorr, -bot.acceleration, bot.acceleration);
 	bot.speed += speedCorr * dt;
-};
+}

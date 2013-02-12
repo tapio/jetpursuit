@@ -1,5 +1,5 @@
-"use strict";
-var cache = new function() {
+function Cache() {
+	"use strict";
 	this.models = {};
 	this.modelMaterials = {};
 	var self = this;
@@ -31,4 +31,6 @@ var cache = new function() {
 		} else // Already loaded
 			callback(m, this.modelMaterials[path]);
 	};
-};
+}
+
+var cache = new Cache();

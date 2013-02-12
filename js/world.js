@@ -1,5 +1,7 @@
 
 function World(scene) {
+	var v = new THREE.Vector3();
+
 	// Lights
 	var ambient = new THREE.AmbientLight(0x444444);
 	scene.add(ambient);
@@ -29,7 +31,6 @@ function World(scene) {
 		transparent: true,
 		opacity: 0.9
 	});
-	var v = new THREE.Vector3();
 	var vertex = new THREE.Vector3();
 	for (var i = 0; i < numClouds; ++i) {
 		vertex.x = Math.random() * 2 * cloudDist - cloudDist;
@@ -43,8 +44,6 @@ function World(scene) {
 	var clouds = new THREE.ParticleSystem(cloudGeo, cloudMat);
 	clouds.sortParticles = true;
 	scene.add(clouds);
-
-	var v = new THREE.Vector3();
 
 	this.update = function(position) {
 		// Infinite ocean

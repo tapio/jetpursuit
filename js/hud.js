@@ -23,7 +23,7 @@ var addMessage = (function() {
 			if (i == messages.length-1) msgs = '<span style="font-size:1.1em">'+msgs+'</span>';
 		}
 		elem.innerHTML = msgs;
-	}
+	};
 })();
 
 
@@ -31,8 +31,8 @@ function ColorGradient(color0, color1) {
 	this.points = [];
 	this.add = function(factor, color) {
 		this.points.push({ f: factor, c: new THREE.Color(color) });
-		this.points.sort(function(a, b){ return a.f-b.f });
-	}
+		this.points.sort(function(a, b){ return a.f - b.f; });
+	};
 	this.add(0, color0);
 	this.add(1, color1);
 	this.get = function(factor) {
@@ -77,9 +77,9 @@ function HUD(object) {
 				var weapon = object.weapons[i];
 				var ammoRatio = weapon.ammo / weapon.maxAmmo;
 				var sel = i == object.curWeapon ? '<li class="selected">' : '<li>';
-				html += sel + weapon.name + ': <span style="color:'
-					+ statusGradient.get(ammoRatio).getStyle()
-					+ '">' + weapon.ammo + '</span></li>';
+				html += sel + weapon.name + ': <span style="color:' +
+					statusGradient.get(ammoRatio).getStyle() +
+					'">' + weapon.ammo + '</span></li>';
 			}
 			dom.weapons.innerHTML = html;
 			object.dirtyStatus = false;

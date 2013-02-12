@@ -3,7 +3,7 @@ function Controls(object) {
 	var pressed = [];
 
 	function onKeyDown(event) {
-		var key = event.keyCode
+		var key = event.keyCode;
 		pressed[key] = true;
 
 		// Switch weapon
@@ -36,6 +36,6 @@ function Controls(object) {
 		if (pressed[32]) { // Space
 			object.shoot();
 		}
-	}
+	};
 
 }
