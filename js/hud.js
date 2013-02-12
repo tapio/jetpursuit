@@ -44,6 +44,9 @@ function HUD(object) {
 		dom.mg.innerHTML = object.weapons.mg.ammo;
 		dom.rocket.innerHTML = object.weapons.rocket.ammo;
 		dom.aam.innerHTML = object.weapons.aam.ammo;
+		var mgRatio = object.weapons.mg.ammo / object.weapons.mg.maxAmmo;
+		var rocketRatio = object.weapons.rocket.ammo / object.weapons.rocket.maxAmmo;
+		var aamRatio = object.weapons.aam.ammo / object.weapons.aam.maxAmmo;
 
 		var speedRatio = (object.speed - object.minSpeed) / (object.maxSpeed - object.minSpeed);
 		var fuelRatio = object.fuel / object.maxFuel;
@@ -54,6 +57,9 @@ function HUD(object) {
 		dom.hull.innerHTML = (hullRatio * 100).toFixed(0) + " %";
 
 		// Colors
+		dom.mg.style.color = statusGradient.get(mgRatio).getStyle();
+		dom.rocket.style.color = statusGradient.get(rocketRatio).getStyle();
+		dom.aam.style.color = statusGradient.get(aamRatio).getStyle();
 		dom.speed.style.color = speedGradient.get(speedRatio).getStyle();
 		dom.fuel.style.color = statusGradient.get(fuelRatio).getStyle();
 		dom.hull.style.color = statusGradient.get(hullRatio).getStyle();

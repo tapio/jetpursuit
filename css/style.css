@@ -1,5 +1,5 @@
 body {
-	color: #99f;
+	color: #332;
 	font-family: 'Faster One', serif;
 	font-size: 13px;
 	text-align: center;
@@ -56,6 +56,8 @@ canvas {
 }
 
 .hud {
+	background-color: rgba(0, 0, 0, 0.25);
+	border-radius: 10px;
 	position: absolute;
 	padding: 10px;
 	font-size: 32px;
