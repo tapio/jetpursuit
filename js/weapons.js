@@ -22,9 +22,6 @@ Missile.prototype.update = function(dt) {
 	this.range -= dpos;
 	// TODO: Check for collisions
 
-	if (this.range <= 0) {
-		// TODO: Remove object
-	}
 };
 
 
@@ -59,6 +56,13 @@ Weapon.prototype.shoot = function(shooter) {
 };
 
 Weapon.prototype.update = function(dt) {
-	for (var i = 0, l = this.bullets.length; i < l; ++i)
-		this.bullets[i].update(dt);
+	for (var i = this.bullets.length-1; i >= 0; --i) {
+		var bullet = this.bullets[i];
+		bullet.update(dt);
+		// Remove the bullet if it's dead
+		if (bullet.range <= 0) {
+			scene.remove(bullet)
+			this.bullets.splice(i, 1);
+		}
+	}
 };
