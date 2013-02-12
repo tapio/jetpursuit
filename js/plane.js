@@ -7,7 +7,7 @@ function Plane(bulletManager) {
 	this.minSpeed = 30;
 	this.maxSpeed = 660;
 	this.speed = this.minSpeed;
-	this.acceleration = 30;
+	this.acceleration = 100;
 	this.turnRate = Math.PI / 2;
 
 	this.fuel = 100;
