@@ -1,6 +1,7 @@
 
 function Plane(bulletManager) {
 	THREE.Object3D.call(this);
+	this.id = Math.floor(Math.random()*100000000000).toString(36);
 	this.bulletManager = bulletManager;
 	this.position.z = 1520;
 

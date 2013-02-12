@@ -19,6 +19,8 @@
 	renderer.setSize(window.innerWidth, window.innerHeight);
 	document.body.appendChild(renderer.domElement);
 
+	var client = new Client(pl);
+
 	function render() {
 		requestAnimationFrame(render);
 		var dt = clock.getDelta();
@@ -28,6 +30,7 @@
 		pl.update(dt);
 		bulletManager.update(dt);
 		world.update(pl.position);
+		client.update(dt);
 		hud.update();
 
 		camera.position.copy(pl.position);
