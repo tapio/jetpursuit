@@ -21,11 +21,13 @@ function Plane(bulletManager) {
 		agm: 4,
 		aam: 6
 	};
+	this.mesh = null;
 
-	var geometry = new THREE.CubeGeometry(8, 5, 1);
-	var material = new THREE.MeshBasicMaterial({ color: 0x888888 });
-	this.mesh = new THREE.Mesh(geometry, material);
-	this.add(this.mesh);
+	var self = this;
+	cache.loadModel("assets/F-15.js", function(geometry, materials) {
+		self.mesh = new THREE.Mesh(geometry, materials[0]);
+		self.add(self.mesh);
+	});
 }
 
 Plane.prototype = Object.create(THREE.Object3D.prototype);

@@ -17,6 +17,16 @@ canvas {
 	height: 100%;
 }
 
+#loading {
+	position: absolute;
+	top: 45%;
+	width: 100%;
+	color: #c00;
+	font-size: 2.8em;
+	text-align: center;
+	z-index: 1000;
+}
+
 #instructions {
 	position: absolute;
 	top: 0;

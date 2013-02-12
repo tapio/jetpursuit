@@ -1,3 +1,7 @@
+* F-15.js
+	- Chris Kuhn (kuhn0362)
+	- CC0
+	- http://www.blendswap.com/blends/view/59389
 * cloud.png
 	- Daniel Gregory Benoy
 	- CC-BY-SA 3.0
