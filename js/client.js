@@ -1,5 +1,5 @@
 
-function Client(object, scene, host) {
+JET.Client = function(object, scene, host) {
 	this.obj = object;
 	this.gaming = false;
 	host = host || "ws://" + window.location.hostname + ":11001";
@@ -28,7 +28,7 @@ function Client(object, scene, host) {
 					var peer = game.findById(state.id);
 					if (!peer) { // New player?
 						addMessage("Player " + state.id + " joined.");
-						peer = new Plane({ id: state.id, local: false });
+						peer = new JET.Plane({ id: state.id, local: false });
 						game.add(peer);
 					}
 					// Set player state
@@ -57,9 +57,9 @@ function Client(object, scene, host) {
 		addMessage("Connection terminated!", "error");
 	};
 
-}
+};
 
-Client.prototype.update = function(dt) {
+JET.Client.prototype.update = function(dt) {
 	if (!this.gaming) return;
 
 	// Send my data

@@ -1,21 +1,22 @@
 var scene = new THREE.Scene();
-var game = new Game();
+var game = new JET.Game();
+var cache = new JET.Cache();
 
 (function() {
 	var clock = new THREE.Clock();
-	var pl = new Plane();
+	var pl = new JET.Plane();
 	game.add(pl);
 
 	var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 5000);
-	var controls = new Controls(pl);
-	var hud = new HUD(pl);
-	var world = new World(scene);
+	var controls = new JET.Controls(pl);
+	var hud = new JET.HUD(pl);
+	var world = new JET.World(scene);
 
-	renderer = new THREE.WebGLRenderer({ antialias: true });
+	var renderer = new THREE.WebGLRenderer({ antialias: true });
 	renderer.setSize(window.innerWidth, window.innerHeight);
 	document.body.appendChild(renderer.domElement);
 
-	var client = new Client(pl, scene);
+	var client = new JET.Client(pl, scene);
 
 	function render() {
 		requestAnimationFrame(render);
@@ -42,7 +43,7 @@ var game = new Game();
 
 	function onKeyPress(event) {
 		if (event.charCode == 43) { // Plus
-			var bot = new Plane({ faction: THREE.Math.randInt(0, 1) });
+			var bot = new JET.Plane({ faction: THREE.Math.randInt(0, 1) });
 			bot.ai = true;
 			game.add(bot);
 			addMessage("Bot added.");

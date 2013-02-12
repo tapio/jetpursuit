@@ -1,8 +1,9 @@
 {
-	"predef": [ "console", "THREE" ],
+	"predef": [ "console", "requestAnimationFrame", "THREE", "Stats", "JET", "game", "cache", "scene", "addMessage" ],
 	"browser": true,
 	"newcap": true,
 	"unused": true,
+	"undef": true,
 	"trailing": true,
 	"strict": false
 }

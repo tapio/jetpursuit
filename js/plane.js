@@ -1,5 +1,5 @@
 
-function Plane(params) {
+JET.Plane = function(params) {
 	THREE.Object3D.call(this);
 	params = params || {};
 	this.id = params.id || Math.floor(Math.random()*100000000).toString(36);
@@ -20,9 +20,9 @@ function Plane(params) {
 
 	this.target = null;
 	this.weapons = [
-		new Weapon("MG", { ammo: 1000, range: 100, damage: 5, delay: 0.1 }),
-		new Weapon("Rocket", { ammo: 20, range: 200, damage: 25, delay: 0.15 }),
-		new Weapon("AAM", { ammo: 6, range: 500, damage: 60, delay: 1.0 })
+		new JET.Weapon("MG", { ammo: 1000, range: 100, damage: 5, delay: 0.1 }),
+		new JET.Weapon("Rocket", { ammo: 20, range: 200, damage: 25, delay: 0.15 }),
+		new JET.Weapon("AAM", { ammo: 6, range: 500, damage: 60, delay: 1.0 })
 	];
 	this.curWeapon = 0;
 	this.dirtyStatus = true;
@@ -35,21 +35,21 @@ function Plane(params) {
 		self.mesh = new THREE.Mesh(geometry, material);
 		self.add(self.mesh);
 	});
-}
+};
 
-Plane.prototype = Object.create(THREE.Object3D.prototype);
+JET.Plane.prototype = Object.create(THREE.Object3D.prototype);
 
-Plane.prototype.cycleWeapons = function() {
+JET.Plane.prototype.cycleWeapons = function() {
 	this.curWeapon = (this.curWeapon + 1) % this.weapons.length;
 	this.dirtyStatus = true;
 };
 
-Plane.prototype.shoot = function() {
+JET.Plane.prototype.shoot = function() {
 	this.weapons[this.curWeapon].shoot(this);
 	this.dirtyStatus = true;
 };
 
-Plane.prototype.testHit = function(pos, radius) {
+JET.Plane.prototype.testHit = function(pos, radius) {
 	var distSq = this.position.distanceToSquared(pos);
 	var thresholdSq = radius + this.mesh.geometry.boundingSphere.radius;
 	thresholdSq *= thresholdSq;
@@ -57,7 +57,7 @@ Plane.prototype.testHit = function(pos, radius) {
 	else return false;
 };
 
-Plane.prototype.update = function(dt) {
+JET.Plane.prototype.update = function(dt) {
 	this.speed = THREE.Math.clamp(this.speed, this.minSpeed, this.maxSpeed);
 
 	var angle = this.rotation.z;

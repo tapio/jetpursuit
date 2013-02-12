@@ -1,5 +1,5 @@
 
-function Controls(object) {
+JET.Controls = function(object) {
 	var pressed = [];
 
 	function onKeyDown(event) {
@@ -38,4 +38,4 @@ function Controls(object) {
 		}
 	};
 
-}
+};

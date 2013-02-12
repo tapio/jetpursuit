@@ -27,7 +27,7 @@ var addMessage = (function() {
 })();
 
 
-function ColorGradient(color0, color1) {
+JET.ColorGradient = function(color0, color1) {
 	this.points = [];
 	this.add = function(factor, color) {
 		this.points.push({ f: factor, c: new THREE.Color(color) });
@@ -50,9 +50,9 @@ function ColorGradient(color0, color1) {
 		factor = (factor - a.f) / (b.f - a.f);
 		return a.c.clone().lerp(b.c, factor);
 	};
-}
+};
 
-function HUD(object) {
+JET.HUD = function(object) {
 	var dom = {};
 	var elems = [ "messages", "weapons", "speed", "fuel", "hull" ];
 	for (var i = 0; i < elems.length; ++i)
@@ -61,11 +61,11 @@ function HUD(object) {
 	var renderStats = new Stats();
 	renderStats.domElement.style.position = 'absolute';
 	renderStats.domElement.style.bottom = '0px';
-	container.appendChild(renderStats.domElement);
+	document.getElementById("container").appendChild(renderStats.domElement);
 
-	var statusGradient = new ColorGradient(0xcc0000, 0x005500);
+	var statusGradient = new JET.ColorGradient(0xcc0000, 0x005500);
 	statusGradient.add(0.5, 0xcccc00);
-	var speedGradient = new ColorGradient(0x005500, 0x00cc55);
+	var speedGradient = new JET.ColorGradient(0x005500, 0x00cc55);
 
 	this.update = function() {
 		renderStats.update();
@@ -97,4 +97,4 @@ function HUD(object) {
 		dom.fuel.style.color = statusGradient.get(fuelRatio).getStyle();
 		dom.hull.style.color = statusGradient.get(hullRatio).getStyle();
 	};
-}
+};

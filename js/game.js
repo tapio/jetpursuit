@@ -1,10 +1,10 @@
-
-function Game() {
+/// Manages the combatants
+JET.Game = function() {
 	this.entities = {};
 	this.entityCache = [];
-}
+};
 
-Game.prototype.rebuildCache = function() {
+JET.Game.prototype.rebuildCache = function() {
 	this.entityCache = [];
 	for (var i in this.entities) {
 		var obj = this.entities[i];
@@ -12,11 +12,11 @@ Game.prototype.rebuildCache = function() {
 	}
 };
 
-Game.prototype.findById = function(id) {
+JET.Game.prototype.findById = function(id) {
 	return this.entities[id];
 };
 
-Game.prototype.add = function(obj) {
+JET.Game.prototype.add = function(obj) {
 	if (!obj.id) throw "Id required for objects added to game!";
 	this.entities[obj.id] = obj;
 	scene.add(obj);
@@ -24,23 +24,23 @@ Game.prototype.add = function(obj) {
 	return obj;
 };
 
-Game.prototype.remove = function(obj, rebuild) {
+JET.Game.prototype.remove = function(obj, rebuild) {
 	if (!obj) return;
 	this.entities[obj.id] = undefined;
 	scene.remove(obj);
 	if (rebuild !== false) this.rebuildCache();
 };
 
-Game.prototype.removeById = function(id) {
+JET.Game.prototype.removeById = function(id) {
 	this.remove(this.entities[id]);
 };
 
-Game.prototype.update = function(dt) {
+JET.Game.prototype.update = function(dt) {
 	var rebuild = false;
 	for (var i = 0, l = this.entityCache.length; i < l; ++i) {
 		var obj = this.entityCache[i];
 		// AI
-		if (obj.ai) updateAI(obj, dt);
+		if (obj.ai) JET.updateAI(obj, dt);
 		// Movement
 		obj.update(dt);
 

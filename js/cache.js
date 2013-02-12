@@ -1,4 +1,5 @@
-function Cache() {
+/// Caches assets to minimize HTTP requests
+JET.Cache = function() {
 	"use strict";
 	this.models = {};
 	this.modelMaterials = {};
@@ -31,6 +32,4 @@ function Cache() {
 		} else // Already loaded
 			callback(m, this.modelMaterials[path]);
 	};
-}
-
-var cache = new Cache();
+};

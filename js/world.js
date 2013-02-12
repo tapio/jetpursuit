@@ -1,5 +1,5 @@
 
-function World(scene) {
+JET.World = function(scene) {
 	var v = new THREE.Vector3();
 
 	// Lights
@@ -65,4 +65,4 @@ function World(scene) {
 			}
 		}
 	};
-}
+};

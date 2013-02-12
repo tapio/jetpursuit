@@ -1,4 +1,5 @@
-function Missile(weapon) {
+/// A projectile
+JET.Missile = function(weapon) {
 	THREE.Object3D.call(this);
 	this.weapon = weapon;
 	this.speed = 0;
@@ -8,10 +9,11 @@ function Missile(weapon) {
 	var material = new THREE.MeshBasicMaterial({ color: 0x555555 });
 	this.mesh = new THREE.Mesh(geometry, material);
 	this.add(this.mesh);
-}
-Missile.prototype = Object.create(THREE.Object3D.prototype);
+};
 
-Missile.prototype.update = function(dt) {
+JET.Missile.prototype = Object.create(THREE.Object3D.prototype);
+
+JET.Missile.prototype.update = function(dt) {
 	if (this.target) {
 		// TODO: Home to the target
 	}
@@ -35,7 +37,9 @@ Missile.prototype.update = function(dt) {
 };
 
 
-function Weapon(name, params) {
+/// Weapon capable of shooting projectiles
+/// Also manages its projectiles
+JET.Weapon = function(name, params) {
 	this.name = name;
 	this.ownerId = params.ownerId;
 	this.range = params.range;
@@ -48,16 +52,16 @@ function Weapon(name, params) {
 	this.guided  = params.guided || false;
 	this.bullets = [];
 	this.lastTime = 0;
-}
+};
 
-Weapon.prototype.shoot = function(shooter) {
+JET.Weapon.prototype.shoot = function(shooter) {
 	if (this.ammo <= 0) return;
 	var t = Date.now() * 0.001;
 	if (t < this.lastTime + this.delay) return;
 	this.lastTime = t;
 	this.ownerId = shooter.id;
 	--this.ammo;
-	var bullet = new Missile(this);
+	var bullet = new JET.Missile(this);
 	bullet.position.copy(shooter.position);
 	bullet.rotation.copy(shooter.rotation);
 	bullet.range = this.range;
@@ -67,7 +71,7 @@ Weapon.prototype.shoot = function(shooter) {
 	scene.add(bullet);
 };
 
-Weapon.prototype.update = function(dt) {
+JET.Weapon.prototype.update = function(dt) {
 	for (var i = this.bullets.length-1; i >= 0; --i) {
 		var bullet = this.bullets[i];
 		bullet.update(dt);
