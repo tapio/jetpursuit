@@ -3,7 +3,13 @@ function Controls(object) {
 	var pressed = [];
 
 	function onKeyDown(event) {
-		pressed[event.keyCode] = true;
+		var key = event.keyCode
+		pressed[key] = true;
+
+		// Switch weapon
+		if (key == 88) { // X
+			object.cycleWeapons();
+		}
 	}
 
 	function onKeyUp(event) {

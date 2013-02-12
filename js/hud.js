@@ -54,7 +54,7 @@ function ColorGradient(color0, color1) {
 
 function HUD(object) {
 	var dom = {};
-	var elems = [ "messages", "mg", "rocket", "aam", "speed", "fuel", "hull" ];
+	var elems = [ "messages", "weapons", "speed", "fuel", "hull" ];
 	for (var i = 0; i < elems.length; ++i)
 		dom[elems[i]] = document.getElementById(elems[i]);
 
@@ -69,25 +69,30 @@ function HUD(object) {
 
 	this.update = function() {
 		renderStats.update();
-		dom.mg.innerHTML = object.weapons.mg.ammo;
-		dom.rocket.innerHTML = object.weapons.rocket.ammo;
-		dom.aam.innerHTML = object.weapons.aam.ammo;
-		var mgRatio = object.weapons.mg.ammo / object.weapons.mg.maxAmmo;
-		var rocketRatio = object.weapons.rocket.ammo / object.weapons.rocket.maxAmmo;
-		var aamRatio = object.weapons.aam.ammo / object.weapons.aam.maxAmmo;
 
+		// Weapons
+		if (object.dirtyStatus) {
+			var html = "";
+			for (var i = 0; i < object.weapons.length; ++i) {
+				var weapon = object.weapons[i];
+				var ammoRatio = weapon.ammo / weapon.maxAmmo;
+				var sel = i == object.curWeapon ? '<li class="selected">' : '<li>';
+				html += sel + weapon.name + ': <span style="color:'
+					+ statusGradient.get(ammoRatio).getStyle()
+					+ '">' + weapon.ammo + '</span></li>';
+			}
+			dom.weapons.innerHTML = html;
+			object.dirtyStatus = false;
+		}
+
+		// Plane status
 		var speedRatio = (object.speed - object.minSpeed) / (object.maxSpeed - object.minSpeed);
 		var fuelRatio = object.fuel / object.maxFuel;
 		var hullRatio = object.hull / object.maxHull;
-
 		dom.speed.innerHTML = (object.speed / 340).toFixed(1) + " Ma";
 		dom.fuel.innerHTML = (fuelRatio * 100).toFixed(0) + " %";
 		dom.hull.innerHTML = (hullRatio * 100).toFixed(0) + " %";
-
 		// Colors
-		dom.mg.style.color = statusGradient.get(mgRatio).getStyle();
-		dom.rocket.style.color = statusGradient.get(rocketRatio).getStyle();
-		dom.aam.style.color = statusGradient.get(aamRatio).getStyle();
 		dom.speed.style.color = speedGradient.get(speedRatio).getStyle();
 		dom.fuel.style.color = statusGradient.get(fuelRatio).getStyle();
 		dom.hull.style.color = statusGradient.get(hullRatio).getStyle();

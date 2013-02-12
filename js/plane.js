@@ -19,11 +19,13 @@ function Plane(params) {
 	this.maxHull = 100;
 
 	this.target = null;
-	this.weapons = {
-		mg:     new Weapon("MG", { ammo: 1000, range: 100, damage: 5, delay: 0.1 }),
-		rocket: new Weapon("Rocket", { ammo: 20, range: 200, damage: 25, delay: 0.15 }),
-		aam:    new Weapon("AAM", { ammo: 6, range: 100, damage: 60, delay: 1.0 })
-	};
+	this.weapons = [
+		new Weapon("MG", { ammo: 1000, range: 100, damage: 5, delay: 0.1 }),
+		new Weapon("Rocket", { ammo: 20, range: 200, damage: 25, delay: 0.15 }),
+		new Weapon("AAM", { ammo: 6, range: 500, damage: 60, delay: 1.0 })
+	];
+	this.curWeapon = 0;
+	this.dirtyStatus = true;
 	this.mesh = null;
 
 	var self = this;
@@ -37,8 +39,14 @@ function Plane(params) {
 
 Plane.prototype = Object.create(THREE.Object3D.prototype);
 
+Plane.prototype.cycleWeapons = function() {
+	this.curWeapon = (this.curWeapon + 1) % this.weapons.length;
+	this.dirtyStatus = true;
+}
+
 Plane.prototype.shoot = function() {
-	this.weapons.rocket.shoot(this);
+	this.weapons[this.curWeapon].shoot(this);
+	this.dirtyStatus = true;
 }
 
 Plane.prototype.testHit = function(pos, radius) {

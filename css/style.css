@@ -51,7 +51,7 @@ canvas {
 	font-family: "monospace";
 }
 
-#ammo {
+#weapons {
 	bottom: 5%;
 }
 
@@ -70,6 +70,8 @@ canvas {
 	opacity: 0.9;
 }
 
+.hud li { padding: 3px; }
+
 .hud-left {
 	left: 20px;
 	text-align: left;
@@ -86,4 +88,9 @@ canvas {
 	-moz-transform: perspective(500px) rotateY(-40deg);
 	-o-transform: perspective(500px) rotateY(-40deg);
 	transform: perspective(500px) rotateY(-40deg);
+}
+
+.selected {
+	border: 2px solid;
+	font-weight: bold;
 }
