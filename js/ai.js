@@ -21,8 +21,9 @@ function AIManager() {
 	this.bots = [];
 };
 
-AIManager.prototype.spawn = function() {
-	var bot = new Plane();
+AIManager.prototype.spawn = function(faction) {
+	faction = faction || THREE.Math.randInt(0, 1);
+	var bot = new Plane(faction);
 	this.bots.push(bot);
 	scene.add(bot);
 };

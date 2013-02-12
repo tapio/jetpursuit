@@ -1,7 +1,8 @@
 
-function Plane() {
+function Plane(faction) {
 	THREE.Object3D.call(this);
 	this.id = Math.floor(Math.random()*100000000).toString(36);
+	this.faction = faction || 0;
 	this.position.z = 1520;
 
 	this.minSpeed = 30;
@@ -25,7 +26,9 @@ function Plane() {
 
 	var self = this;
 	cache.loadModel("assets/F-15.js", function(geometry, materials) {
-		self.mesh = new THREE.Mesh(geometry, materials[0]);
+		var material = materials[0].clone();
+		material.color.lerp(self.faction === 0 ? new THREE.Color(0x00ff00) : new THREE.Color(0xff0000), 0.15);
+		self.mesh = new THREE.Mesh(geometry, material);
 		self.add(self.mesh);
 	});
 }
