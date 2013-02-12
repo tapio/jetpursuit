@@ -31,10 +31,10 @@ canvas {
 	position: absolute;
 	top: 0;
 	right: 0;
-	color: #a50;
+	color: #f80;
 	font-size: 14px;
 	text-align: right;
-	opacity: 0.33;
+	opacity: 0.4;
 }
 #instructions:hover {
 	opacity: 1.0;
