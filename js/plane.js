@@ -1,11 +1,11 @@
 
 function Plane(bulletManager) {
 	THREE.Object3D.call(this);
-	this.id = Math.floor(Math.random()*100000000000).toString(36);
+	this.id = Math.floor(Math.random()*100000000).toString(36);
 	this.bulletManager = bulletManager;
 	this.position.z = 1520;
 
-	this.minSpeed = 30;
+	this.minSpeed = 0;
 	this.maxSpeed = 660;
 	this.speed = this.minSpeed;
 	this.acceleration = 100;

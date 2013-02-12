@@ -19,7 +19,7 @@
 	renderer.setSize(window.innerWidth, window.innerHeight);
 	document.body.appendChild(renderer.domElement);
 
-	var client = new Client(pl);
+	var client = new Client(pl, scene);
 
 	function render() {
 		requestAnimationFrame(render);
