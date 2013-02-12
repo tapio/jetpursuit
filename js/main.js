@@ -6,11 +6,11 @@ var scene = new THREE.Scene();
 	scene.add(pl);
 
 	var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 5000);
-
 	var controls = new Controls(pl);
 	var hud = new HUD(pl);
-
 	var world = new World(scene);
+	var ai = new AIManager();
+	ai.enemy = pl; // FIXME: Horrible hack
 
 	renderer = new THREE.WebGLRenderer({ antialias: true });
 	renderer.setSize(window.innerWidth, window.innerHeight);
@@ -27,6 +27,7 @@ var scene = new THREE.Scene();
 		pl.update(dt);
 		world.update(pl.position);
 		client.update(dt);
+		ai.update(dt);
 		hud.update();
 
 		camera.position.copy(pl.position);
@@ -40,6 +41,11 @@ var scene = new THREE.Scene();
 		renderer.setSize(window.innerWidth, window.innerHeight);
 	};
 	window.addEventListener('resize', onWindowResize, false);
+
+	function onKeyPress(event) {
+		if (event.charCode == 43) ai.spawn(); // Plus
+	};
+	document.addEventListener('keypress', onKeyPress, false);
 
 	render();
 
