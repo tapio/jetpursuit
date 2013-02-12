@@ -1,8 +1,10 @@
 
-function Plane(faction) {
+function Plane(params) {
 	THREE.Object3D.call(this);
-	this.id = Math.floor(Math.random()*100000000).toString(36);
-	this.faction = faction || 0;
+	params = params || {};
+	this.id = params.id || Math.floor(Math.random()*100000000).toString(36);
+	this.faction = params.faction || 0;
+	this.local = params.local || true;
 	this.position.z = 1520;
 
 	this.minSpeed = 30;

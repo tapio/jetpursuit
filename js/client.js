@@ -2,7 +2,6 @@
 function Client(object, scene, host) {
 	this.obj = object;
 	this.gaming = false;
-	this.peers = {};
 	host = host || "ws://" + window.location.hostname + ":11001";
 	addMessage("Attempting connection to " + host + "...");
 	this.socket = new WebSocket(host);
@@ -26,11 +25,11 @@ function Client(object, scene, host) {
 				client.gaming = true;
 				for (var i = 0; i < msg.data.length; ++i) {
 					var state = msg.data[i];
-					var peer = client.peers[state.id];
+					var peer = game.findById(state.id);
 					if (!peer) { // New player?
 						addMessage("Player " + state.id + " joined.");
-						client.peers[state.id] = peer = new Plane();
-						scene.add(peer);
+						peer = new Plane({ id: state.id, local: false });
+						game.add(peer);
 					}
 					// Set player state
 					peer.position.set(state.pos[0], state.pos[1], state.pos[2]);
@@ -40,12 +39,8 @@ function Client(object, scene, host) {
 				break;
 			// Someone left
 			case "leave":
-				if (client.peers[msg.id]) {
-					scene.remove(client.peers[msg.id]);
-					client.peers[msg.id] = undefined;
-				}
-				addMessage("Player " + msg.id + " left.");
-				client.peers[msg.id] = undefined;
+				game.removeById(msg.id);
+				addMessage("Player " + msg.id + " left.", "warn");
 				break;
 			// Introduction ok, join a game
 			case "hello":
@@ -79,11 +74,5 @@ Client.prototype.update = function(dt) {
 		spd: this.obj.speed
 	};
 	this.send(packet);
-
-	// Manage other players
-	for (var i in this.peers) {
-		if (!this.peers[i]) continue;
-		this.peers[i].update(dt);
-	}
 };
 
