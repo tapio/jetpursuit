@@ -8,10 +8,10 @@ function World(scene) {
 	scene.add(sun);
 
 	// Sea
-	var w = 5000, h = 5000;
+	var w = 10000, h = 5000;
 	var seaTex = THREE.ImageUtils.loadTexture("assets/water.jpg");
 	seaTex.wrapS = seaTex.wrapT = THREE.RepeatWrapping;
-	seaTex.repeat.set(2, 2);
+	seaTex.repeat.set(4, 2);
 	var seaMat = new THREE.MeshBasicMaterial({ map: seaTex });
 	var seaGeo = new THREE.PlaneGeometry(w, h);
 	var sea = new THREE.Mesh(seaGeo, seaMat);
