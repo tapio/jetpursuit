@@ -26,7 +26,7 @@ function ColorGradient(color0, color1) {
 
 function HUD(object) {
 	var dom = {};
-	var elems = [ "messages", "mg", "rockets", "aam", "speed", "fuel", "hull" ];
+	var elems = [ "messages", "mg", "rocket", "aam", "speed", "fuel", "hull" ];
 	for (var i = 0; i < elems.length; ++i)
 		dom[elems[i]] = document.getElementById(elems[i]);
 
@@ -41,9 +41,9 @@ function HUD(object) {
 
 	this.update = function() {
 		renderStats.update();
-		dom.mg.innerHTML = object.ammo.mg;
-		dom.rockets.innerHTML = object.ammo.rockets;
-		dom.aam.innerHTML = object.ammo.aam;
+		dom.mg.innerHTML = object.weapons.mg.ammo;
+		dom.rocket.innerHTML = object.weapons.rocket.ammo;
+		dom.aam.innerHTML = object.weapons.aam.ammo;
 
 		var speedRatio = (object.speed - object.minSpeed) / (object.maxSpeed - object.minSpeed);
 		var fuelRatio = object.fuel / object.maxFuel;

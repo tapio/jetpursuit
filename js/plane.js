@@ -1,11 +1,10 @@
 
-function Plane(bulletManager) {
+function Plane() {
 	THREE.Object3D.call(this);
 	this.id = Math.floor(Math.random()*100000000).toString(36);
-	this.bulletManager = bulletManager;
 	this.position.z = 1520;
 
-	this.minSpeed = 0;
+	this.minSpeed = 30;
 	this.maxSpeed = 660;
 	this.speed = this.minSpeed;
 	this.acceleration = 100;
@@ -15,12 +14,12 @@ function Plane(bulletManager) {
 	this.maxFuel = 100;
 	this.hull = 100;
 	this.maxHull = 100;
-	this.ammo = {
-		mg: 1000,
-		cannon: 100,
-		rockets: 20,
-		agm: 4,
-		aam: 6
+
+	this.target = null;
+	this.weapons = {
+		mg:     new Weapon("MG", { ammo: 1000, range: 100, damage: 5 }),
+		rocket: new Weapon("Rocket", { ammo: 20, range: 200, damage: 25 }),
+		aam:    new Weapon("AAM", { ammo: 6, range: 100, damage: 60 })
 	};
 	this.mesh = null;
 
@@ -34,11 +33,15 @@ function Plane(bulletManager) {
 Plane.prototype = Object.create(THREE.Object3D.prototype);
 
 Plane.prototype.shoot = function() {
-	this.bulletManager.add(new Bullet(this, 100));
+	this.weapons.rocket.shoot(this);
 }
 
 Plane.prototype.update = function(dt) {
 	var angle = this.rotation.z;
 	this.position.x += Math.cos(angle) * this.speed * dt;
 	this.position.y += Math.sin(angle) * this.speed * dt;
+
+	// Update bullets
+	for (var w in this.weapons)
+		this.weapons[w].update(dt);
 };
