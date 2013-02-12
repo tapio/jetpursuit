@@ -17,9 +17,9 @@ function Plane() {
 
 	this.target = null;
 	this.weapons = {
-		mg:     new Weapon("MG", { ammo: 1000, range: 100, damage: 5 }),
-		rocket: new Weapon("Rocket", { ammo: 20, range: 200, damage: 25 }),
-		aam:    new Weapon("AAM", { ammo: 6, range: 100, damage: 60 })
+		mg:     new Weapon("MG", { ammo: 1000, range: 100, damage: 5, delay: 0.1 }),
+		rocket: new Weapon("Rocket", { ammo: 20, range: 200, damage: 25, delay: 0.2 }),
+		aam:    new Weapon("AAM", { ammo: 6, range: 100, damage: 60, delay: 1.0 })
 	};
 	this.mesh = null;
 

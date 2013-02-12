@@ -39,10 +39,14 @@ function Weapon(name, params) {
 	this.speed = params.speed || 150;
 	this.guided  = params.guided || false;
 	this.bullets = [];
+	this.lastTime = 0;
 }
 
 Weapon.prototype.shoot = function(shooter) {
 	if (this.ammo <= 0) return;
+	var t = Date.now() * 0.001;
+	if (t < this.lastTime + this.delay) return;
+	this.lastTime = t;
 	--this.ammo;
 	var bullet = new Missile(this);
 	bullet.position.copy(shooter.position);

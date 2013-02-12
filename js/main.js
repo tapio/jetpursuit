@@ -1,7 +1,7 @@
-var clock = new THREE.Clock();
 var scene = new THREE.Scene();
 
 (function() {
+	var clock = new THREE.Clock();
 	var pl = new Plane();
 	scene.add(pl);
 
