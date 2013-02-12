@@ -20,13 +20,24 @@ Missile.prototype.update = function(dt) {
 	this.position.x += Math.cos(angle) * dpos;
 	this.position.y += Math.sin(angle) * dpos;
 	this.range -= dpos;
-	// TODO: Check for collisions
 
+	// Test for hit
+	for (var i = 0, l = game.entityCache.length; i < l; ++i) {
+		var obj = game.entityCache[i];
+		if (obj.id === this.weapon.ownerId) continue;
+		if (obj.testHit(this.position, this.weapon.radius)) {
+			this.range = 0;
+			obj.hull -= this.weapon.damage;
+			addMessage("HIT!");
+			// TODO: Explosion
+		}
+	}
 };
 
 
 function Weapon(name, params) {
 	this.name = name;
+	this.ownerId = params.ownerId;
 	this.range = params.range;
 	this.damage = params.damage;
 	this.ammo = params.ammo;
@@ -44,6 +55,7 @@ Weapon.prototype.shoot = function(shooter) {
 	var t = Date.now() * 0.001;
 	if (t < this.lastTime + this.delay) return;
 	this.lastTime = t;
+	this.ownerId = shooter.id;
 	--this.ammo;
 	var bullet = new Missile(this);
 	bullet.position.copy(shooter.position);

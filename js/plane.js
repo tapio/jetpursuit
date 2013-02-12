@@ -21,7 +21,7 @@ function Plane(params) {
 	this.target = null;
 	this.weapons = {
 		mg:     new Weapon("MG", { ammo: 1000, range: 100, damage: 5, delay: 0.1 }),
-		rocket: new Weapon("Rocket", { ammo: 20, range: 200, damage: 25, delay: 0.2 }),
+		rocket: new Weapon("Rocket", { ammo: 20, range: 200, damage: 25, delay: 0.15 }),
 		aam:    new Weapon("AAM", { ammo: 6, range: 100, damage: 60, delay: 1.0 })
 	};
 	this.mesh = null;
@@ -39,6 +39,14 @@ Plane.prototype = Object.create(THREE.Object3D.prototype);
 
 Plane.prototype.shoot = function() {
 	this.weapons.rocket.shoot(this);
+}
+
+Plane.prototype.testHit = function(pos, radius) {
+	var distSq = this.position.distanceToSquared(pos);
+	var thresholdSq = radius + this.mesh.geometry.boundingSphere.radius;
+	thresholdSq *= thresholdSq;
+	if (distSq < thresholdSq) return true;
+	else return false;
 }
 
 Plane.prototype.update = function(dt) {

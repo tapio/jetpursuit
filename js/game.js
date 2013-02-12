@@ -24,11 +24,11 @@ Game.prototype.add = function(obj) {
 	return obj;
 };
 
-Game.prototype.remove = function(obj) {
+Game.prototype.remove = function(obj, rebuild) {
 	if (!obj) return;
 	this.entities[obj.id] = undefined;
 	scene.remove(obj);
-	this.rebuildCache();
+	if (rebuild !== false) this.rebuildCache();
 };
 
 Game.prototype.removeById = function(id) {
@@ -36,11 +36,19 @@ Game.prototype.removeById = function(id) {
 };
 
 Game.prototype.update = function(dt) {
+	var rebuild = false;
 	for (var i = 0, l = this.entityCache.length; i < l; ++i) {
 		var obj = this.entityCache[i];
 		// AI
 		if (obj.ai) updateAI(obj, dt);
 		// Movement
 		obj.update(dt);
+
+		// Remove if dead
+		if (obj.hull <= 0) {
+			this.remove(obj, false);
+			rebuild = true;
+		}
 	}
+	if (rebuild) this.rebuildCache();
 };

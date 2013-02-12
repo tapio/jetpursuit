@@ -45,6 +45,7 @@ var game = new Game();
 			var bot = new Plane({ faction: THREE.Math.randInt(0, 1) });
 			bot.ai = true;
 			game.add(bot);
+			addMessage("Bot added.");
 		}
 	};
 	document.addEventListener('keypress', onKeyPress, false);
