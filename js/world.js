@@ -19,6 +19,7 @@ function World(scene) {
 
 	// Clouds
 	var numClouds = 1000;
+	var cloudDist = 1000;
 	var cloudTex = THREE.ImageUtils.loadTexture("assets/cloud1.png");
 	var cloudGeo = new THREE.Geometry();
 	var cloudMat = new THREE.ParticleBasicMaterial({
@@ -31,8 +32,8 @@ function World(scene) {
 	var v = new THREE.Vector3();
 	var vertex = new THREE.Vector3();
 	for (var i = 0; i < numClouds; ++i) {
-		vertex.x = Math.random() * 2000 - 1000;
-		vertex.y = Math.random() * 2000 - 1000;
+		vertex.x = Math.random() * 2 * cloudDist - cloudDist;
+		vertex.y = Math.random() * 2 * cloudDist - cloudDist;
 		vertex.z = Math.random() * 2000 + 1000;
 		for (var j = 0; j < 4; ++j) {
 			v.set(Math.random() * 50, Math.random() * 50, 0);
@@ -43,9 +44,26 @@ function World(scene) {
 	clouds.sortParticles = true;
 	scene.add(clouds);
 
+	var v = new THREE.Vector3();
+
 	this.update = function(position) {
+		// Infinite ocean
 		sea.position.x = position.x;
 		sea.position.y = position.y;
 		seaTex.offset.set(position.x / w * seaTex.repeat.x, position.y / h * seaTex.repeat.y);
+
+		// Infinite clouds
+		for (var i = 0, l = cloudGeo.vertices.length; i < l; ++i) {
+			var cloudpos = cloudGeo.vertices[i];
+			v.subVectors(cloudpos, position);
+			if (Math.abs(v.x) > cloudDist) {
+				cloudpos.x -= THREE.Math.sign(v.x) * cloudDist * 2;
+				cloudGeo.verticesNeedUpdate = true;
+			}
+			if (Math.abs(v.y) > cloudDist) {
+				cloudpos.y -= THREE.Math.sign(v.y) * cloudDist * 2;
+				cloudGeo.verticesNeedUpdate = true;
+			}
+		}
 	};
 }
