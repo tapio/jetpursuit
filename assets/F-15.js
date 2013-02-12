@@ -19,7 +19,7 @@
 		"DbgColor" : 15658734,
 		"DbgIndex" : 0,
 		"DbgName" : "F-15",
-		"shading": "basic",
+		"shading": "phong",
 		"colorAmbient" : [ 0.5, 0.5, 0.5 ],
 		"colorDiffuse" : [ 0.5, 0.5, 0.5 ],
 		"colorSpecular" : [ 1.0, 1.0, 1.0 ],

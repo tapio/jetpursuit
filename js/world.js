@@ -1,7 +1,14 @@
 
 function World(scene) {
-	var w = 5000, h = 5000;
+	// Lights
+	var ambient = new THREE.AmbientLight(0x444444);
+	scene.add(ambient);
+	var sun = new THREE.DirectionalLight(0xffffff, 0.6);
+	sun.position.set(1.0, 1.0, 2.0);
+	scene.add(sun);
+
 	// Sea
+	var w = 5000, h = 5000;
 	var seaTex = THREE.ImageUtils.loadTexture("assets/water.jpg");
 	seaTex.wrapS = seaTex.wrapT = THREE.RepeatWrapping;
 	seaTex.repeat.set(2, 2);
