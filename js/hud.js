@@ -1,4 +1,32 @@
 
+var addMessage = (function() {
+	var messages = [];
+	var maxMessages = 4;
+	var colors = { info: {r:20,g:250,b:20}, warn: {r:200,g:200,b:0}, error: {r:255,g:80,b:80} };
+	var elem = document.getElementById("messages");
+	return function(msg, msgtype) {
+		msgtype = msgtype || "info";
+		if (messages.length && messages[messages.length-1].text === msg)
+			messages[messages.length-1].count++;
+		else messages.push({ text: msg, type: msgtype, count: 1 });
+		if (messages.length > maxMessages) messages.splice(0, messages.length - maxMessages);
+		var msgs = "", last = messages.length-1, color, fadefactor, r, g, b, mult;
+		for (var i = 0; i <= last; ++i) {
+			color = colors[messages[i].type];
+			fadefactor = (last-i)/3 + 1;
+			r = Math.floor(color.r / fadefactor);
+			g = Math.floor(color.g / fadefactor);
+			b = Math.floor(color.b / fadefactor);
+			if (messages[i].count > 1) mult = " x" + messages[i].count;
+			else mult = "";
+			msgs += '<span style="color: rgb('+r+','+g+','+b+');">'+messages[i].text+mult+'</span><br/>';
+			if (i == messages.length-1) msgs = '<span style="font-size:1.1em">'+msgs+'</span>';
+		}
+		elem.innerHTML = msgs;
+	}
+})();
+
+
 function ColorGradient(color0, color1) {
 	this.points = [];
 	this.add = function(factor, color) {
@@ -32,7 +60,7 @@ function HUD(object) {
 
 	var renderStats = new Stats();
 	renderStats.domElement.style.position = 'absolute';
-	renderStats.domElement.style.top = '0px';
+	renderStats.domElement.style.bottom = '0px';
 	container.appendChild(renderStats.domElement);
 
 	var statusGradient = new ColorGradient(0xcc0000, 0x005500);

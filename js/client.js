@@ -4,7 +4,7 @@ function Client(object, scene, host) {
 	this.gaming = false;
 	this.peers = {};
 	host = host || "ws://" + window.location.hostname + ":11001";
-	console.log("Attempting connection to " + host + "...");
+	addMessage("Attempting connection to " + host + "...");
 	this.socket = new WebSocket(host);
 	var client = this;
 
@@ -13,7 +13,7 @@ function Client(object, scene, host) {
 	};
 
 	this.socket.onopen = function() {
-		console.log("Connection established!");
+		addMessage("Connection established!");
 		client.send({ type: "hello", id: client.obj.id });
 	};
 
@@ -28,7 +28,7 @@ function Client(object, scene, host) {
 					var state = msg.data[i];
 					var peer = client.peers[state.id];
 					if (!peer) { // New player?
-						console.log(state.id + " joins");
+						addMessage("Player " + state.id + " joined.");
 						client.peers[state.id] = peer = new Plane();
 						scene.add(peer);
 					}
@@ -44,7 +44,7 @@ function Client(object, scene, host) {
 					scene.remove(client.peers[msg.id]);
 					client.peers[msg.id] = undefined;
 				}
-				console.log(msg.id + " left");
+				addMessage("Player " + msg.id + " left.");
 				client.peers[msg.id] = undefined;
 				break;
 			// Introduction ok, join a game
@@ -59,7 +59,7 @@ function Client(object, scene, host) {
 	};
 
 	this.socket.onclose = function() {
-		console.log("Connection terminated");
+		addMessage("Connection terminated!", "error");
 	};
 
 }
