@@ -28,12 +28,16 @@ function World(scene) {
 		transparent: true,
 		opacity: 0.9
 	});
+	var v = new THREE.Vector3();
+	var vertex = new THREE.Vector3();
 	for (var i = 0; i < numClouds; ++i) {
-		var vertex = new THREE.Vector3();
 		vertex.x = Math.random() * 2000 - 1000;
 		vertex.y = Math.random() * 2000 - 1000;
 		vertex.z = Math.random() * 2000 + 1000;
-		cloudGeo.vertices.push(vertex);
+		for (var j = 0; j < 4; ++j) {
+			v.set(Math.random() * 50, Math.random() * 50, 0);
+			cloudGeo.vertices.push(vertex.clone().add(v));
+		}
 	}
 	var clouds = new THREE.ParticleSystem(cloudGeo, cloudMat);
 	clouds.sortParticles = true;
