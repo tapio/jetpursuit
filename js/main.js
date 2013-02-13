@@ -45,6 +45,9 @@ var cache = new JET.Cache();
 		if (event.charCode == 43) { // Plus
 			var bot = new JET.Plane({ faction: THREE.Math.randInt(0, 1) });
 			bot.ai = true;
+			var angle = Math.random() * Math.PI * 2;
+			bot.position.x = pl.position.x + Math.cos(angle) * 500;
+			bot.position.y = pl.position.y + Math.sin(angle) * 500;
 			game.add(bot);
 			addMessage("Bot added.");
 		}
