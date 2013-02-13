@@ -99,9 +99,17 @@ JET.Plane.prototype.update = function(dt) {
 	// Update heading
 	this.angle += this.angSpeed * dt;
 	this.angSpeed *= 0.9;
-	this.rotation.z = this.angle;
+
+	// Rotate the model based on roll and yaw
+	var roll = THREE.Math.clamp(-this.angSpeed, -Math.PI / 6, Math.PI / 6);
+	JET.Plane.__m1.makeRotationX(roll);
+	this.matrix.makeRotationZ(this.angle);
+	this.matrix.multiply(JET.Plane.__m1);
+	this.rotation.setEulerFromRotationMatrix(this.matrix);
 
 	// Update position
 	this.position.x += Math.cos(this.angle) * this.speed * dt;
 	this.position.y += Math.sin(this.angle) * this.speed * dt;
 };
+
+JET.Plane.__m1 = new THREE.Matrix4();
