@@ -1,7 +1,7 @@
 
 var addMessage = (function() {
 	var messages = [];
-	var maxMessages = 4;
+	var maxMessages = 6;
 	var colors = { info: {r:20,g:250,b:20}, warn: {r:200,g:200,b:0}, error: {r:255,g:80,b:80} };
 	var elem = document.getElementById("messages");
 	return function(msg, msgtype) {
