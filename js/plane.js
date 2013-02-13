@@ -1,8 +1,14 @@
 
+JET.BotNames = [
+	"Ace", "Goose", "Hotshot", "Dagger", "Sword", "Anvil", "Hammer",
+	"Flamer", "Dash", "Thunder", "Buzz", "Rooster"
+];
+
 JET.Plane = function(params) {
 	THREE.Object3D.call(this);
 	params = params || {};
 	this.id = params.id || Math.floor(Math.random()*100000000).toString(36);
+	this.name = params.name || JET.BotNames[Math.floor(Math.random()*JET.BotNames.length)];
 	this.faction = params.faction || 0;
 	this.local = params.local || true;
 	this.position.z = 1520;

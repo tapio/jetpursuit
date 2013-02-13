@@ -4,7 +4,7 @@ var cache = new JET.Cache();
 
 (function() {
 	var clock = new THREE.Clock();
-	var pl = new JET.Plane();
+	var pl = new JET.Plane({ name: "YOU" });
 	game.add(pl);
 
 	var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 5000);

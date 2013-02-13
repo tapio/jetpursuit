@@ -46,6 +46,7 @@ JET.Game.prototype.update = function(dt) {
 
 		// Remove if dead
 		if (obj.hull <= 0) {
+			addMessage('"' + obj.name + '" destroyed!', "warn");
 			this.remove(obj, false);
 			rebuild = true;
 		}
