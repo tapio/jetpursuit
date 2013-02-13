@@ -20,9 +20,9 @@ JET.Plane = function(params) {
 
 	this.target = null;
 	this.weapons = [
-		new JET.Weapon("MG", { ammo: 1000, range: 100, damage: 5, delay: 0.1 }),
-		new JET.Weapon("Rocket", { ammo: 20, range: 200, damage: 25, delay: 0.15 }),
-		new JET.Weapon("AAM", { ammo: 6, range: 500, damage: 60, delay: 1.0 })
+		new JET.Weapon("Cannon", { ammo: 1000, range: 100, damage: 5, delay: 0.1 }),
+		new JET.Weapon("SRAAM", { ammo: 20, range: 200, damage: 25, delay: 0.15 }),
+		new JET.Weapon("MRAAM", { ammo: 6, range: 500, damage: 60, delay: 1.0 })
 	];
 	this.curWeapon = 0;
 	this.dirtyStatus = true;
