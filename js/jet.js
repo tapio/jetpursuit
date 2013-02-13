@@ -25,6 +25,8 @@ JET.updateAI = function(bot, dt) {
 		if (!bot.target) return;
 	}
 
+	var targetDistSq = JET.Math.distSq(bot, bot.target);
+
 	// Control angle
 	var desiredAngle = JET.Math.angleBetween(bot, bot.target);
 	var angleError = JET.Math.angleDiff(bot.rotation.z, desiredAngle);
@@ -36,8 +38,10 @@ JET.updateAI = function(bot, dt) {
 	var desiredSpeed = bot.maxSpeed;
 	if (Math.abs(angleError) > Math.PI / 4)
 		desiredSpeed = bot.minSpeed;
-	else if (JET.Math.distSq(bot, bot.target) < 30*30)
+	else if (targetDistSq < 50*50)
 		desiredSpeed = bot.target.speed;
+	else if (targetDistSq < 200*200)
+		desiredSpeed = bot.target.speed * 1.1;
 	// Control the speed
 	var speedError = desiredSpeed - bot.speed;
 	var speedCorr = speedError * 10; // Apply gain
