@@ -65,6 +65,10 @@ server.on('connection', function(ws) {
 				pl.spd = msg.spd;
 				pl.broadcast({ type: "state", data: [ pl.serialize() ] });
 				break;
+			// Update
+			case "ping":
+				ws.send('{"type":"pong"}');
+				break;
 			// Join game
 			case "join":
 				if (VERBOSITY > 0) console.log(pl.id + " joins game " + msg.game);

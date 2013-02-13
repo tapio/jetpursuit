@@ -12,6 +12,7 @@ JET.Plane = function(params) {
 	this.faction = params.faction || 0;
 	this.local = params.local || true;
 	this.position.z = 1520;
+	this.ping = 0;
 
 	this.minSpeed = 30;
 	this.maxSpeed = 660;

@@ -2,10 +2,13 @@
 JET.Client = function(object, scene, host) {
 	this.obj = object;
 	this.gaming = false;
+	this.connected = false;
 	host = host || "ws://" + window.location.hostname + ":11001";
 	addMessage("Attempting connection to " + host + "...");
 	this.socket = new WebSocket(host);
 	var client = this;
+	var pingInterval = null;
+	var pingTime = Date.now();
 
 	this.send = function(msg) {
 		this.socket.send(JSON.stringify(msg));
@@ -14,6 +17,11 @@ JET.Client = function(object, scene, host) {
 	this.socket.onopen = function() {
 		addMessage("Connection established!");
 		client.send({ type: "hello", id: client.obj.id });
+		this.connected = true;
+		pingInterval = window.setInterval(function() {
+			pingTime = Date.now();
+			client.send({ type: "ping" });
+		}, 2000);
 	};
 
 	this.socket.onmessage = function(event) {
@@ -37,6 +45,9 @@ JET.Client = function(object, scene, host) {
 					peer.speed = state.spd;
 				}
 				break;
+			case "pong":
+				object.ping = Date.now() - pingTime;
+				break;
 			// Someone left
 			case "leave":
 				game.removeById(msg.id);
@@ -54,6 +65,8 @@ JET.Client = function(object, scene, host) {
 	};
 
 	this.socket.onclose = function() {
+		this.connected = false;
+		if (pingInterval) window.clearInterval(pingInterval);
 		addMessage("Connection terminated!", "error");
 	};
 

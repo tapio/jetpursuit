@@ -54,7 +54,7 @@ JET.ColorGradient = function(color0, color1) {
 
 JET.HUD = function(object) {
 	var dom = {};
-	var elems = [ "messages", "weapons", "speed", "fuel", "hull" ];
+	var elems = [ "ping", "messages", "weapons", "speed", "fuel", "hull" ];
 	for (var i = 0; i < elems.length; ++i)
 		dom[elems[i]] = document.getElementById(elems[i]);
 
@@ -96,5 +96,7 @@ JET.HUD = function(object) {
 		dom.speed.style.color = speedGradient.get(speedRatio).getStyle();
 		dom.fuel.style.color = statusGradient.get(fuelRatio).getStyle();
 		dom.hull.style.color = statusGradient.get(hullRatio).getStyle();
+
+		dom.ping.innerHTML = object.ping;
 	};
 };
