@@ -19,6 +19,7 @@ JET.Plane = function(params) {
 	this.speed = this.minSpeed;
 	this.acceleration = 100;
 	this.angSpeed = 0;
+	this.angle = 0;
 	this.turnRate = Math.PI / 2;
 
 	this.fuel = 100;
@@ -96,11 +97,11 @@ JET.Plane.prototype.update = function(dt) {
 	this.angSpeed = THREE.Math.clamp(this.angSpeed, -this.turnRate, this.turnRate);
 
 	// Update heading
-	this.rotation.z += this.angSpeed * dt;
+	this.angle += this.angSpeed * dt;
 	this.angSpeed *= 0.9;
+	this.rotation.z = this.angle;
 
 	// Update position
-	var angle = this.rotation.z;
-	this.position.x += Math.cos(angle) * this.speed * dt;
-	this.position.y += Math.sin(angle) * this.speed * dt;
+	this.position.x += Math.cos(this.angle) * this.speed * dt;
+	this.position.y += Math.sin(this.angle) * this.speed * dt;
 };

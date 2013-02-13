@@ -41,7 +41,7 @@ JET.Client = function(object, scene, host) {
 					}
 					// Set player state
 					peer.position.set(state.pos[0], state.pos[1], state.pos[2]);
-					peer.rotation.z = state.ang;
+					peer.angle = state.ang;
 					peer.speed = state.spd;
 				}
 				break;
@@ -83,7 +83,7 @@ JET.Client.prototype.update = function(dt) {
 			this.obj.position.y,
 			this.obj.position.z
 		],
-		ang: this.obj.rotation.z,
+		ang: this.obj.angle,
 		spd: this.obj.speed
 	};
 	this.send(packet);

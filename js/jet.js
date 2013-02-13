@@ -29,7 +29,7 @@ JET.updateAI = function(bot, dt) {
 
 	// Control angle
 	var desiredAngle = JET.Math.angleBetween(bot, bot.target);
-	var angleError = JET.Math.angleDiff(bot.rotation.z, desiredAngle);
+	var angleError = JET.Math.angleDiff(bot.angle, desiredAngle);
 	bot.angSpeed = angleError * 10; // Apply gain, clamped in Plane.update()
 
 	// Figure out speed goal
