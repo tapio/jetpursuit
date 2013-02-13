@@ -80,7 +80,7 @@ JET.HUD = function(object) {
 		sizeAttenuation: false
 	});
 	for (var i = 0; i < 30; ++i) {
-		radarGeo.vertices.push(new THREE.Vector3());
+		radarGeo.vertices.push(new THREE.Vector3(0, 0, 100000));
 		radarGeo.colors.push(new THREE.Color());
 	}
 	var radarDist = 12;
@@ -109,6 +109,8 @@ JET.HUD = function(object) {
 			} else color.setRGB(0, 1, 0); // Ally
 			++j;
 		}
+		for (i = j; i < radarGeo.vertices.length; ++i)
+			radarGeo.vertices[i].z = 100000;
 		radarGeo.verticesNeedUpdate = true;
 		radarGeo.colorsNeedUpdate = true;
 	}
