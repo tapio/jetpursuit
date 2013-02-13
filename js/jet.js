@@ -20,7 +20,10 @@ JET.Math = {
 
 JET.updateAI = function(bot, dt) {
 	// Select target
-	bot.target = game.entityCache[0]; // FIXME
+	if (!bot.target) {
+		bot.cycleTargets();
+		if (!bot.target) return;
+	}
 
 	// Control angle
 	var desiredAngle = JET.Math.angleBetween(bot, bot.target);
