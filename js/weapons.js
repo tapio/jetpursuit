@@ -55,7 +55,6 @@ JET.Weapon = function(name, params) {
 	this.delay = params.delay || 0.1;
 	this.speed = params.speed || 150;
 	this.guided  = params.guided || false;
-	this.bullets = [];
 	this.lastTime = 0;
 };
 
@@ -71,18 +70,5 @@ JET.Weapon.prototype.shoot = function(shooter) {
 	bullet.rotation.copy(shooter.rotation);
 	bullet.speed = this.speed + shooter.speed;
 	if (this.guided) bullet.target = shooter.target;
-	this.bullets.push(bullet);
-	scene.add(bullet);
-};
-
-JET.Weapon.prototype.update = function(dt) {
-	for (var i = this.bullets.length-1; i >= 0; --i) {
-		var bullet = this.bullets[i];
-		bullet.update(dt);
-		// Remove the bullet if it's dead
-		if (bullet.flightTime <= 0) {
-			scene.remove(bullet);
-			this.bullets.splice(i, 1);
-		}
-	}
+	game.addBullet(bullet);
 };

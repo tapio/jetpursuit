@@ -96,8 +96,4 @@ JET.Plane.prototype.update = function(dt) {
 	var angle = this.rotation.z;
 	this.position.x += Math.cos(angle) * this.speed * dt;
 	this.position.y += Math.sin(angle) * this.speed * dt;
-
-	// Update bullets
-	for (var w in this.weapons)
-		this.weapons[w].update(dt);
 };

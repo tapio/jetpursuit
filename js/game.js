@@ -2,6 +2,7 @@
 JET.Game = function() {
 	this.entities = {};
 	this.entityCache = [];
+	this.bullets = [];
 };
 
 JET.Game.prototype.rebuildCache = function() {
@@ -35,9 +36,15 @@ JET.Game.prototype.removeById = function(id) {
 	this.remove(this.entities[id]);
 };
 
+JET.Game.prototype.addBullet = function(obj) {
+	scene.add(obj);
+	this.bullets.push(obj);
+	return obj;
+};
+
 JET.Game.prototype.update = function(dt) {
-	var rebuild = false;
-	for (var i = 0, l = this.entityCache.length; i < l; ++i) {
+	var i, rebuild = false;
+	for (i = 0, l = this.entityCache.length; i < l; ++i) {
 		var obj = this.entityCache[i];
 		// AI
 		if (obj.ai) JET.updateAI(obj, dt);
@@ -52,4 +59,15 @@ JET.Game.prototype.update = function(dt) {
 		}
 	}
 	if (rebuild) this.rebuildCache();
+
+	// Bullets
+	for (i = this.bullets.length-1; i >= 0; --i) {
+		var bullet = this.bullets[i];
+		bullet.update(dt);
+		// Remove the bullet if it's dead
+		if (bullet.flightTime <= 0) {
+			scene.remove(bullet);
+			this.bullets.splice(i, 1);
+		}
+	}
 };
