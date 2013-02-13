@@ -29,7 +29,8 @@ JET.Plane = function(params) {
 	this.mesh = null;
 
 	var self = this;
-	cache.loadModel("assets/F-15.js", function(geometry, materials) {
+	var models = [ "F-15.js", "F-18.js", "F-22.js" ];
+	cache.loadModel("assets/" + models[Math.floor(Math.random()*models.length)], function(geometry, materials) {
 		var material = materials[0].clone();
 		material.color.lerp(self.faction === 0 ? new THREE.Color(0x00ff00) : new THREE.Color(0xff0000), 0.15);
 		self.mesh = new THREE.Mesh(geometry, material);
