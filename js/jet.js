@@ -20,7 +20,7 @@ JET.Math = {
 
 JET.updateAI = function(bot, dt) {
 	// Select target
-	if (!bot.target) {
+	if (!bot.target || bot.target.hull <= 0) {
 		bot.cycleTargets();
 		if (!bot.target) return;
 	}
