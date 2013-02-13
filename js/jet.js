@@ -30,9 +30,7 @@ JET.updateAI = function(bot, dt) {
 	// Control angle
 	var desiredAngle = JET.Math.angleBetween(bot, bot.target);
 	var angleError = JET.Math.angleDiff(bot.rotation.z, desiredAngle);
-	var angleCorr = angleError * 10; // Apply gain
-	angleCorr = THREE.Math.clamp(angleCorr, -bot.turnRate, bot.turnRate);
-	bot.rotation.z += angleCorr * dt;
+	bot.angSpeed = angleError * 10; // Apply gain, clamped in Plane.update()
 
 	// Figure out speed goal
 	var desiredSpeed = bot.maxSpeed;

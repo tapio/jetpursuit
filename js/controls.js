@@ -34,9 +34,9 @@ JET.Controls = function(object) {
 		}
 		// Steering
 		if (pressed[37]) { // Left
-			object.rotation.z += object.turnRate * dt;
+			object.angSpeed = object.turnRate;
 		} else if (pressed[39]) { // Right
-			object.rotation.z -= object.turnRate * dt;
+			object.angSpeed = -object.turnRate;
 		}
 		// Shoot
 		if (pressed[32]) { // Space
