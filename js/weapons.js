@@ -15,7 +15,11 @@ JET.Missile.prototype = Object.create(THREE.Object3D.prototype);
 
 JET.Missile.prototype.update = function(dt) {
 	if (this.target) {
-		// TODO: Home to the target
+		var desiredAngle = JET.Math.angleBetween(this, this.target);
+		var angleError = JET.Math.angleDiff(this.rotation.z, desiredAngle);
+		var angleCorr = angleError * 10; // Apply gain
+		angleCorr = THREE.Math.clamp(angleCorr, -this.turnRate, this.turnRate);
+		this.rotation.z += angleCorr * dt;
 	}
 	var angle = this.rotation.z;
 	var dpos = this.speed * dt;
@@ -46,6 +50,7 @@ JET.Weapon = function(name, params) {
 	this.damage = params.damage;
 	this.ammo = params.ammo;
 	this.maxAmmo = params.ammo;
+	this.turnRate = params.turnRate || Math.PI / 2;
 	this.radius = params.radius || 1;
 	this.delay = params.delay || 0.1;
 	this.speed = params.speed || 150;
