@@ -77,8 +77,7 @@ JET.HUD = function(object) {
 		depthWrite: true,
 		transparent: false,
 		vertexColors: true,
-		sizeAttenuation: false,
-		blending: THREE.MultiplyBlending
+		sizeAttenuation: false
 	});
 	for (var i = 0; i < 30; ++i) {
 		radarGeo.vertices.push(new THREE.Vector3());

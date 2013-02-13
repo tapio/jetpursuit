@@ -7,8 +7,12 @@ JET.Controls = function(object) {
 		pressed[key] = true;
 
 		// Switch weapon
-		if (key == 88) { // X
+		if (key == 86) { // V
 			object.cycleWeapons();
+		} else if (key == 67) { // C
+			object.cycleTargets();
+		} else if (key == 88) { // X
+			object.scanTargets();
 		}
 	}
 

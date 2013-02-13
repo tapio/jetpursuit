@@ -25,16 +25,19 @@ JET.Plane = function(params) {
 	this.hull = 100;
 	this.maxHull = 100;
 
-	this.target = null;
 	this.weapons = [
 		new JET.Weapon("Cannon", { ammo: 1000, flightTime: 1.5, damage: 10, speed: 200, delay: 0.1 }),
-		new JET.Weapon("SRAAM", { ammo: 20, flightTime: 6, damage: 35, speed: 500, delay: 0.2 }),
-		new JET.Weapon("MRAAM", { ammo: 6, flightTime: 10, damage: 60, speed: 500, delay: 1.0 })
+		new JET.Weapon("SRAAM", { ammo: 20, flightTime: 6, damage: 35, speed: 500, delay: 0.2, guided: true }),
+		new JET.Weapon("MRAAM", { ammo: 6, flightTime: 10, damage: 60, speed: 500, delay: 1.0, guided: true })
 	];
 	this.curWeapon = 0;
 	this.dirtyStatus = true;
-	this.mesh = null;
 
+	this.target = null;
+	this.targets = [];
+	this.curTarget = 0;
+
+	this.mesh = null;
 	var self = this;
 	var models = [ "F-15.js", "F-18.js", "F-22.js" ];
 	cache.loadModel("assets/" + models[Math.floor(Math.random()*models.length)], function(geometry, materials) {
@@ -46,6 +49,28 @@ JET.Plane = function(params) {
 };
 
 JET.Plane.prototype = Object.create(THREE.Object3D.prototype);
+
+JET.Plane.prototype.scanTargets = function() {
+	this.targets = [];
+	for (var i = 0, l = game.entityCache.length; i < l; ++i) {
+		var contact = game.entityCache[i];
+		if (contact.faction === this.faction) continue;
+		this.targets.push(contact);
+		contact.tempSortDist = JET.Math.distSq(this, contact);
+	}
+	this.targets.sort(function(a, b) { a.tempSortDist - b.tempSortDist; });
+	this.curTarget = 0;
+	this.target = this.targets[this.curTarget];
+	this.dirtyStatus = true;
+};
+
+JET.Plane.prototype.cycleTargets = function() {
+	this.dirtyStatus = true;
+	if (!this.targets.length) { this.scanTargets(); return }
+	++this.curTarget;
+	if (this.curTarget >= this.targets.length) { this.scanTargets(); return }
+	this.target = this.targets[this.curTarget];
+};
 
 JET.Plane.prototype.cycleWeapons = function() {
 	this.curWeapon = (this.curWeapon + 1) % this.weapons.length;
