@@ -3,7 +3,7 @@ JET.Missile = function(weapon) {
 	THREE.Object3D.call(this);
 	this.weapon = weapon;
 	this.speed = 0;
-	this.range = 0;
+	this.flightTime = weapon ? weapon.flightTime || 0 : 0;
 	this.target = null;
 	var geometry = new THREE.CubeGeometry(2.0, 1.0, 1.0);
 	var material = new THREE.MeshBasicMaterial({ color: 0x555555 });
@@ -21,14 +21,14 @@ JET.Missile.prototype.update = function(dt) {
 	var dpos = this.speed * dt;
 	this.position.x += Math.cos(angle) * dpos;
 	this.position.y += Math.sin(angle) * dpos;
-	this.range -= dpos;
+	this.flightTime -= dt;
 
 	// Test for hit
 	for (var i = 0, l = game.entityCache.length; i < l; ++i) {
 		var obj = game.entityCache[i];
 		if (obj.id === this.weapon.ownerId) continue;
 		if (obj.testHit(this.position, this.weapon.radius)) {
-			this.range = 0;
+			this.flightTime = 0;
 			obj.hull -= this.weapon.damage;
 			addMessage("HIT!");
 			// TODO: Explosion
@@ -42,7 +42,7 @@ JET.Missile.prototype.update = function(dt) {
 JET.Weapon = function(name, params) {
 	this.name = name;
 	this.ownerId = params.ownerId;
-	this.range = params.range;
+	this.flightTime = params.flightTime;
 	this.damage = params.damage;
 	this.ammo = params.ammo;
 	this.maxAmmo = params.ammo;
@@ -64,7 +64,6 @@ JET.Weapon.prototype.shoot = function(shooter) {
 	var bullet = new JET.Missile(this);
 	bullet.position.copy(shooter.position);
 	bullet.rotation.copy(shooter.rotation);
-	bullet.range = this.range;
 	bullet.speed = this.speed + shooter.speed;
 	if (this.guided) bullet.target = shooter.target;
 	this.bullets.push(bullet);
@@ -76,7 +75,7 @@ JET.Weapon.prototype.update = function(dt) {
 		var bullet = this.bullets[i];
 		bullet.update(dt);
 		// Remove the bullet if it's dead
-		if (bullet.range <= 0) {
+		if (bullet.flightTime <= 0) {
 			scene.remove(bullet);
 			this.bullets.splice(i, 1);
 		}
