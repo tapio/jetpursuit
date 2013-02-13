@@ -42,9 +42,16 @@ JET.updateAI = function(bot, dt) {
 		desiredSpeed = bot.target.speed;
 	else if (targetDistSq < 200*200)
 		desiredSpeed = bot.target.speed * 1.1;
+
 	// Control the speed
 	var speedError = desiredSpeed - bot.speed;
 	var speedCorr = speedError * 10; // Apply gain
 	speedCorr = THREE.Math.clamp(speedCorr, -bot.acceleration, bot.acceleration);
 	bot.speed += speedCorr * dt;
+
+	// Weapons
+	if (targetDistSq < 100*100 && angleError < Math.PI / 16) {
+		bot.curWeapon = 0;
+		bot.shoot();
+	}
 };
