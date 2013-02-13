@@ -78,6 +78,7 @@ JET.Plane.prototype.cycleWeapons = function() {
 };
 
 JET.Plane.prototype.shoot = function() {
+	if (this.hull <= 0) return;
 	this.weapons[this.curWeapon].shoot(this);
 	this.dirtyStatus = true;
 };
