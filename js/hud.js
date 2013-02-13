@@ -58,17 +58,65 @@ JET.HUD = function(object) {
 	for (var i = 0; i < elems.length; ++i)
 		dom[elems[i]] = document.getElementById(elems[i]);
 
+	// FPS counter
 	var renderStats = new Stats();
 	renderStats.domElement.style.position = 'absolute';
 	renderStats.domElement.style.bottom = '0px';
 	document.getElementById("container").appendChild(renderStats.domElement);
 
+	// Gradients
 	var statusGradient = new JET.ColorGradient(0xcc0000, 0x005500);
 	statusGradient.add(0.5, 0xcccc00);
 	var speedGradient = new JET.ColorGradient(0x005500, 0x00cc55);
 
+	// Radar contact visualization
+	var radarGeo = new THREE.Geometry();
+	var radarMat = new THREE.ParticleBasicMaterial({
+		size: 3,
+		depthTest: true,
+		depthWrite: true,
+		transparent: false,
+		vertexColors: true,
+		sizeAttenuation: false,
+		blending: THREE.MultiplyBlending
+	});
+	for (var i = 0; i < 30; ++i) {
+		radarGeo.vertices.push(new THREE.Vector3());
+		radarGeo.colors.push(new THREE.Color());
+	}
+	var radarDist = 12;
+	var radar = new THREE.ParticleSystem(radarGeo, radarMat);
+	scene.add(radar);
+
+	function updateRadar() {
+		for (var i = 0, j = 0, l = game.entityCache.length; i < l; ++i) {
+			var contact = game.entityCache[i];
+			if (contact.id === object.id) continue;
+			if (j >= radarGeo.vertices.length) break;
+			// Set position based on direction
+			var angle = JET.Math.angleBetween(object, contact);
+			var vertex = radarGeo.vertices[j];
+			vertex.x = object.position.x + Math.cos(angle) * radarDist;
+			vertex.y = object.position.y + Math.sin(angle) * radarDist;
+			vertex.z = object.position.z;
+			// Determine color based on faction
+			var color = radarGeo.colors[j];
+			if (object.target && contact.id === object.target.id) {
+				color.setRGB(1, 0, 1); // Target
+				vertex.z += 2; // Put on top
+			} else if (contact.faction !== object.faction) {
+				color.setRGB(1, 0, 0); // Enemy
+				vertex.z += 1; // Rise above allies
+			} else color.setRGB(0, 1, 0); // Ally
+			++j;
+		}
+		radarGeo.verticesNeedUpdate = true;
+		radarGeo.colorsNeedUpdate = true;
+	}
+
 	this.update = function() {
-		renderStats.update();
+		// Radar
+		updateRadar();
 
 		// Weapons
 		if (object.dirtyStatus) {
@@ -98,5 +146,7 @@ JET.HUD = function(object) {
 		dom.hull.style.color = statusGradient.get(hullRatio).getStyle();
 
 		dom.ping.innerHTML = object.ping;
+
+		renderStats.update();
 	};
 };
