@@ -101,7 +101,7 @@ JET.Emitter = function(params) {
 		this.particles[i] = new JET.Particle();
 	}
 	this.particleSystem = new THREE.ParticleSystem(this.geometry, params.material);
-	this.particleSystem.sortParticles = params.sortParticles || true;
+	this.particleSystem.sortParticles = params.sortParticles || false;
 	if (params.parent) params.parent.add(this.particleSystem);
 };
 
