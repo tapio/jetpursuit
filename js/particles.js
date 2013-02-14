@@ -125,7 +125,7 @@ JET.createTrail = function(parent) {
 	var maxLife = 2;
 	var emitter = new JET.Emitter({
 		parent: scene,
-		maxParticles: 400,
+		maxParticles: 300,
 		material: new JET.ParticleMaterial({
 			color: 0xffffff,
 			size: 15,
@@ -139,7 +139,7 @@ JET.createTrail = function(parent) {
 			alphaTest: 0.1
 		}),
 		spawner: function(dt) {
-			toCreate += 200 * dt;
+			toCreate += 150 * dt;
 			var amount = toCreate|0;
 			toCreate -= amount;
 			return amount;
@@ -172,11 +172,11 @@ JET.createTrail = function(parent) {
 
 // Spawn a one-shot explosion
 JET.createExplosion = function(pos) {
-	var maxLife = 1;
+	var maxLife = 1.5;
 	var time = Date.now();
 	var emitter = new JET.Emitter({
 		parent: scene,
-		maxParticles: 5,
+		maxParticles: 10,
 		material: new JET.ParticleMaterial({
 			color: 0xffffff,
 			size: 100,
