@@ -77,10 +77,15 @@ JET.createTrail = function(parent) {
 		},
 		onBorn: function(particle, position, color) {
 			particle.lifeTime = maxLife;
-			var speed = -40 + Math.random();// * 20 + parent.speed;
-			particle.velocity.x = Math.cos(parent.angle) * speed + Math.random()*2;
-			particle.velocity.y = Math.sin(parent.angle) * speed + Math.random()*2;
+			var speed = -40 + Math.random() * 20 + parent.speed * 0.7;
+			var dx = Math.cos(parent.angle);
+			var dy = Math.sin(parent.angle);
+			particle.velocity.x = dx * speed + Math.random()*2;
+			particle.velocity.y = dy * speed + Math.random()*2;
 			position.copy(parent.position);
+			var r = 5 + Math.random() * 5;
+			position.x -= dx * r;
+			position.y -= dy * r;
 			position.z -= 2;
 			JET.GradientLib.trail.getTo(1.0, color);
 		},
