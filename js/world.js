@@ -28,6 +28,7 @@ JET.World = function(scene) {
 		size: 256,
 		map: cloudTex,
 		depthTest: true,
+		depthWrite: false,
 		transparent: true,
 		opacity: 0.9
 	});
@@ -54,7 +55,7 @@ JET.World = function(scene) {
 		}
 	}
 	var clouds = new THREE.ParticleSystem(cloudGeo, cloudMat);
-	clouds.sortParticles = true;
+	clouds.renderDepth = 1000;
 	scene.add(clouds);
 
 	this.update = function(position) {
