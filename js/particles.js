@@ -56,20 +56,6 @@ JET.ParticleMaterial = function(params) {
 }
 JET.ParticleMaterial.prototype = Object.create(THREE.ShaderMaterial.prototype);
 
-JET.ParticleMaterials = {
-	explosion: new THREE.ParticleBasicMaterial({
-		color: 0xffffff,
-		size: 40,
-		map: THREE.ImageUtils.loadTexture("assets/smoke.png"),
-		sizeAttenuation: true,
-		vertexColors: true,
-		depthWrite: true,
-		transparent: true,
-		opacity: 0.5,
-		alphaTest: 0.1
-	})
-};
-
 JET.GradientLib = {
 	trail: new JET.ColorGradient(0xcccccc, 0xffaa88),
 	explosion: new JET.ColorGradient(0x777777, 0xffff00)
@@ -186,7 +172,17 @@ JET.createExplosion = function(pos) {
 	var emitter = new JET.Emitter({
 		parent: scene,
 		maxParticles: 5,
-		material: JET.ParticleMaterials.explosion,
+		material: new JET.ParticleMaterial({
+			color: 0xffffff,
+			size: 100,
+			map: THREE.ImageUtils.loadTexture("assets/smoke.png"),
+			sizeAttenuation: true,
+			vertexColors: true,
+			depthWrite: true,
+			transparent: true,
+			opacity: 0.5,
+			alphaTest: 0.1
+		}),
 		spawner: function(dt) {
 			if (Date.now() > time + maxLife * 1000) {
 				emitter.done = true;
@@ -201,7 +197,9 @@ JET.createExplosion = function(pos) {
 			JET.GradientLib.explosion.getTo(1.0, color);
 		},
 		onUpdate: function(particle, position, color, dt) {
-			JET.GradientLib.explosion.getTo(particle.lifeTime / maxLife, color);
+			var normalizedLife = particle.lifeTime / maxLife;
+			JET.GradientLib.explosion.getTo(normalizedLife, color);
+			particle.alpha = normalizedLife;
 		}
 	});
 	return emitter;
