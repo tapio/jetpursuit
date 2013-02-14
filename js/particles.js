@@ -55,6 +55,32 @@ JET.ParticleMaterial.prototype = Object.create(THREE.ShaderMaterial.prototype);
 
 JET.TextureLib.smoke = THREE.ImageUtils.loadTexture("assets/smoke.png");
 
+JET.MaterialLib.trail = new JET.ParticleMaterial({
+	color: 0xffffff,
+	size: 15,
+	map: JET.TextureLib.smoke,
+	sizeAttenuation: true,
+	vertexColors: true,
+	depthTest: false,
+	depthWrite: true,
+	transparent: true,
+	opacity: 0.75,
+	alphaTest: 0.1
+});
+
+JET.MaterialLib.explosion = new JET.ParticleMaterial({
+	color: 0xffffff,
+	size: 100,
+	map: JET.TextureLib.smoke,
+	sizeAttenuation: true,
+	vertexColors: true,
+	depthTest: false,
+	depthWrite: true,
+	transparent: true,
+	opacity: 0.75,
+	alphaTest: 0.1
+});
+
 JET.GradientLib = {
 	trail: new JET.ColorGradient(0xcccccc, 0xffaa88),
 	explosion: new JET.ColorGradient(0x777777, 0xffff00)
@@ -143,18 +169,7 @@ JET.createTrail = function(parent) {
 	var emitter = new JET.Emitter({
 		parent: scene,
 		maxParticles: 300,
-		material: new JET.ParticleMaterial({
-			color: 0xffffff,
-			size: 15,
-			map: JET.TextureLib.smoke,
-			sizeAttenuation: true,
-			vertexColors: true,
-			depthTest: false,
-			depthWrite: true,
-			transparent: true,
-			opacity: 0.75,
-			alphaTest: 0.1
-		}),
+		material: JET.MaterialLib.trail,
 		spawner: function(dt) {
 			toCreate += 150 * dt;
 			var amount = toCreate|0;
@@ -194,18 +209,7 @@ JET.createExplosion = function(pos) {
 	var emitter = new JET.Emitter({
 		parent: scene,
 		maxParticles: 10,
-		material: new JET.ParticleMaterial({
-			color: 0xffffff,
-			size: 100,
-			map: JET.TextureLib.smoke,
-			sizeAttenuation: true,
-			vertexColors: true,
-			depthTest: false,
-			depthWrite: true,
-			transparent: true,
-			opacity: 0.75,
-			alphaTest: 0.1
-		}),
+		material: JET.MaterialLib.explosion,
 		spawner: function(dt) {
 			if (Date.now() > time + maxLife * 1000) {
 				emitter.done = true;
