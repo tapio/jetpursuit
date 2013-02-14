@@ -87,6 +87,7 @@ JET.Plane.prototype.cycleWeapons = function() {
 JET.Plane.prototype.shoot = function() {
 	this.weapons[this.curWeapon].shoot(this);
 	this.dirtyStatus = true;
+	//JET.SoundLibrary.cannon.play();
 };
 
 JET.Plane.prototype.testHit = function(pos, radius) {
