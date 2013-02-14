@@ -1,15 +1,22 @@
 
 JET.ParticleMaterials = {
 	trail: new THREE.ParticleBasicMaterial({
-		color: 0xee8800,
-		size: 8,
-		sizeAttenuation: false,
+		color: 0xffffff,
+		size: 5,
+		map: THREE.ImageUtils.loadTexture("assets/smoke.png"),
+		sizeAttenuation: true,
 		vertexColors: true,
 		depthWrite: true,
 		transparent: true,
 		opacity: 0.75
 	})
 };
+
+JET.GradientLib = {
+	trail: new JET.ColorGradient(0xcccccc, 0xffaa88)
+};
+JET.GradientLib.trail.add(0.80, 0xbbbbbb);
+
 
 JET.Particle = function(index) {
 	this.index = index || 0;
@@ -46,8 +53,7 @@ JET.Emitter.prototype.update = function(dt) {
 		if (particle.lifeTime <= 0 && spawnAmount > 0) {
 			this.onBorn(particle, position, color);
 			--spawnAmount;
-		}
-		if (particle.lifeTime > 0)
+		} else if (particle.lifeTime > 0)
 			this.onUpdate(particle, position, color, dt);
 	}
 	this.geometry.verticesNeedUpdate = true;
@@ -58,26 +64,31 @@ JET.Emitter.prototype.update = function(dt) {
 JET.createTrail = function(parent) {
 	var v = new THREE.Vector3();
 	var toCreate = 0;
+	var maxLife = 2;
 	var emitter = new JET.Emitter({
 		parent: scene,
 		maxParticles: 400,
 		material: JET.ParticleMaterials.trail,
 		spawner: function(dt) {
-			toCreate += 100 * dt;
+			toCreate += 200 * dt;
 			var amount = toCreate|0;
 			toCreate -= amount;
 			return amount;
 		},
 		onBorn: function(particle, position, color) {
-			particle.lifeTime = 2;
-			particle.velocity.set(-10, 0, 0);
+			particle.lifeTime = maxLife;
+			var speed = -40 + Math.random();// * 20 + parent.speed;
+			particle.velocity.x = Math.cos(parent.angle) * speed + Math.random()*2;
+			particle.velocity.y = Math.sin(parent.angle) * speed + Math.random()*2;
 			position.copy(parent.position);
 			position.z -= 2;
-			color.setRGB(1.0, 0.5, 0.0);
+			JET.GradientLib.trail.getTo(1.0, color);
 		},
 		onUpdate: function(particle, position, color, dt) {
 			v.copy(particle.velocity).multiplyScalar(dt);
 			position.add(v);
+			particle.velocity.multiplyScalar(1.0 - 0.5 * dt); // Some drag
+			JET.GradientLib.trail.getTo(particle.lifeTime / maxLife, color);
 		}
 	});
 	return emitter;
