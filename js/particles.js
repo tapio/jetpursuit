@@ -1,8 +1,65 @@
 
+JET.ParticleMaterial = function(params) {
+	THREE.ShaderMaterial.call(this, params);
+
+	this.attributes = {
+		alpha: { type: 'f', value: [] }
+	};
+	params.color = params.color || 0xffffff;
+	this.uniforms = {
+		"psColor" : { type: "c", value: new THREE.Color(params.color) },
+		"opacity" : { type: "f", value: params.opacity || 1.0 },
+		"size" : { type: "f", value: params.size || 1.0 },
+		"scale" : { type: "f", value: params.scale || 1.0 },
+		"map" : { type: "t", value: params.map || null }
+	};
+	this.map = params.map;
+	this.color = new THREE.Color(params.color);
+	//this.sizeAttenuation = params.sizeAttenuation;
+	//this.size = params.size;
+	this.vertexColors = params.vertexColors;
+	this.setValues(params);
+
+	this.vertexShader = [
+		"attribute float alpha;",
+		"uniform float size;",
+		"uniform float scale;",
+		THREE.ShaderChunk[ "color_pars_vertex" ],
+		"varying float vAlpha;",
+		"void main() {",
+			THREE.ShaderChunk[ "color_vertex" ],
+			"vAlpha = alpha;",
+			"vec4 mvPosition = modelViewMatrix * vec4( position, 1.0 );",
+			"#ifdef USE_SIZEATTENUATION",
+				"gl_PointSize = size * ( scale / length( mvPosition.xyz ) );",
+			"#else",
+				"gl_PointSize = size;",
+			"#endif",
+			"gl_Position = projectionMatrix * mvPosition;",
+			THREE.ShaderChunk[ "worldpos_vertex" ],
+		"}"
+	].join("\n"),
+
+	this.fragmentShader = [
+		"uniform vec3 psColor;",
+		"uniform float opacity;",
+		THREE.ShaderChunk[ "color_pars_fragment" ],
+		THREE.ShaderChunk[ "map_particle_pars_fragment" ],
+		"varying float vAlpha;",
+		"void main() {",
+			"gl_FragColor = vec4( psColor, opacity * vAlpha );",
+			THREE.ShaderChunk[ "map_particle_fragment" ],
+			THREE.ShaderChunk[ "alphatest_fragment" ],
+			THREE.ShaderChunk[ "color_fragment" ],
+		"}"
+	].join("\n")
+}
+JET.ParticleMaterial.prototype = Object.create(THREE.ShaderMaterial.prototype);
+
 JET.ParticleMaterials = {
-	trail: new THREE.ParticleBasicMaterial({
+	trail: new JET.ParticleMaterial({
 		color: 0xffffff,
-		size: 5,
+		size: 15,
 		map: THREE.ImageUtils.loadTexture("assets/smoke.png"),
 		sizeAttenuation: true,
 		vertexColors: true,
@@ -34,6 +91,7 @@ JET.GradientLib.explosion.add(0.5, 0xbb2200);
 
 JET.Particle = function(index) {
 	this.index = index || 0;
+	this.alpha = 1.0;
 	this.velocity = new THREE.Vector3();
 	this.lifeTime = 0;
 };
@@ -48,9 +106,11 @@ JET.Emitter = function(params) {
 	this.particles = new Array(this.maxParticles);
 	this.geometry.vertices = new Array(this.maxParticles);
 	this.geometry.colors = new Array(this.maxParticles);
+	this.geometry.alphas = params.material.attributes.alpha.value = new Array(this.maxParticles);
 	for (var i = 0; i < this.maxParticles; ++i) {
 		this.geometry.vertices[i] = new THREE.Vector3();
 		this.geometry.colors[i] = new THREE.Color();
+		this.geometry.alphas[i] = 1.0;
 		this.particles[i] = new JET.Particle(i);
 	}
 	this.particleSystem = new THREE.ParticleSystem(this.geometry, params.material);
@@ -70,9 +130,12 @@ JET.Emitter.prototype.update = function(dt) {
 			--spawnAmount;
 		} else if (particle.lifeTime > 0)
 			this.onUpdate(particle, position, color, dt);
+		else particle.alpha = 0;
+		this.geometry.alphas[i] = particle.alpha;
 	}
 	this.geometry.verticesNeedUpdate = true;
 	this.geometry.colorsNeedUpdate = true;
+	this.particleSystem.material.attributes.alpha.needsUpdate = true;
 }
 
 
@@ -109,7 +172,9 @@ JET.createTrail = function(parent) {
 			v.copy(particle.velocity).multiplyScalar(dt);
 			position.add(v);
 			particle.velocity.multiplyScalar(1.0 - 0.5 * dt); // Some drag
-			JET.GradientLib.trail.getTo(particle.lifeTime / maxLife, color);
+			var normalizedLife = particle.lifeTime / maxLife;
+			JET.GradientLib.trail.getTo(normalizedLife, color);
+			particle.alpha = normalizedLife;
 		}
 	});
 	return emitter;
