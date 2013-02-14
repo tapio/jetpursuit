@@ -25,5 +25,6 @@ JET.Sound = function(samples, minPlayers) {
 
 JET.SoundLibrary = {
 	cannon: new JET.Sound("cannon.ogg", 20),
+	missile: new JET.Sound("missile.ogg", 10),
 	explosion: new JET.Sound("explosion.ogg", 10)
 };
