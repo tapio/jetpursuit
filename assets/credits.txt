@@ -10,4 +10,6 @@
 	- Jattenalle - www.godsandidols.org
 	- CC-BY 3.0
 	- http://opengameart.org/content/texture-water
+* sounds/*
+	- Public Domain
 

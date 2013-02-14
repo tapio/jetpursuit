@@ -60,6 +60,7 @@ JET.Game.prototype.update = function(dt) {
 		// Handle deaths
 		if (obj.hull <= 0) {
 			addMessage('"' + obj.name + '" destroyed!', "warn");
+			JET.SoundLibrary.explosion.play();
 			this.addEmitter(JET.createExplosion(obj.position));
 			this.remove(obj, false);
 			rebuild = true;
