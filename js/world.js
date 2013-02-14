@@ -20,25 +20,37 @@ JET.World = function(scene) {
 	scene.add(sea);
 
 	// Clouds
-	var numClouds = 1000;
-	var cloudDist = 1000;
+	var cloudsInCluster = 4;
+	var numClouds = 250 * cloudsInCluster;
+	var cloudDist = 1500;
 	var cloudTex = THREE.ImageUtils.loadTexture("assets/cloud1.png");
-	var cloudGeo = new THREE.Geometry();
 	var cloudMat = new THREE.ParticleBasicMaterial({
-		size: 128,
+		size: 256,
 		map: cloudTex,
 		depthTest: true,
 		transparent: true,
 		opacity: 0.9
 	});
+	var cloudGeo = new THREE.BufferGeometry();
+	cloudGeo.dynamic = true;
+	cloudGeo.attributes = {
+		position: {
+			itemSize: 3,
+			array: new Float32Array(numClouds * 3),
+			numItems: numClouds * 3
+		}
+	};
 	var vertex = new THREE.Vector3();
-	for (var i = 0; i < numClouds; ++i) {
+	var cloudPositions = cloudGeo.attributes.position.array;
+	for (var i = 0, l = numClouds * 3; i < l; i += 3 * cloudsInCluster) {
 		vertex.x = Math.random() * 2 * cloudDist - cloudDist;
 		vertex.y = Math.random() * 2 * cloudDist - cloudDist;
-		vertex.z = Math.random() * 2000 + 1000;
-		for (var j = 0; j < 4; ++j) {
-			v.set(Math.random() * 50, Math.random() * 50, j);
-			cloudGeo.vertices.push(vertex.clone().add(v));
+		vertex.z = 500 + i/l * 1000;
+		for (var j = 0; j < cloudsInCluster; ++j) {
+			vertex.add(v.set(THREE.Math.randFloatSpread(100), THREE.Math.randFloatSpread(100), 0));
+			cloudPositions[3*j+i  ] = vertex.x;
+			cloudPositions[3*j+i+1] = vertex.y;
+			cloudPositions[3*j+i+2] = vertex.z;
 		}
 	}
 	var clouds = new THREE.ParticleSystem(cloudGeo, cloudMat);
@@ -52,15 +64,14 @@ JET.World = function(scene) {
 		seaTex.offset.set(position.x / w * seaTex.repeat.x, position.y / h * seaTex.repeat.y);
 
 		// Infinite clouds
-		for (var i = 0, l = cloudGeo.vertices.length; i < l; ++i) {
-			var cloudpos = cloudGeo.vertices[i];
-			v.subVectors(cloudpos, position);
+		for (var i = 0, l = numClouds * 3; i < l; i += 3) {
+			v.set(cloudPositions[i] - position.x, cloudPositions[i+1] - position.y, 0);
 			if (Math.abs(v.x) > cloudDist) {
-				cloudpos.x -= THREE.Math.sign(v.x) * cloudDist * 2;
+				cloudPositions[i] -= THREE.Math.sign(v.x) * cloudDist * 2;
 				cloudGeo.verticesNeedUpdate = true;
 			}
 			if (Math.abs(v.y) > cloudDist) {
-				cloudpos.y -= THREE.Math.sign(v.y) * cloudDist * 2;
+				cloudPositions[i+1] -= THREE.Math.sign(v.y) * cloudDist * 2;
 				cloudGeo.verticesNeedUpdate = true;
 			}
 		}
