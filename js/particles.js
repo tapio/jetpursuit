@@ -57,17 +57,6 @@ JET.ParticleMaterial = function(params) {
 JET.ParticleMaterial.prototype = Object.create(THREE.ShaderMaterial.prototype);
 
 JET.ParticleMaterials = {
-	trail: new JET.ParticleMaterial({
-		color: 0xffffff,
-		size: 15,
-		map: THREE.ImageUtils.loadTexture("assets/smoke.png"),
-		sizeAttenuation: true,
-		vertexColors: true,
-		depthWrite: true,
-		transparent: true,
-		opacity: 0.75,
-		alphaTest: 0.1
-	}),
 	explosion: new THREE.ParticleBasicMaterial({
 		color: 0xffffff,
 		size: 40,
@@ -147,7 +136,17 @@ JET.createTrail = function(parent) {
 	var emitter = new JET.Emitter({
 		parent: scene,
 		maxParticles: 400,
-		material: JET.ParticleMaterials.trail,
+		material: new JET.ParticleMaterial({
+			color: 0xffffff,
+			size: 15,
+			map: THREE.ImageUtils.loadTexture("assets/smoke.png"),
+			sizeAttenuation: true,
+			vertexColors: true,
+			depthWrite: true,
+			transparent: true,
+			opacity: 0.75,
+			alphaTest: 0.1
+		}),
 		spawner: function(dt) {
 			toCreate += 200 * dt;
 			var amount = toCreate|0;
