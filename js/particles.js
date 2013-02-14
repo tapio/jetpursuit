@@ -56,6 +56,10 @@ JET.ParticleMaterial = function(params) {
 }
 JET.ParticleMaterial.prototype = Object.create(THREE.ShaderMaterial.prototype);
 
+JET.TextureLib = {
+	smoke: THREE.ImageUtils.loadTexture("assets/smoke.png")
+}
+
 JET.GradientLib = {
 	trail: new JET.ColorGradient(0xcccccc, 0xffaa88),
 	explosion: new JET.ColorGradient(0x777777, 0xffff00)
@@ -125,9 +129,10 @@ JET.createTrail = function(parent) {
 		material: new JET.ParticleMaterial({
 			color: 0xffffff,
 			size: 15,
-			map: THREE.ImageUtils.loadTexture("assets/smoke.png"),
+			map: JET.TextureLib.smoke,
 			sizeAttenuation: true,
 			vertexColors: true,
+			depthTest: false,
 			depthWrite: true,
 			transparent: true,
 			opacity: 0.75,
@@ -147,7 +152,7 @@ JET.createTrail = function(parent) {
 			particle.velocity.x = dx * speed + Math.random()*2;
 			particle.velocity.y = dy * speed + Math.random()*2;
 			position.copy(parent.position);
-			var r = 5 + Math.random() * 5;
+			var r = 7 + Math.random() * 5;
 			position.x -= dx * r;
 			position.y -= dy * r;
 			position.z -= 2;
@@ -175,12 +180,13 @@ JET.createExplosion = function(pos) {
 		material: new JET.ParticleMaterial({
 			color: 0xffffff,
 			size: 100,
-			map: THREE.ImageUtils.loadTexture("assets/smoke.png"),
+			map: JET.TextureLib.smoke,
 			sizeAttenuation: true,
 			vertexColors: true,
+			depthTest: false,
 			depthWrite: true,
 			transparent: true,
-			opacity: 0.5,
+			opacity: 0.75,
 			alphaTest: 0.1
 		}),
 		spawner: function(dt) {
