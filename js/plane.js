@@ -39,6 +39,7 @@ JET.Plane = function(params) {
 	this.targets = [];
 	this.curTarget = 0;
 
+	this.trail = JET.createTrail(this);
 	this.mesh = null;
 	var self = this;
 	var models = [ "F-15.js", "F-18.js", "F-22.js" ];
@@ -110,6 +111,9 @@ JET.Plane.prototype.update = function(dt) {
 	// Update position
 	this.position.x += Math.cos(this.angle) * this.speed * dt;
 	this.position.y += Math.sin(this.angle) * this.speed * dt;
+
+	// Particles
+	this.trail.update(dt);
 };
 
 JET.Plane.__m1 = new THREE.Matrix4();
