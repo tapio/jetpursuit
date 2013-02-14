@@ -64,7 +64,7 @@ JET.MaterialLib.trail = new JET.ParticleMaterial({
 	depthTest: false,
 	depthWrite: true,
 	transparent: true,
-	opacity: 0.75,
+	opacity: 0.9,
 	alphaTest: 0.1
 });
 
@@ -82,9 +82,10 @@ JET.MaterialLib.explosion = new JET.ParticleMaterial({
 });
 
 JET.GradientLib = {
-	trail: new JET.ColorGradient(0xcccccc, 0xffaa88),
+	trail: new JET.ColorGradient(0xcccccc, 0xffcc99),
 	explosion: new JET.ColorGradient(0x777777, 0xffff00)
 };
+JET.GradientLib.trail.add(0.9, 0xff8888);
 JET.GradientLib.trail.add(0.8, 0xbbbbbb);
 JET.GradientLib.explosion.add(0.5, 0xbb2200);
 
@@ -165,13 +166,13 @@ JET.Emitter.prototype.update = function(dt) {
 JET.createTrail = function(parent) {
 	var v = new THREE.Vector3();
 	var toCreate = 0;
-	var maxLife = 2;
+	var maxLife = 1.5;
 	var emitter = new JET.Emitter({
 		parent: scene,
-		maxParticles: 300,
+		maxParticles: 400,
 		material: JET.MaterialLib.trail,
 		spawner: function(dt) {
-			toCreate += 150 * dt;
+			toCreate += 200 * dt;
 			var amount = toCreate|0;
 			toCreate -= amount;
 			return amount;
