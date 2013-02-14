@@ -4,12 +4,11 @@ JET.BotNames = [
 	"Flamer", "Dash", "Thunder", "Buzz", "Rooster"
 ];
 
-JET.MaterialLib = {
-	factions: [
-		new THREE.MeshPhongMaterial({ color: 0x335533, specular: 0xffffff }),
-		new THREE.MeshPhongMaterial({ color: 0x663333, specular: 0xffffff })
-	]
-}
+JET.MaterialLib.factions = [
+	new THREE.MeshPhongMaterial({ color: 0x335533, specular: 0xffffff }),
+	new THREE.MeshPhongMaterial({ color: 0x663333, specular: 0xffffff })
+];
+
 
 JET.Plane = function(params) {
 	THREE.Object3D.call(this);

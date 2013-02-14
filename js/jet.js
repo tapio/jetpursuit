@@ -18,6 +18,9 @@ JET.Math = {
 	}
 };
 
+JET.MaterialLib = {};
+JET.GeometryLib = {};
+JET.TextureLib = {};
 
 JET.ColorGradient = function(color0, color1) {
 	this.points = [];

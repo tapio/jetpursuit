@@ -53,9 +53,7 @@ JET.ParticleMaterial = function(params) {
 }
 JET.ParticleMaterial.prototype = Object.create(THREE.ShaderMaterial.prototype);
 
-JET.TextureLib = {
-	smoke: THREE.ImageUtils.loadTexture("assets/smoke.png")
-}
+JET.TextureLib.smoke = THREE.ImageUtils.loadTexture("assets/smoke.png");
 
 JET.GradientLib = {
 	trail: new JET.ColorGradient(0xcccccc, 0xffaa88),

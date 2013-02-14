@@ -1,3 +1,10 @@
+
+JET.MaterialLib.missile = new THREE.MeshBasicMaterial({ color: 0x555555 });
+JET.MaterialLib.bullet = new THREE.MeshBasicMaterial({ color: 0x111111 });
+
+JET.GeometryLib.missile = new THREE.PlaneGeometry(2, 1);
+JET.GeometryLib.bullet = new THREE.PlaneGeometry(1, 1);
+
 /// A projectile
 JET.Missile = function(weapon) {
 	THREE.Object3D.call(this);
@@ -5,8 +12,8 @@ JET.Missile = function(weapon) {
 	this.speed = 0;
 	this.flightTime = weapon ? weapon.flightTime || 0 : 0;
 	this.target = null;
-	var geometry = new THREE.CubeGeometry(2.0, 1.0, 1.0);
-	var material = new THREE.MeshBasicMaterial({ color: 0x555555 });
+	var geometry = this.weapon.guided ? JET.GeometryLib.missile : JET.GeometryLib.bullet;
+	var material = this.weapon.guided ? JET.MaterialLib.missile : JET.MaterialLib.bullet;
 	this.mesh = new THREE.Mesh(geometry, material);
 	this.add(this.mesh);
 };
