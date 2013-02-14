@@ -4,6 +4,13 @@ JET.BotNames = [
 	"Flamer", "Dash", "Thunder", "Buzz", "Rooster"
 ];
 
+JET.MaterialLib = {
+	factions: [
+		new THREE.MeshPhongMaterial({ color: 0x335533, specular: 0xffffff }),
+		new THREE.MeshPhongMaterial({ color: 0x663333, specular: 0xffffff })
+	]
+}
+
 JET.Plane = function(params) {
 	THREE.Object3D.call(this);
 	params = params || {};
@@ -44,9 +51,7 @@ JET.Plane = function(params) {
 	var self = this;
 	var models = [ "F-15.js", "F-18.js", "F-22.js" ];
 	cache.loadModel("assets/" + models[Math.floor(Math.random()*models.length)], function(geometry, materials) {
-		var material = materials[0].clone();
-		material.color.lerp(self.faction === 0 ? new THREE.Color(0x00ff00) : new THREE.Color(0xff0000), 0.15);
-		self.mesh = new THREE.Mesh(geometry, material);
+		self.mesh = new THREE.Mesh(geometry, JET.MaterialLib.factions[self.faction]);
 		self.add(self.mesh);
 	});
 };
