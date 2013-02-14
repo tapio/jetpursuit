@@ -8,14 +8,28 @@ JET.ParticleMaterials = {
 		vertexColors: true,
 		depthWrite: true,
 		transparent: true,
-		opacity: 0.75
+		opacity: 0.75,
+		alphaTest: 0.1
+	}),
+	explosion: new THREE.ParticleBasicMaterial({
+		color: 0xffffff,
+		size: 40,
+		map: THREE.ImageUtils.loadTexture("assets/smoke.png"),
+		sizeAttenuation: true,
+		vertexColors: true,
+		depthWrite: true,
+		transparent: true,
+		opacity: 0.5,
+		alphaTest: 0.1
 	})
 };
 
 JET.GradientLib = {
-	trail: new JET.ColorGradient(0xcccccc, 0xffaa88)
+	trail: new JET.ColorGradient(0xcccccc, 0xffaa88),
+	explosion: new JET.ColorGradient(0x777777, 0xffff00)
 };
-JET.GradientLib.trail.add(0.80, 0xbbbbbb);
+JET.GradientLib.trail.add(0.8, 0xbbbbbb);
+JET.GradientLib.explosion.add(0.5, 0xbb2200);
 
 
 JET.Particle = function(index) {
@@ -23,6 +37,7 @@ JET.Particle = function(index) {
 	this.velocity = new THREE.Vector3();
 	this.lifeTime = 0;
 };
+
 
 JET.Emitter = function(params) {
 	this.maxParticles = params.maxParticles;
@@ -60,7 +75,8 @@ JET.Emitter.prototype.update = function(dt) {
 	this.geometry.colorsNeedUpdate = true;
 }
 
-// Create a simple fire emitter
+
+// Create a simple jet trail emitter
 JET.createTrail = function(parent) {
 	var v = new THREE.Vector3();
 	var toCreate = 0;
@@ -99,6 +115,33 @@ JET.createTrail = function(parent) {
 	return emitter;
 };
 
+// Spawn a one-shot explosion
+JET.createExplosion = function(pos) {
+	var maxLife = 1;
+	var time = Date.now();
+	var emitter = new JET.Emitter({
+		parent: scene,
+		maxParticles: 5,
+		material: JET.ParticleMaterials.explosion,
+		spawner: function(dt) {
+			if (Date.now() > time + maxLife * 1000) {
+				emitter.done = true;
+				return;
+			}
+			return 100;
+		},
+		onBorn: function(particle, position, color) {
+			particle.lifeTime = 0.5 * (maxLife * Math.random() + maxLife);
+			position.copy(pos);
+			position.z += 5;
+			JET.GradientLib.explosion.getTo(1.0, color);
+		},
+		onUpdate: function(particle, position, color, dt) {
+			JET.GradientLib.explosion.getTo(particle.lifeTime / maxLife, color);
+		}
+	});
+	return emitter;
+};
 
 
 // Particle system initializer for simple particle flames

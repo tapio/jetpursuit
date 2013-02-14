@@ -3,6 +3,7 @@ JET.Game = function() {
 	this.entities = {};
 	this.entityCache = [];
 	this.bullets = [];
+	this.emitters = [];
 };
 
 JET.Game.prototype.rebuildCache = function() {
@@ -42,6 +43,11 @@ JET.Game.prototype.addBullet = function(obj) {
 	return obj;
 };
 
+JET.Game.prototype.addEmitter = function(obj) {
+	this.emitters.push(obj);
+	return obj;
+};
+
 JET.Game.prototype.update = function(dt) {
 	var i, rebuild = false;
 	for (i = 0, l = this.entityCache.length; i < l; ++i) {
@@ -51,9 +57,10 @@ JET.Game.prototype.update = function(dt) {
 		// Movement
 		obj.update(dt);
 
-		// Remove if dead
+		// Handle deaths
 		if (obj.hull <= 0) {
 			addMessage('"' + obj.name + '" destroyed!', "warn");
+			this.addEmitter(JET.createExplosion(obj.position));
 			this.remove(obj, false);
 			rebuild = true;
 		}
@@ -68,6 +75,17 @@ JET.Game.prototype.update = function(dt) {
 		if (bullet.flightTime <= 0) {
 			scene.remove(bullet);
 			this.bullets.splice(i, 1);
+		}
+	}
+
+	// Emitters
+	for (i = this.emitters.length-1; i >= 0; --i) {
+		var emitter = this.emitters[i];
+		emitter.update(dt);
+		// Remove if dead
+		if (emitter.done) {
+			scene.remove(emitter.particleSystem);
+			this.emitters.splice(i, 1);
 		}
 	}
 };
