@@ -2,9 +2,7 @@
 JET.ParticleMaterial = function(params) {
 	THREE.ShaderMaterial.call(this, params);
 
-	this.attributes = {
-		alpha: { type: 'f', value: [] }
-	};
+	this.attributes = {};
 	params.color = params.color || 0xffffff;
 	this.uniforms = {
 		"psColor" : { type: "c", value: new THREE.Color(params.color) },
@@ -21,14 +19,13 @@ JET.ParticleMaterial = function(params) {
 	this.setValues(params);
 
 	this.vertexShader = [
-		"attribute float alpha;",
 		"uniform float size;",
 		"uniform float scale;",
 		THREE.ShaderChunk[ "color_pars_vertex" ],
 		"varying float vAlpha;",
 		"void main() {",
 			THREE.ShaderChunk[ "color_vertex" ],
-			"vAlpha = alpha;",
+			"vAlpha = normal.x;",
 			"vec4 mvPosition = modelViewMatrix * vec4( position, 1.0 );",
 			"#ifdef USE_SIZEATTENUATION",
 				"gl_PointSize = size * ( scale / length( mvPosition.xyz ) );",
@@ -69,7 +66,8 @@ JET.GradientLib.explosion.add(0.5, 0xbb2200);
 
 
 JET.Particle = function(index) {
-	this.index = index || 0;
+	this.position = new THREE.Vector3();
+	this.color = new THREE.Color();
 	this.alpha = 1.0;
 	this.velocity = new THREE.Vector3();
 	this.lifeTime = 0;
@@ -81,16 +79,28 @@ JET.Emitter = function(params) {
 	this.spawner = params.spawner;
 	this.onBorn = params.onBorn;
 	this.onUpdate = params.onUpdate;
-	this.geometry = new THREE.Geometry();
+	this.geometry = new THREE.BufferGeometry();
+	this.geometry.dynamic = true;
+	this.geometry.attributes = {
+		position: {
+			itemSize: 3,
+			array: new Float32Array(this.maxParticles * 3),
+			numItems: this.maxParticles * 3
+		},
+		color: {
+			itemSize: 3,
+			array: new Float32Array(this.maxParticles * 3),
+			numItems: this.maxParticles * 3
+		},
+		normal: {
+			itemSize: 3,
+			array: new Float32Array(this.maxParticles * 3),
+			numItems: this.maxParticles * 3
+		}
+	}
 	this.particles = new Array(this.maxParticles);
-	this.geometry.vertices = new Array(this.maxParticles);
-	this.geometry.colors = new Array(this.maxParticles);
-	this.geometry.alphas = params.material.attributes.alpha.value = new Array(this.maxParticles);
 	for (var i = 0; i < this.maxParticles; ++i) {
-		this.geometry.vertices[i] = new THREE.Vector3();
-		this.geometry.colors[i] = new THREE.Color();
-		this.geometry.alphas[i] = 1.0;
-		this.particles[i] = new JET.Particle(i);
+		this.particles[i] = new JET.Particle();
 	}
 	this.particleSystem = new THREE.ParticleSystem(this.geometry, params.material);
 	this.particleSystem.sortParticles = params.sortParticles || true;
@@ -101,20 +111,29 @@ JET.Emitter.prototype.update = function(dt) {
 	var spawnAmount = this.spawner(dt);
 	for (var i = 0; i < this.maxParticles; ++i) {
 		var particle = this.particles[i];
-		var position = this.geometry.vertices[i];
-		var color = this.geometry.colors[i];
 		particle.lifeTime -= dt;
 		if (particle.lifeTime <= 0 && spawnAmount > 0) {
-			this.onBorn(particle, position, color);
+			this.onBorn(particle);
 			--spawnAmount;
 		} else if (particle.lifeTime > 0)
-			this.onUpdate(particle, position, color, dt);
+			this.onUpdate(particle, dt);
 		else particle.alpha = 0;
-		this.geometry.alphas[i] = particle.alpha;
+
+		var positions = this.geometry.attributes.position.array;
+		var colors = this.geometry.attributes.color.array;
+		var customs = this.geometry.attributes.normal.array;
+		var i3 = i * 3;
+		positions[i3  ] = particle.position.x;
+		positions[i3+1] = particle.position.y;
+		positions[i3+2] = particle.position.z;
+		colors[i3  ] = particle.color.r;
+		colors[i3+1] = particle.color.g;
+		colors[i3+2] = particle.color.b;
+		customs[i3] = particle.alpha;
 	}
 	this.geometry.verticesNeedUpdate = true;
 	this.geometry.colorsNeedUpdate = true;
-	this.particleSystem.material.attributes.alpha.needsUpdate = true;
+	this.geometry.normalsNeedUpdate = true;
 }
 
 
@@ -144,26 +163,26 @@ JET.createTrail = function(parent) {
 			toCreate -= amount;
 			return amount;
 		},
-		onBorn: function(particle, position, color) {
+		onBorn: function(particle) {
 			particle.lifeTime = maxLife;
 			var speed = -40 + Math.random() * 20 + parent.speed * 0.7;
 			var dx = Math.cos(parent.angle);
 			var dy = Math.sin(parent.angle);
 			particle.velocity.x = dx * speed + Math.random()*2;
 			particle.velocity.y = dy * speed + Math.random()*2;
-			position.copy(parent.position);
+			particle.position.copy(parent.position);
 			var r = 7 + Math.random() * 5;
-			position.x -= dx * r;
-			position.y -= dy * r;
-			position.z -= 2;
-			JET.GradientLib.trail.getTo(1.0, color);
+			particle.position.x -= dx * r;
+			particle.position.y -= dy * r;
+			particle.position.z -= 2;
+			JET.GradientLib.trail.getTo(1.0, particle.color);
 		},
-		onUpdate: function(particle, position, color, dt) {
+		onUpdate: function(particle, dt) {
 			v.copy(particle.velocity).multiplyScalar(dt);
-			position.add(v);
+			particle.position.add(v);
 			particle.velocity.multiplyScalar(1.0 - 0.5 * dt); // Some drag
 			var normalizedLife = particle.lifeTime / maxLife;
-			JET.GradientLib.trail.getTo(normalizedLife, color);
+			JET.GradientLib.trail.getTo(normalizedLife, particle.color);
 			particle.alpha = normalizedLife;
 		}
 	});
@@ -196,15 +215,15 @@ JET.createExplosion = function(pos) {
 			}
 			return 100;
 		},
-		onBorn: function(particle, position, color) {
+		onBorn: function(particle) {
 			particle.lifeTime = 0.5 * (maxLife * Math.random() + maxLife);
-			position.copy(pos);
-			position.z += 5;
-			JET.GradientLib.explosion.getTo(1.0, color);
+			particle.position.copy(pos);
+			particle.position.z += 5;
+			JET.GradientLib.explosion.getTo(1.0, particle.color);
 		},
-		onUpdate: function(particle, position, color, dt) {
+		onUpdate: function(particle, dt) {
 			var normalizedLife = particle.lifeTime / maxLife;
-			JET.GradientLib.explosion.getTo(normalizedLife, color);
+			JET.GradientLib.explosion.getTo(normalizedLife, particle.color);
 			particle.alpha = normalizedLife;
 		}
 	});
