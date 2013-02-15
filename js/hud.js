@@ -45,6 +45,17 @@ JET.HUD = function(object) {
 	statusGradient.add(0.5, 0xcccc00);
 	var speedGradient = new JET.ColorGradient(0x005500, 0x00cc55);
 
+	// Target reticle
+	var reticle = new THREE.Sprite(new THREE.SpriteMaterial({
+		map: THREE.ImageUtils.loadTexture("assets/target-reticle.png"),
+		transparent: true,
+		useScreenCoordinates: false,
+		sizeAttenuation: false
+	}));
+	reticle.scale.set(60, 60, 60);
+	reticle.visible = false;
+	scene.add(reticle);
+
 	// Radar contact visualization
 	var maxContacts = 50;
 	var radarRenderDist = 12;
@@ -111,6 +122,14 @@ JET.HUD = function(object) {
 	this.update = function() {
 		// Radar
 		updateRadar();
+
+		// Reticle
+		if (object.target) {
+			reticle.visible = true;
+			reticle.position.copy(object.target.position);
+		} else {
+			reticle.visible = false;
+		}
 
 		// Weapons
 		if (object.dirtyStatus) {

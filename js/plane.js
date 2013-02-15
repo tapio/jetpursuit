@@ -35,7 +35,7 @@ JET.Plane = function(params) {
 
 	this.weapons = [
 		new JET.Weapon("Cannon", this, { ammo: 1000, flightTime: 1.5, damage: 10, speed: 200, delay: 0.1 }),
-		new JET.Weapon("SRAAM", this, { ammo: 20, flightTime: 10, damage: 35, speed: 100, delay: 0.2, guided: true, turnRate: Math.PI/2 }),
+		new JET.Weapon("SRAAM", this, { ammo: 20, flightTime: 10, damage: 35, speed: 100, delay: 0.2, guided: true, turnRate: Math.PI/3 }),
 		new JET.Weapon("MRAAM", this, { ammo: 6, flightTime: 15, damage: 60, speed: 100, delay: 1.0, guided: true, turnRate: Math.PI/2 })
 	];
 	this.curWeapon = 0;

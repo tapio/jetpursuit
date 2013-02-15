@@ -2,7 +2,6 @@
 JET.MaterialLib.missile = new THREE.MeshBasicMaterial({ color: 0x555555 });
 JET.MaterialLib.bullet = new THREE.MeshBasicMaterial({ color: 0x111111 });
 JET.MaterialLib.warningReticle = new THREE.SpriteMaterial({
-	color: 0xffffff,
 	map: THREE.ImageUtils.loadTexture("assets/warning-reticle.png"),
 	transparent: true,
 	useScreenCoordinates: false,
