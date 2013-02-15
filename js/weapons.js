@@ -66,9 +66,9 @@ JET.Weapon = function(name, params) {
 };
 
 JET.Weapon.prototype.shoot = function(shooter) {
-	if (this.ammo <= 0) return;
+	if (this.ammo <= 0) return false;
 	var t = Date.now() * 0.001;
-	if (t < this.lastTime + this.delay) return;
+	if (t < this.lastTime + this.delay) return false;
 	this.lastTime = t;
 	this.ownerId = shooter.id;
 	--this.ammo;
@@ -78,4 +78,5 @@ JET.Weapon.prototype.shoot = function(shooter) {
 	bullet.speed = this.speed + shooter.speed;
 	if (this.guided) bullet.target = shooter.target;
 	game.addBullet(bullet);
+	return true
 };

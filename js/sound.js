@@ -13,6 +13,7 @@ JET.Sound = function(samples, minPlayers) {
 	this.play = function(volume) {
 		try { // Firefox fails at GitHub MIME types
 			var sample = this.samples[this.sampleIndex];
+			if (!sample.paused) return;
 			if (window.chrome) sample.load(); // Chrome requires reload
 			else sample.currentTime = 0;
 			if (volume !== undefined)
@@ -24,7 +25,7 @@ JET.Sound = function(samples, minPlayers) {
 };
 
 JET.SoundLibrary = {
-	cannon: new JET.Sound("cannon.ogg", 20),
+	cannon: new JET.Sound("cannon.ogg", 15),
 	missile: new JET.Sound("missile.ogg", 10),
 	explosion: new JET.Sound("explosion.ogg", 10)
 };
