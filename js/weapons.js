@@ -2,7 +2,7 @@
 JET.MaterialLib.missile = new THREE.MeshBasicMaterial({ color: 0x555555 });
 JET.MaterialLib.bullet = new THREE.MeshBasicMaterial({ color: 0x111111 });
 
-JET.GeometryLib.missile = new THREE.PlaneGeometry(2, 1);
+JET.GeometryLib.missile = new THREE.PlaneGeometry(3, 1.5);
 JET.GeometryLib.bullet = new THREE.PlaneGeometry(1, 1);
 
 /// A projectile
