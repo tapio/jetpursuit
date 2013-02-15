@@ -1,4 +1,4 @@
-var PORT = parseInt(process.env.PORT, 10) || 11001;
+var PORT = parseInt(process.env.PORT, 10) || 10666;
 var VERBOSITY = parseInt(process.env.VERBOSE, 10) || 1;
 var WebSocketServer = require('ws').Server;
 
