@@ -46,7 +46,8 @@ JET.HUD = function(object) {
 	var speedGradient = new JET.ColorGradient(0x005500, 0x00cc55);
 
 	// Radar contact visualization
-	var radarGeo = new THREE.Geometry();
+	var maxContacts = 50;
+	var radarRenderDist = 12;
 	var radarMat = new THREE.ParticleBasicMaterial({
 		size: 3,
 		depthTest: true,
@@ -55,38 +56,54 @@ JET.HUD = function(object) {
 		vertexColors: true,
 		sizeAttenuation: false
 	});
-	for (i = 0; i < 50; ++i) {
-		radarGeo.vertices.push(new THREE.Vector3(0, 0, 100000));
-		radarGeo.colors.push(new THREE.Color());
-	}
-	var radarDist = 12;
+	var radarGeo = new THREE.BufferGeometry();
+	radarGeo.dynamic = true;
+	radarGeo.attributes = {
+		position: {
+			itemSize: 3,
+			array: new Float32Array(maxContacts * 3),
+			numItems: maxContacts * 3
+		},
+		color: {
+			itemSize: 3,
+			array: new Float32Array(maxContacts * 3),
+			numItems: maxContacts * 3
+		}
+	};
 	var radar = new THREE.ParticleSystem(radarGeo, radarMat);
 	scene.add(radar);
 
 	function updateRadar() {
-		for (var i = 0, j = 0, l = game.entityCache.length; i < l; ++i) {
+		var i, j, l;
+		var vertices = radarGeo.attributes.position.array;
+		var colors = radarGeo.attributes.color.array;
+		for (i = 0, j = 0, l = game.entityCache.length; i < l; ++i) {
 			var contact = game.entityCache[i];
 			if (contact.id === object.id) continue;
-			if (j >= radarGeo.vertices.length) break;
+			if (j >= maxContacts * 3) break;
+			var renderDist = radarRenderDist;
+			// Determine color and other attributes based on faction
+			if (object.target && contact.id === object.target.id) {
+				// Target
+				colors[j] = 1.0; colors[j+1] = 0.0; colors[j+2] = 0.0;
+				renderDist *= 1.1;
+			} else if (contact.faction !== object.faction) {
+				// Enemy
+				colors[j] = 1.0; colors[j+1] = 0.5; colors[j+2] = 0;
+			} else {
+				// Ally
+				colors[j] = 0; colors[j+1] = 0.8; colors[j+2] = 0;
+				renderDist *= 0.9;
+			}
 			// Set position based on direction
 			var angle = JET.Math.angleBetween(object, contact);
-			var vertex = radarGeo.vertices[j];
-			vertex.x = object.position.x + Math.cos(angle) * radarDist;
-			vertex.y = object.position.y + Math.sin(angle) * radarDist;
-			vertex.z = object.position.z;
-			// Determine color based on faction
-			var color = radarGeo.colors[j];
-			if (object.target && contact.id === object.target.id) {
-				color.setRGB(1, 0, 1); // Target
-				vertex.z += 2; // Put on top
-			} else if (contact.faction !== object.faction) {
-				color.setRGB(1, 0, 0); // Enemy
-				vertex.z += 1; // Rise above allies
-			} else color.setRGB(0, 1, 0); // Ally
-			++j;
+			vertices[j  ] = object.position.x + Math.cos(angle) * renderDist;
+			vertices[j+1] = object.position.y + Math.sin(angle) * renderDist;
+			vertices[j+2] = object.position.z;
+			j += 3;
 		}
-		for (i = j; i < radarGeo.vertices.length; ++i)
-			radarGeo.vertices[i].z = 100000;
+		for (i = j, l = maxContacts * 3; i < l; i += 3)
+			vertices[i+2] = 100000;
 		radarGeo.verticesNeedUpdate = true;
 		radarGeo.colorsNeedUpdate = true;
 	}
