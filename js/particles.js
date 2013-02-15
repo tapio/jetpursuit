@@ -101,6 +101,7 @@ JET.Particle = function() {
 
 JET.Emitter = function(params) {
 	this.maxParticles = params.maxParticles;
+	this.lifeTime = params.lifeTime;
 	this.spawner = params.spawner;
 	this.onBorn = params.onBorn;
 	this.onUpdate = params.onUpdate;
@@ -128,12 +129,14 @@ JET.Emitter = function(params) {
 		this.particles[i] = new JET.Particle();
 	}
 	this.particleSystem = new THREE.ParticleSystem(this.geometry, params.material);
-	this.particleSystem.sortParticles = params.sortParticles || false;
-	if (params.parent) params.parent.add(this.particleSystem);
 };
 
 JET.Emitter.prototype.update = function(dt) {
-	var spawnAmount = this.spawner(dt);
+	if (this.lifeTime !== undefined) {
+		if (this.lifeTime <= 0) return false;
+		this.lifeTime -= dt;
+	}
+	var spawnAmount = this.spawner ? this.spawner(dt) : 100;
 	for (var i = 0; i < this.maxParticles; ++i) {
 		var particle = this.particles[i];
 		particle.lifeTime -= dt;
@@ -159,6 +162,7 @@ JET.Emitter.prototype.update = function(dt) {
 	this.geometry.verticesNeedUpdate = true;
 	this.geometry.colorsNeedUpdate = true;
 	this.geometry.normalsNeedUpdate = true;
+	return true;
 };
 
 
@@ -168,11 +172,10 @@ JET.createTrail = function(parent) {
 	var toCreate = 0;
 	var maxLife = 1.5;
 	var emitter = new JET.Emitter({
-		parent: scene,
 		maxParticles: 400,
 		material: JET.MaterialLib.trail,
 		spawner: function(dt) {
-			toCreate += 200 * dt;
+			toCreate += 400 / maxLife * dt;
 			var amount = toCreate|0;
 			toCreate -= amount;
 			return amount;
@@ -208,16 +211,9 @@ JET.createExplosion = function(pos) {
 	var maxLife = 1.5;
 	var time = Date.now();
 	var emitter = new JET.Emitter({
-		parent: scene,
+		lifeTime: maxLife,
 		maxParticles: 10,
 		material: JET.MaterialLib.explosion,
-		spawner: function(dt) {
-			if (Date.now() > time + maxLife * 1000) {
-				emitter.done = true;
-				return;
-			}
-			return 100;
-		},
 		onBorn: function(particle) {
 			particle.lifeTime = 0.5 * (maxLife * Math.random() + maxLife);
 			particle.position.copy(pos);
@@ -231,22 +227,4 @@ JET.createExplosion = function(pos) {
 		}
 	});
 	return emitter;
-};
-
-
-// Particle system initializer for simple particle flames
-// TODO: Remove
-JET.createParticleSystem = function(nParticles, material) {
-	var i, geometry = new THREE.Geometry();
-	// Init vertices & colors
-	geometry.vertices = new Array(nParticles);
-	geometry.colors = new Array(nParticles);
-	for (i = 0; i < nParticles; ++i) {
-		geometry.vertices[i] = new THREE.Vector3();
-		geometry.colors[i] = new THREE.Color();
-	}
-	// Init particle system
-	var particleSystem = new THREE.ParticleSystem(geometry, material);
-	particleSystem.sortParticles = true;
-	return particleSystem;
 };

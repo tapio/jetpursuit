@@ -21,6 +21,9 @@ JET.Missile = function(weapon) {
 JET.Missile.prototype = Object.create(THREE.Object3D.prototype);
 
 JET.Missile.prototype.update = function(dt) {
+	if (this.flightTime <= 0) return false;
+	this.flightTime -= dt;
+
 	if (this.target) {
 		var desiredAngle = JET.Math.angleBetween(this, this.target);
 		var angleError = JET.Math.angleDiff(this.rotation.z, desiredAngle);
@@ -32,7 +35,6 @@ JET.Missile.prototype.update = function(dt) {
 	var dpos = this.speed * dt;
 	this.position.x += Math.cos(angle) * dpos;
 	this.position.y += Math.sin(angle) * dpos;
-	this.flightTime -= dt;
 
 	// Test for hit
 	for (var i = 0, l = game.entityCache.length; i < l; ++i) {
@@ -45,6 +47,7 @@ JET.Missile.prototype.update = function(dt) {
 			// TODO: Explosion
 		}
 	}
+	return true;
 };
 
 

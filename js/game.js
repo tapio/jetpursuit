@@ -44,6 +44,7 @@ JET.Game.prototype.addBullet = function(obj) {
 };
 
 JET.Game.prototype.addEmitter = function(obj) {
+	scene.add(obj.particleSystem);
 	this.emitters.push(obj);
 	return obj;
 };
@@ -62,6 +63,7 @@ JET.Game.prototype.update = function(dt) {
 			addMessage('"' + obj.name + '" destroyed!', "warn");
 			JET.SoundLibrary.explosion.play();
 			this.addEmitter(JET.createExplosion(obj.position));
+			obj.trail.lifeTime = 0;
 			this.remove(obj, false);
 			rebuild = true;
 		}
@@ -71,9 +73,8 @@ JET.Game.prototype.update = function(dt) {
 	// Bullets
 	for (i = this.bullets.length-1; i >= 0; --i) {
 		var bullet = this.bullets[i];
-		bullet.update(dt);
-		// Remove the bullet if it's dead
-		if (bullet.flightTime <= 0) {
+		if (!bullet.update(dt)) {
+			// Remove the bullet if it's dead
 			scene.remove(bullet);
 			this.bullets.splice(i, 1);
 		}
@@ -82,9 +83,7 @@ JET.Game.prototype.update = function(dt) {
 	// Emitters
 	for (i = this.emitters.length-1; i >= 0; --i) {
 		var emitter = this.emitters[i];
-		emitter.update(dt);
-		// Remove if dead
-		if (emitter.done) {
+		if (!emitter.update(dt)) {
 			scene.remove(emitter.particleSystem);
 			this.emitters.splice(i, 1);
 		}
