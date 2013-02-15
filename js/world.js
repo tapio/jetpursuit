@@ -30,13 +30,15 @@ JET.World = function(scene) {
 	var numClouds = 250 * cloudsInCluster;
 	var cloudDist = 1500;
 	var cloudTex = THREE.ImageUtils.loadTexture("assets/cloud1.png");
-	var cloudMat = new THREE.ParticleBasicMaterial({
+	var cloudMat = new JET.CloudMaterial({
 		size: 256,
+		scale: 320,
 		map: cloudTex,
 		depthTest: true,
 		depthWrite: false,
 		transparent: true,
-		opacity: 0.9
+		opacity: 0.8,
+		sizeAttenuation: true
 	});
 	var cloudGeo = new THREE.BufferGeometry();
 	cloudGeo.dynamic = true;
@@ -84,3 +86,55 @@ JET.World = function(scene) {
 		}
 	};
 };
+
+
+JET.CloudMaterial = function(params) {
+	THREE.ShaderMaterial.call(this, params);
+
+	this.attributes = {};
+	params.color = params.color || 0xffffff;
+	this.uniforms = {
+		"psColor" : { type: "c", value: new THREE.Color(params.color) },
+		"opacity" : { type: "f", value: params.opacity || 1.0 },
+		"size" : { type: "f", value: params.size || 1.0 },
+		"scale" : { type: "f", value: params.scale || 1.0 },
+		"map" : { type: "t", value: params.map || null }
+	};
+	this.map = params.map;
+	this.color = new THREE.Color(params.color);
+	this.sizeAttenuation = params.sizeAttenuation;
+	this.size = params.size;
+	this.vertexColors = params.vertexColors;
+	this.setValues(params);
+
+	this.vertexShader = [
+		"uniform float size;",
+		"uniform float scale;",
+		THREE.ShaderChunk[ "color_pars_vertex" ],
+		"void main() {",
+			THREE.ShaderChunk[ "color_vertex" ],
+			"vec4 mvPosition = modelViewMatrix * vec4( position, 1.0 );",
+			"#ifdef USE_SIZEATTENUATION",
+				"gl_PointSize = size * ( scale / -mvPosition.z );",
+			"#else",
+				"gl_PointSize = size;",
+			"#endif",
+			"gl_Position = projectionMatrix * mvPosition;",
+			THREE.ShaderChunk[ "worldpos_vertex" ],
+		"}"
+	].join("\n"),
+
+	this.fragmentShader = [
+		"uniform vec3 psColor;",
+		"uniform float opacity;",
+		THREE.ShaderChunk[ "color_pars_fragment" ],
+		THREE.ShaderChunk[ "map_particle_pars_fragment" ],
+		"void main() {",
+			"gl_FragColor = vec4( psColor, opacity );",
+			THREE.ShaderChunk[ "map_particle_fragment" ],
+			THREE.ShaderChunk[ "alphatest_fragment" ],
+			THREE.ShaderChunk[ "color_fragment" ],
+		"}"
+	].join("\n")
+}
+JET.CloudMaterial.prototype = Object.create(THREE.ShaderMaterial.prototype);
