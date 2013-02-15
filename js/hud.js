@@ -30,7 +30,7 @@ var addMessage = (function() {
 JET.HUD = function(object) {
 	var dom = {};
 	var i;
-	var elems = [ "ping", "messages", "weapons", "speed", "fuel", "hull" ];
+	var elems = [ "ping", "messages", "weapons", "speed", "fuel", "hull", "distance" ];
 	for (i = 0; i < elems.length; ++i)
 		dom[elems[i]] = document.getElementById(elems[i]);
 
@@ -123,12 +123,14 @@ JET.HUD = function(object) {
 		// Radar
 		updateRadar();
 
-		// Reticle
+		// Reticle & target properties
 		if (object.target) {
 			reticle.visible = true;
 			reticle.position.copy(object.target.position);
+			dom.distance.innerHTML = (Math.sqrt(JET.Math.distSq(object, object.target)) / 1000).toFixed(1) + " km";
 		} else {
 			reticle.visible = false;
+			dom.distance.innerHTML = "n/a";
 		}
 
 		// Weapons
