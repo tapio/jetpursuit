@@ -93,8 +93,15 @@ JET.updateAI = function(bot, dt) {
 	bot.speed += speedCorr * dt;
 
 	// Weapons
-	if (targetDistSq < 100*100 && angleError < Math.PI / 16) {
-		bot.curWeapon = 0;
+	if (targetDistSq < 150*150 && angleError < Math.PI / 16) {
+		bot.curWeapon = 0; // Cannon
 		bot.shoot();
+	} else if (targetDistSq > 200*200 && targetDistSq < 500*500 && angleError < Math.PI / 4) {
+		var t = Date.now();
+		if (t > bot.ai.missileTime + bot.ai.missileDelay * 1000) {
+			bot.curWeapon = 1; // SRAAM
+			bot.shoot();
+			bot.ai.missileTime = t;
+		}
 	}
 };

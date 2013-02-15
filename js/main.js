@@ -44,7 +44,10 @@ var cache = new JET.Cache();
 	function onKeyPress(event) {
 		if (event.charCode == 43) { // Plus
 			var bot = new JET.Plane({ faction: THREE.Math.randInt(0, 1) });
-			bot.ai = true;
+			bot.ai = {
+				missileDelay: 4.0,
+				missileTime: 0
+			};
 			var angle = Math.random() * Math.PI * 2;
 			bot.position.x = pl.position.x + Math.cos(angle) * 500;
 			bot.position.y = pl.position.y + Math.sin(angle) * 500;
