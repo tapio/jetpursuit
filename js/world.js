@@ -14,7 +14,13 @@ JET.World = function(scene) {
 	var seaTex = THREE.ImageUtils.loadTexture("assets/water.jpg");
 	seaTex.wrapS = seaTex.wrapT = THREE.RepeatWrapping;
 	seaTex.repeat.set(4, 2);
-	var seaMat = new THREE.MeshBasicMaterial({ map: seaTex });
+	var seaMat = new THREE.MeshPhongMaterial({
+		specular: 0xffffff,
+		shininess: 100,
+		map: seaTex,
+		bumpMap: seaTex,
+		bumpScale: 5.0,
+	});
 	var seaGeo = new THREE.PlaneGeometry(w, h);
 	var sea = new THREE.Mesh(seaGeo, seaMat);
 	scene.add(sea);
