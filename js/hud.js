@@ -29,8 +29,9 @@ var addMessage = (function() {
 
 JET.HUD = function(object) {
 	var dom = {};
+	var i;
 	var elems = [ "ping", "messages", "weapons", "speed", "fuel", "hull" ];
-	for (var i = 0; i < elems.length; ++i)
+	for (i = 0; i < elems.length; ++i)
 		dom[elems[i]] = document.getElementById(elems[i]);
 
 	// FPS counter
@@ -54,7 +55,7 @@ JET.HUD = function(object) {
 		vertexColors: true,
 		sizeAttenuation: false
 	});
-	for (var i = 0; i < 30; ++i) {
+	for (i = 0; i < 50; ++i) {
 		radarGeo.vertices.push(new THREE.Vector3(0, 0, 100000));
 		radarGeo.colors.push(new THREE.Color());
 	}

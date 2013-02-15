@@ -49,7 +49,7 @@ JET.Game.prototype.addEmitter = function(obj) {
 };
 
 JET.Game.prototype.update = function(dt) {
-	var i, rebuild = false;
+	var i, l, rebuild = false;
 	for (i = 0, l = this.entityCache.length; i < l; ++i) {
 		var obj = this.entityCache[i];
 		// AI

@@ -49,7 +49,7 @@ JET.Plane = function(params) {
 	this.mesh = null;
 	var self = this;
 	var models = [ "F-15.js", "F-18.js", "F-22.js" ];
-	cache.loadModel("assets/" + models[Math.floor(Math.random()*models.length)], function(geometry, materials) {
+	cache.loadModel("assets/" + models[Math.floor(Math.random()*models.length)], function(geometry) {
 		self.mesh = new THREE.Mesh(geometry, JET.MaterialLib.factions[self.faction]);
 		self.add(self.mesh);
 	});
@@ -65,7 +65,7 @@ JET.Plane.prototype.scanTargets = function() {
 		this.targets.push(contact);
 		contact.tempSortDist = JET.Math.distSq(this, contact);
 	}
-	this.targets.sort(function(a, b) { a.tempSortDist - b.tempSortDist; });
+	this.targets.sort(function(a, b) { return a.tempSortDist - b.tempSortDist; });
 	this.curTarget = 0;
 	this.target = this.targets[this.curTarget];
 	this.dirtyStatus = true;
@@ -73,9 +73,9 @@ JET.Plane.prototype.scanTargets = function() {
 
 JET.Plane.prototype.cycleTargets = function() {
 	this.dirtyStatus = true;
-	if (!this.targets.length) { this.scanTargets(); return }
+	if (!this.targets.length) { this.scanTargets(); return; }
 	++this.curTarget;
-	if (this.curTarget >= this.targets.length) { this.scanTargets(); return }
+	if (this.curTarget >= this.targets.length) { this.scanTargets(); return; }
 	this.target = this.targets[this.curTarget];
 };
 

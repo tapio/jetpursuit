@@ -35,7 +35,7 @@ JET.ParticleMaterial = function(params) {
 			"gl_Position = projectionMatrix * mvPosition;",
 			THREE.ShaderChunk[ "worldpos_vertex" ],
 		"}"
-	].join("\n"),
+	].join("\n");
 
 	this.fragmentShader = [
 		"uniform vec3 psColor;",
@@ -49,8 +49,8 @@ JET.ParticleMaterial = function(params) {
 			THREE.ShaderChunk[ "alphatest_fragment" ],
 			THREE.ShaderChunk[ "color_fragment" ],
 		"}"
-	].join("\n")
-}
+	].join("\n");
+};
 JET.ParticleMaterial.prototype = Object.create(THREE.ShaderMaterial.prototype);
 
 JET.TextureLib.smoke = THREE.ImageUtils.loadTexture("assets/smoke.png");
@@ -90,7 +90,7 @@ JET.GradientLib.trail.add(0.8, 0xbbbbbb);
 JET.GradientLib.explosion.add(0.5, 0xbb2200);
 
 
-JET.Particle = function(index) {
+JET.Particle = function() {
 	this.position = new THREE.Vector3();
 	this.color = new THREE.Color();
 	this.alpha = 1.0;
@@ -122,7 +122,7 @@ JET.Emitter = function(params) {
 			array: new Float32Array(this.maxParticles * 3),
 			numItems: this.maxParticles * 3
 		}
-	}
+	};
 	this.particles = new Array(this.maxParticles);
 	for (var i = 0; i < this.maxParticles; ++i) {
 		this.particles[i] = new JET.Particle();
@@ -159,7 +159,7 @@ JET.Emitter.prototype.update = function(dt) {
 	this.geometry.verticesNeedUpdate = true;
 	this.geometry.colorsNeedUpdate = true;
 	this.geometry.normalsNeedUpdate = true;
-}
+};
 
 
 // Create a simple jet trail emitter

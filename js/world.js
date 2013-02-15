@@ -19,7 +19,7 @@ JET.World = function(scene) {
 		shininess: 100,
 		map: seaTex,
 		bumpMap: seaTex,
-		bumpScale: 5.0,
+		bumpScale: 5.0
 	});
 	var seaGeo = new THREE.PlaneGeometry(w, h);
 	var sea = new THREE.Mesh(seaGeo, seaMat);
@@ -115,14 +115,14 @@ JET.CloudMaterial = function(params) {
 			THREE.ShaderChunk[ "color_vertex" ],
 			"vec4 mvPosition = modelViewMatrix * vec4( position, 1.0 );",
 			"#ifdef USE_SIZEATTENUATION",
-				"gl_PointSize = size * ( scale / -mvPosition.z );",
+				"gl_PointSize = size * ( scale / -mvPosition.z );", // Orthographic attenuation
 			"#else",
 				"gl_PointSize = size;",
 			"#endif",
 			"gl_Position = projectionMatrix * mvPosition;",
 			THREE.ShaderChunk[ "worldpos_vertex" ],
 		"}"
-	].join("\n"),
+	].join("\n");
 
 	this.fragmentShader = [
 		"uniform vec3 psColor;",
@@ -135,6 +135,6 @@ JET.CloudMaterial = function(params) {
 			THREE.ShaderChunk[ "alphatest_fragment" ],
 			THREE.ShaderChunk[ "color_fragment" ],
 		"}"
-	].join("\n")
-}
+	].join("\n");
+};
 JET.CloudMaterial.prototype = Object.create(THREE.ShaderMaterial.prototype);

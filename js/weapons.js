@@ -78,5 +78,5 @@ JET.Weapon.prototype.shoot = function(shooter) {
 	bullet.speed = this.speed + shooter.speed;
 	if (this.guided) bullet.target = shooter.target;
 	game.addBullet(bullet);
-	return true
+	return true;
 };
