@@ -9,6 +9,7 @@ JET.Client = function(object, scene, host) {
 	var client = this;
 	var pingInterval = null;
 	var pingTime = Date.now();
+	var v = new THREE.Vector3();
 
 	this.send = function(msg) {
 		this.socket.send(JSON.stringify(msg));
@@ -37,10 +38,12 @@ JET.Client = function(object, scene, host) {
 					if (!peer) { // New player?
 						addMessage("Player " + state.id + " joined.");
 						peer = new JET.Plane({ id: state.id, local: false });
+						peer.position.set(state.pos[0], state.pos[1], state.pos[2]);
 						game.add(peer);
 					}
-					// Set player state
-					peer.position.set(state.pos[0], state.pos[1], state.pos[2]);
+					// Set player state with interpolation
+					v.set(state.pos[0], state.pos[1], state.pos[2]);
+					peer.position.lerp(v, 0.2);
 					peer.angle = state.ang;
 					peer.speed = state.spd;
 				}
