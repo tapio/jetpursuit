@@ -23,14 +23,17 @@ JET.Missile.prototype = Object.create(THREE.Object3D.prototype);
 JET.Missile.prototype.update = function(dt) {
 	if (this.flightTime <= 0) return false;
 	this.flightTime -= dt;
+	var weapon = this.weapon;
 
-	if (this.target) {
+	// Homing missiles; there is a small delay before activating
+	if (this.target && this.flightTime < weapon.flightTime - 0.2) {
 		var desiredAngle = JET.Math.angleBetween(this, this.target);
 		var angleError = JET.Math.angleDiff(this.rotation.z, desiredAngle);
 		var angleCorr = angleError * 10; // Apply gain
-		angleCorr = THREE.Math.clamp(angleCorr, -this.turnRate, this.turnRate);
+		angleCorr = THREE.Math.clamp(angleCorr, -weapon.turnRate, weapon.turnRate);
 		this.rotation.z += angleCorr * dt;
 	}
+	// Regular movement
 	var angle = this.rotation.z;
 	var dpos = this.speed * dt;
 	this.position.x += Math.cos(angle) * dpos;
@@ -39,12 +42,11 @@ JET.Missile.prototype.update = function(dt) {
 	// Test for hit
 	for (var i = 0, l = game.entityCache.length; i < l; ++i) {
 		var obj = game.entityCache[i];
-		if (obj.id === this.weapon.ownerId) continue;
-		if (obj.testHit(this.position, this.weapon.radius)) {
+		if (obj.id === weapon.ownerId) continue;
+		if (obj.testHit(this.position, weapon.radius)) {
 			this.flightTime = 0;
-			obj.hull -= this.weapon.damage;
+			obj.hull -= weapon.damage;
 			addMessage("HIT!");
-			// TODO: Explosion
 		}
 	}
 	return true;

@@ -35,8 +35,8 @@ JET.Plane = function(params) {
 
 	this.weapons = [
 		new JET.Weapon("Cannon", { ammo: 1000, flightTime: 1.5, damage: 10, speed: 200, delay: 0.1 }),
-		new JET.Weapon("SRAAM", { ammo: 20, flightTime: 6, damage: 35, speed: 150, delay: 0.2, guided: true, turnRate: Math.PI/6 }),
-		new JET.Weapon("MRAAM", { ammo: 6, flightTime: 10, damage: 60, speed: 150, delay: 1.0, guided: true, turnRate: Math.PI/8 })
+		new JET.Weapon("SRAAM", { ammo: 20, flightTime: 10, damage: 35, speed: 100, delay: 0.2, guided: true, turnRate: Math.PI/2 }),
+		new JET.Weapon("MRAAM", { ammo: 6, flightTime: 15, damage: 60, speed: 100, delay: 1.0, guided: true, turnRate: Math.PI/2 })
 	];
 	this.curWeapon = 0;
 	this.dirtyStatus = true;
@@ -103,6 +103,7 @@ JET.Plane.prototype.testHit = function(pos, radius) {
 };
 
 JET.Plane.prototype.update = function(dt) {
+	if (this.hull <= 0) return false;
 	this.speed = THREE.Math.clamp(this.speed, this.minSpeed, this.maxSpeed);
 	this.angSpeed = THREE.Math.clamp(this.angSpeed, -this.turnRate, this.turnRate);
 
@@ -120,6 +121,9 @@ JET.Plane.prototype.update = function(dt) {
 	// Update position
 	this.position.x += Math.cos(this.angle) * this.speed * dt;
 	this.position.y += Math.sin(this.angle) * this.speed * dt;
+
+	if (this.target && this.target.hull <= 0) this.target = null;
+	return true;
 };
 
 JET.Plane.__m1 = new THREE.Matrix4();
