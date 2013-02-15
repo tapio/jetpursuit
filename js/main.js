@@ -1,10 +1,11 @@
 var scene = new THREE.Scene();
 var game = new JET.Game();
 var cache = new JET.Cache();
+var pl = null;
 
 (function() {
 	var clock = new THREE.Clock();
-	var pl = new JET.Plane({ name: "YOU" });
+	pl = new JET.Plane({ name: "YOU" });
 	game.add(pl);
 
 	var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 5000);

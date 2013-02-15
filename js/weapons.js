@@ -1,6 +1,13 @@
 
 JET.MaterialLib.missile = new THREE.MeshBasicMaterial({ color: 0x555555 });
 JET.MaterialLib.bullet = new THREE.MeshBasicMaterial({ color: 0x111111 });
+JET.MaterialLib.warningReticle = new THREE.SpriteMaterial({
+	color: 0xffffff,
+	map: THREE.ImageUtils.loadTexture("assets/warning-reticle.png"),
+	transparent: true,
+	useScreenCoordinates: false,
+	sizeAttenuation: false
+});
 
 JET.GeometryLib.missile = new THREE.PlaneGeometry(3, 1.5);
 JET.GeometryLib.bullet = new THREE.PlaneGeometry(1, 1);
@@ -16,6 +23,11 @@ JET.Missile = function(weapon) {
 	var material = this.weapon.guided ? JET.MaterialLib.missile : JET.MaterialLib.bullet;
 	this.mesh = new THREE.Mesh(geometry, material);
 	this.add(this.mesh);
+	if (weapon.guided && weapon.faction !== pl.faction) {
+		this.reticle = new THREE.Sprite(JET.MaterialLib.warningReticle);
+		this.reticle.scale.set(40,40,40);
+		this.add(this.reticle);
+	}
 };
 
 JET.Missile.prototype = Object.create(THREE.Object3D.prototype);
