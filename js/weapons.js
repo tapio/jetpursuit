@@ -42,7 +42,7 @@ JET.Missile.prototype.update = function(dt) {
 	// Test for hit
 	for (var i = 0, l = game.entityCache.length; i < l; ++i) {
 		var obj = game.entityCache[i];
-		if (obj.id === weapon.ownerId) continue;
+		if (obj.id === weapon.ownerId || obj.faction === weapon.faction) continue;
 		if (obj.testHit(this.position, weapon.radius)) {
 			this.flightTime = 0;
 			obj.hull -= weapon.damage;
@@ -55,9 +55,10 @@ JET.Missile.prototype.update = function(dt) {
 
 /// Weapon capable of shooting projectiles
 /// Also manages its projectiles
-JET.Weapon = function(name, params) {
+JET.Weapon = function(name, owner, params) {
 	this.name = name;
-	this.ownerId = params.ownerId;
+	this.ownerId = owner.id;
+	this.faction = owner.faction;
 	this.flightTime = params.flightTime;
 	this.damage = params.damage;
 	this.ammo = params.ammo;
@@ -75,7 +76,6 @@ JET.Weapon.prototype.shoot = function(shooter) {
 	var t = Date.now() * 0.001;
 	if (t < this.lastTime + this.delay) return false;
 	this.lastTime = t;
-	this.ownerId = shooter.id;
 	--this.ammo;
 	var bullet = new JET.Missile(this);
 	bullet.position.copy(shooter.position);
