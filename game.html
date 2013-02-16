@@ -6,6 +6,7 @@
 		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
 		<link rel="shortcut icon" href="favicon.png" />
 		<link href='http://fonts.googleapis.com/css?family=Black+Ops+One' rel='stylesheet' type='text/css'>
+		<link href="css/bootstrap.min.css" rel="stylesheet" type="text/css" />
 		<link href="css/style.css" rel="stylesheet" type="text/css" />
 	</head>
 	<body>
@@ -38,6 +39,29 @@
 				Ping: <span id="ping"></span>
 			</div>
 		</div>
+
+		<div class="menu">
+			<ul class="nav nav-tabs">
+				<li class="active"><a href="#loadout"><i class="icon-plane"></i> Loadout</a></li>
+				<li><a href="#create"><i class="icon-plus"></i> Create</a></li>
+				<li><a href="#join"><i class="icon-globe"></i> Join</a></li>
+				<li><a href="#settings"><i class="icon-cog"></i> Settings</a></li>
+			</ul>
+			<div id="loadout">
+				<button class="btn">Create a game</button>
+				<button class="btn">Join a game</button>
+			</div>
+			<div id="create">
+				<button class="btn btn-primary">Create!</button>
+			</div>
+			<div id="join">
+				<button class="btn btn-primary">Join!</button>
+			</div>
+			<div id="settings">
+				<button class="btn btn-success">Save</button>
+			</div>
+		</div>
+		<div class="fade"></div>
 
 		<script src="libs/three.js"></script>
 		<script src="libs/stats.min.js"></script>
