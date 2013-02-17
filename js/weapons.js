@@ -66,14 +66,14 @@ JET.Missile.prototype.update = function(dt) {
 
 /// Weapon capable of shooting projectiles
 /// Also manages its projectiles
-JET.Weapon = function(name, owner, params) {
-	this.name = name;
+JET.Weapon = function(owner, ammo, params) {
+	this.name = params.name;
 	this.ownerId = owner.id;
 	this.faction = owner.faction;
 	this.flightTime = params.flightTime;
 	this.damage = params.damage;
-	this.ammo = params.ammo;
-	this.maxAmmo = params.ammo;
+	this.ammo = ammo;
+	this.maxAmmo = ammo;
 	this.turnRate = params.turnRate || Math.PI / 2;
 	this.radius = params.radius || 1;
 	this.delay = params.delay || 0.1;

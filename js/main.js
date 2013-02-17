@@ -5,7 +5,11 @@ var pl = null;
 
 (function() {
 	var clock = new THREE.Clock();
-	pl = new JET.Plane({ name: "YOU" });
+	pl = new JET.Plane({
+		name: "YOU",
+		template: DATA.aircrafts[(Math.random() * DATA.aircrafts.length)|0],
+		loadout: DATA.loadouts[(Math.random() * DATA.loadouts.length)|0]
+	});
 	game.add(pl);
 
 	var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 5000);
@@ -44,7 +48,11 @@ var pl = null;
 
 	function onKeyPress(event) {
 		if (event.charCode == 43) { // Plus
-			var bot = new JET.Plane({ faction: THREE.Math.randInt(0, 1) });
+			var bot = new JET.Plane({
+				faction: THREE.Math.randInt(0, 1),
+				template: DATA.aircrafts[(Math.random() * DATA.aircrafts.length)|0],
+				loadout: DATA.loadouts[(Math.random() * DATA.loadouts.length)|0]
+			});
 			bot.ai = {
 				missileDelay: 4.0,
 				missileTime: 0
