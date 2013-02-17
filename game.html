@@ -6,7 +6,7 @@
 		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
 		<link rel="shortcut icon" href="favicon.png" />
 		<link href='http://fonts.googleapis.com/css?family=Black+Ops+One' rel='stylesheet' type='text/css'>
-		<link href="css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+		<link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.1/themes/dot-luv/jquery-ui.min.css" rel="stylesheet" type="text/css" />
 		<link href="css/style.css" rel="stylesheet" type="text/css" />
 	</head>
 	<body>
@@ -40,41 +40,43 @@
 			</div>
 		</div>
 
-		<div class="menu">
+		<div id="menu">
 			<ul class="nav nav-tabs">
-				<li class="active"><a href="#loadout"><i class="icon-plane"></i> Loadout</a></li>
-				<li><a href="#create"><i class="icon-plus"></i> Create</a></li>
-				<li><a href="#join"><i class="icon-globe"></i> Join</a></li>
-				<li><a href="#settings"><i class="icon-cog"></i> Settings</a></li>
+				<li><a href="#loadout"><i class="ui-icon ui-icon-wrench"></i> Loadout</a></li>
+				<li><a href="#create"><i class="ui-icon ui-icon-plus"></i> Create</a></li>
+				<li><a href="#join"><i class="ui-icon ui-icon-refresh"></i> Join</a></li>
+				<li><a href="#settings"><i class="ui-icon ui-icon-gear"></i> Settings</a></li>
 			</ul>
 
 			<div id="loadout">
 				<div class="menu-footer">
-					<button class="btn">Create a game</button>
-					<button class="btn">Join a game</button>
+					<button><i class="ui-icon ui-icon-plus"></i> Create a game</button>
+					<button><i class="ui-icon ui-icon-refresh"></i> Join a game</button>
 				</div>
 			</div>
 
 			<div id="create">
 				<div class="menu-footer">
-					<button class="btn btn-primary">Create!</button>
+					<button><i class="ui-icon ui-icon-check"></i> Create!</button>
 				</div>
 			</div>
 
 			<div id="join">
 				<div class="menu-footer">
-					<button class="btn btn-primary">Join!</button>
+					<button><i class="ui-icon ui-icon-check"></i> Join!</button>
 				</div>
 			</div>
 
 			<div id="settings">
 				<div class="menu-footer">
-					<button class="btn btn-success">Save</button>
+					<button><i class="ui-icon ui-icon-disk"></i> Save</button>
 				</div>
 			</div>
 		</div>
 		<div class="fade"></div>
 
+		<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+		<script src="http://code.jquery.com/ui/1.10.1/jquery-ui.js"></script>
 		<script src="libs/three.js"></script>
 		<script src="libs/stats.min.js"></script>
 		<script src="js/menu.js"></script>

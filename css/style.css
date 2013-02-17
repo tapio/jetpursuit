@@ -123,7 +123,7 @@ canvas {
 	opacity: 0.2;
 }
 
-.menu {
+#menu {
 	position: absolute;
 	top: 20%;
 	left: 20%;
@@ -142,3 +142,5 @@ canvas {
 	bottom: 20px;
 	right: 20px;
 }
+
+i.ui-icon { display: inline-block; }
