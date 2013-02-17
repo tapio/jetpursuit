@@ -135,6 +135,11 @@ canvas {
 	opacity: 0.9;
 	z-index:102;
 	overflow: auto;
+	text-align: left;
+}
+
+#menu > div {
+	padding: 5px;
 }
 
 .menu-footer {

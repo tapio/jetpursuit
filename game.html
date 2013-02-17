@@ -48,7 +48,7 @@
 				<li><a href="#settings"><i class="ui-icon ui-icon-gear"></i> Settings</a></li>
 			</ul>
 
-			<div id="loadout">
+			<div id="loadout" class="ui-widget-content">
 				<div class="menu-footer">
 					<button><i class="ui-icon ui-icon-plus"></i> Create a game</button>
 					<button><i class="ui-icon ui-icon-refresh"></i> Join a game</button>
@@ -56,18 +56,31 @@
 			</div>
 
 			<div id="create">
+				<form>
+					<label for="enemies">Enemies</label>
+					<input id="enemies" name="enemies" type="range" min="1" max="30" />
+					<label for="allies">Allies</label>
+					<input id="allies" name="allies" type="range" min="0" max="29" />
+				</form>
 				<div class="menu-footer">
 					<button><i class="ui-icon ui-icon-check"></i> Create!</button>
 				</div>
 			</div>
 
 			<div id="join">
+				<h1>Available games</h1>
+				<p>Sorry, online game browser is not yet implemented. :(</p>
 				<div class="menu-footer">
 					<button><i class="ui-icon ui-icon-check"></i> Join!</button>
 				</div>
 			</div>
 
 			<div id="settings">
+				<form>
+					<label for="particles">Particles</label>
+					<input id="particles" name="particles" type="range" min="1" max="4" value="3" />
+					<output for="particles"></output>
+				</form>
 				<div class="menu-footer">
 					<button><i class="ui-icon ui-icon-disk"></i> Save</button>
 				</div>
