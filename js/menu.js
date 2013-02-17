@@ -3,14 +3,18 @@
 	// Create
 
 	function checkGameVars() {
-		//if (
+		if (parseInt($("#enemies").val()) + parseInt($("#allies").val()) > 40)
+			$("#players-warning").show();
+		else $("#players-warning").hide();
 	}
 
 	$("#enemies").change(function() {
 		$(this).next("output").html($(this).val());
+		checkGameVars();
 	});
 	$("#allies").change(function() {
 		$(this).next("output").html($(this).val());
+		checkGameVars();
 	});
 
 	$("#to-create").click(function() { $('#menu a[href="#create"]').tab('show'); });

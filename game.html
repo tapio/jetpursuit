@@ -40,7 +40,11 @@
 			</div>
 		</div>
 
+
+		<!-- MENU -->
+
 		<div id="menu">
+			<!--<button class="close">&times;</button>-->
 			<ul class="nav nav-tabs">
 				<li class="active"><a href="#loadout" data-toggle="tab""><i class="icon-plane"></i> Loadout</a></li>
 				<li><a href="#create" data-toggle="tab"><i class="icon-plus"></i> Create</a></li>
@@ -59,15 +63,16 @@
 			<div id="create" class="tab-pane">
 				<form>
 					<fieldset>
-					<label for="enemies">Enemies</label>
-					<input id="enemies" name="enemies" type="range" min="1" max="30" value="1" />
-					<output for="enemies">1</output>
-					<label for="allies">Allies</label>
-					<input id="allies" name="allies" type="range" min="0" max="29" value="0" />
-					<output for="allies">0</output>
+						<label for="enemies">Enemies</label>
+						<input id="enemies" name="enemies" type="range" min="1" max="30" value="1" />
+						<output for="enemies">1</output>
+						<label for="allies">Allies</label>
+						<input id="allies" name="allies" type="range" min="0" max="29" value="0" />
+						<output for="allies">0</output>
 					</fieldset>
-					<div class="alert hide">
-						Quite a lot of planes you got there, you better have a good computer to handle that!
+					<div id="players-warning" class="alert hide">
+						<i class="icon-warning-sign"></i>
+						Quite a lot of planes you got there, better have a good computer to handle that...
 					</div>
 				</form>
 				<div class="menu-footer">

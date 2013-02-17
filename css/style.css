@@ -143,4 +143,6 @@ canvas {
 	right: 20px;
 }
 
-i.ui-icon { display: inline-block; }
+fieldset {
+	margin-bottom: 1em;
+}
