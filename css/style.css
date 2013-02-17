@@ -131,6 +131,7 @@ canvas {
 	height: 60%;
 	padding: 16px;
 	border-radius: 10px;
+	color: #eeeeff;
 	background-color: rgba(0, 0, 0, 0.9);
 	z-index:102;
 	overflow: auto;

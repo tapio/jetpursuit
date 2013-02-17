@@ -54,6 +54,31 @@
 			<div class="tab-content">
 
 			<div id="loadout" class="tab-pane active">
+				<h1>Select aircraft</h1>
+				<div id="plane-selector" class="carousel slide" data-interval="false">
+					<ol class="carousel-indicators">
+						<li data-target="#plane-selector" data-slide-to="0" class="active"></li>
+						<li data-target="#plane-selector" data-slide-to="1"></li>
+						<li data-target="#plane-selector" data-slide-to="2"></li>
+					</ol>
+					<div class="carousel-inner">
+						<div class="active item">
+							<h2>Air-superiority fighter</h2>
+							<p>Designed for taking over the enemy airspace, these aircraft offer the best maneuvaribility and dogfighting capabilities.</p>
+						</div>
+						<div class="item">
+							<h2>Interceptor</h2>
+							<p>Defensive aircraft designed to quickly intercept enemy attacks.
+							It sacrifices durability and some maneuvaribility for achieving the greatest speeds.</p>
+						</div>
+						<div class="item">
+							<h2>Strike fighter</h2>
+							<p>Versatile fighter that can take some serious pounding.</p>
+						</div>
+					</div>
+					<a class="carousel-control left" href="#plane-selector" data-slide="prev">&lsaquo;</a>
+					<a class="carousel-control right" href="#plane-selector" data-slide="next">&rsaquo;</a>
+				</div>
 				<div class="menu-footer">
 					<button id="to-create" data-target="create" class="btn btn-primary"><i class="icon-plus"></i> Create a game</button>
 					<button id="to-join" class="btn btn-primary"><i class="icon-globe"></i> Join a game</button>
