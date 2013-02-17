@@ -1,5 +1,11 @@
 (function() {
 
+	$("#instant").click(function() {
+		$("#menu").fadeOut();
+		$(".fade-overlay").fadeOut();
+		newGame();
+	});
+
 	// Create
 
 	function checkGameVars() {
