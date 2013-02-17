@@ -53,6 +53,7 @@
 			</ul>
 			<div class="tab-content">
 
+			<!-- Loadout -->
 			<div id="loadout" class="tab-pane active">
 				<div id="plane-selector" class="tabbable tabs-left">
 					<ul class="nav nav-tabs">
@@ -64,15 +65,63 @@
 						<div id="aircraft-1" class="tab-pane active">
 							<h2>Air superiority fighter</h2>
 							<p>Designed for taking over the enemy airspace, these aircraft offer the best maneuvaribility and dogfighting capabilities.</p>
+							<ul>
+								<li>Max speed: <span>2 Mach</span></li>
+								<li>Turn rate: <span>Excellent</span></li>
+								<li>Durability: <span>Good</span></li>
+							</ul>
 						</div>
 						<div id="aircraft-2" class="tab-pane">
 							<h2>Interceptor</h2>
 							<p>Defensive aircraft designed to quickly intercept enemy attacks.
 							It sacrifices durability and some maneuvaribility for achieving the greatest speeds.</p>
+							<ul>
+								<li>Max speed: <span>2.5 Mach</span></li>
+								<li>Turn rate: <span>Good</span></li>
+								<li>Durability: <span>Good</span></li>
+							</ul>
 						</div>
 						<div id="aircraft-3" class="tab-pane">
 							<h2>Strike fighter</h2>
 							<p>Versatile fighter that is fit for multiple roles and can take some serious pounding.</p>
+							<ul>
+								<li>Max speed: <span>1.9 Mach</span></li>
+								<li>Turn rate: <span>Good</span></li>
+								<li>Durability: <span>Excellent</span></li>
+							</ul>
+						</div>
+					</div>
+				</div>
+				<div id="loadout-selector" class="tabbable tabs-left">
+					<ul class="nav nav-tabs">
+						<li class="active"><a href="#loadout-1" data-toggle="tab">Balanced</a></li>
+						<li><a href="#loadout-2" data-toggle="tab">Dogfight</a></li>
+						<li><a href="#loadout-3" data-toggle="tab">Long-range</a></li>
+					</ul>
+					<div class="tab-content">
+						<div id="loadout-1" class="tab-pane active">
+							<h2>Balanced weapon loadout - "ready for anything"</h2>
+							<ul>
+								<li>Cannon: <span>400</span></li>
+								<li>SRAAM: <span>10</span></li>
+								<li>MRAAM: <span>6</span></li>
+							</ul>
+						</div>
+						<div id="loadout-2" class="tab-pane">
+							<h2>Dogfight weapon loadout - "close-quarters combat"</h2>
+							<ul>
+								<li>Cannon: <span>800</span></li>
+								<li>SRAAM: <span>14</span></li>
+								<li>MRAAM: <span>0</span></li>
+							</ul>
+						</div>
+						<div id="loadout-3" class="tab-pane">
+							<h2>Long range loadout - "death from afar"</h2>
+							<ul>
+								<li>Cannon: <span>100</span></li>
+								<li>SRAAM: <span>10</span></li>
+								<li>MRAAM: <span>12</span></li>
+							</ul>
 						</div>
 					</div>
 				</div>
@@ -82,6 +131,7 @@
 				</div>
 			</div>
 
+			<!-- Create game -->
 			<div id="create" class="tab-pane">
 				<form>
 					<fieldset>
@@ -102,6 +152,7 @@
 				</div>
 			</div>
 
+			<!-- Join game -->
 			<div id="join" class="tab-pane">
 				<h1>Available games</h1>
 				<p>Sorry, online game browser is not yet implemented. :(</p>
@@ -110,6 +161,7 @@
 				</div>
 			</div>
 
+			<!-- Settings -->
 			<div id="settings" class="tab-pane">
 				<form>
 					<label for="particles">Particles</label>

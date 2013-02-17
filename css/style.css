@@ -143,6 +143,8 @@ h2 { font-size: 20px; }
 h3 { font-size: 16px; }
 h1, h2, h3 { line-height: 30px; }
 
+#loadout div ul { width: 140px; }
+
 .menu-footer {
 	position: absolute;
 	bottom: 20px;
