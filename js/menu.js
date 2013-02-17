@@ -3,7 +3,6 @@
 	$("#instant").click(function() {
 		$("#menu").fadeOut();
 		$(".fade-overlay").fadeOut();
-		newGame();
 	});
 
 	// Create

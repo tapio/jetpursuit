@@ -82,8 +82,9 @@ JET.Plane.prototype.cycleTargets = function() {
 	this.target = this.targets[this.curTarget];
 };
 
-JET.Plane.prototype.cycleWeapons = function() {
-	this.curWeapon = (this.curWeapon + 1) % this.weapons.length;
+JET.Plane.prototype.cycleWeapons = function(dir) {
+	dir = dir || 1;
+	this.curWeapon = (this.curWeapon + dir + this.weapons.length) % this.weapons.length;
 	this.dirtyStatus = true;
 };
 
