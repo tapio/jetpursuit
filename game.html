@@ -46,7 +46,7 @@
 		<div id="menu">
 			<!--<button class="close">&times;</button>-->
 			<ul class="nav nav-tabs">
-				<li class="active"><a href="#loadout" data-toggle="tab""><i class="icon-plane"></i> Loadout</a></li>
+				<li class="active"><a href="#loadout" data-toggle="tab"><i class="icon-plane"></i> Loadout</a></li>
 				<li><a href="#create" data-toggle="tab"><i class="icon-plus"></i> Create</a></li>
 				<li><a href="#join" data-toggle="tab"><i class="icon-globe"></i> Join</a></li>
 				<li><a href="#settings" data-toggle="tab"><i class="icon-cog"></i> Settings</a></li>
@@ -54,30 +54,27 @@
 			<div class="tab-content">
 
 			<div id="loadout" class="tab-pane active">
-				<h1>Select aircraft</h1>
-				<div id="plane-selector" class="carousel slide" data-interval="false">
-					<ol class="carousel-indicators">
-						<li data-target="#plane-selector" data-slide-to="0" class="active"></li>
-						<li data-target="#plane-selector" data-slide-to="1"></li>
-						<li data-target="#plane-selector" data-slide-to="2"></li>
-					</ol>
-					<div class="carousel-inner">
-						<div class="active item">
-							<h2>Air-superiority fighter</h2>
+				<div id="plane-selector" class="tabbable tabs-left">
+					<ul class="nav nav-tabs">
+						<li class="active"><a href="#aircraft-1" data-toggle="tab">Air superiority</a></li>
+						<li><a href="#aircraft-2" data-toggle="tab">Interceptor</a></li>
+						<li><a href="#aircraft-3" data-toggle="tab">Strike fighter</a></li>
+					</ul>
+					<div class="tab-content">
+						<div id="aircraft-1" class="tab-pane active">
+							<h2>Air superiority fighter</h2>
 							<p>Designed for taking over the enemy airspace, these aircraft offer the best maneuvaribility and dogfighting capabilities.</p>
 						</div>
-						<div class="item">
+						<div id="aircraft-2" class="tab-pane">
 							<h2>Interceptor</h2>
 							<p>Defensive aircraft designed to quickly intercept enemy attacks.
 							It sacrifices durability and some maneuvaribility for achieving the greatest speeds.</p>
 						</div>
-						<div class="item">
+						<div id="aircraft-3" class="tab-pane">
 							<h2>Strike fighter</h2>
-							<p>Versatile fighter that can take some serious pounding.</p>
+							<p>Versatile fighter that is fit for multiple roles and can take some serious pounding.</p>
 						</div>
 					</div>
-					<a class="carousel-control left" href="#plane-selector" data-slide="prev">&lsaquo;</a>
-					<a class="carousel-control right" href="#plane-selector" data-slide="next">&rsaquo;</a>
 				</div>
 				<div class="menu-footer">
 					<button id="to-create" data-target="create" class="btn btn-primary"><i class="icon-plus"></i> Create a game</button>
