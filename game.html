@@ -6,7 +6,7 @@
 		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
 		<link rel="shortcut icon" href="favicon.png" />
 		<link href='http://fonts.googleapis.com/css?family=Black+Ops+One' rel='stylesheet' type='text/css'>
-		<link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.1/themes/dot-luv/jquery-ui.min.css" rel="stylesheet" type="text/css" />
+		<link href="css/bootstrap.min.css" rel="stylesheet" type="text/css" />
 		<link href="css/style.css" rel="stylesheet" type="text/css" />
 	</head>
 	<body>
@@ -42,54 +42,64 @@
 
 		<div id="menu">
 			<ul class="nav nav-tabs">
-				<li><a href="#loadout"><i class="ui-icon ui-icon-wrench"></i> Loadout</a></li>
-				<li><a href="#create"><i class="ui-icon ui-icon-plus"></i> Create</a></li>
-				<li><a href="#join"><i class="ui-icon ui-icon-refresh"></i> Join</a></li>
-				<li><a href="#settings"><i class="ui-icon ui-icon-gear"></i> Settings</a></li>
+				<li class="active"><a href="#loadout" data-toggle="tab""><i class="icon-plane"></i> Loadout</a></li>
+				<li><a href="#create" data-toggle="tab"><i class="icon-plus"></i> Create</a></li>
+				<li><a href="#join" data-toggle="tab"><i class="icon-globe"></i> Join</a></li>
+				<li><a href="#settings" data-toggle="tab"><i class="icon-cog"></i> Settings</a></li>
 			</ul>
+			<div class="tab-content">
 
-			<div id="loadout" class="ui-widget-content">
+			<div id="loadout" class="tab-pane active">
 				<div class="menu-footer">
-					<button><i class="ui-icon ui-icon-plus"></i> Create a game</button>
-					<button><i class="ui-icon ui-icon-refresh"></i> Join a game</button>
+					<button id="to-create" data-target="create" class="btn btn-primary"><i class="icon-plus"></i> Create a game</button>
+					<button id="to-join" class="btn btn-primary"><i class="icon-globe"></i> Join a game</button>
 				</div>
 			</div>
 
-			<div id="create">
+			<div id="create" class="tab-pane">
 				<form>
+					<fieldset>
 					<label for="enemies">Enemies</label>
-					<input id="enemies" name="enemies" type="range" min="1" max="30" />
+					<input id="enemies" name="enemies" type="range" min="1" max="30" value="1" />
+					<output for="enemies">1</output>
 					<label for="allies">Allies</label>
-					<input id="allies" name="allies" type="range" min="0" max="29" />
+					<input id="allies" name="allies" type="range" min="0" max="29" value="0" />
+					<output for="allies">0</output>
+					</fieldset>
+					<div class="alert hide">
+						Quite a lot of planes you got there, you better have a good computer to handle that!
+					</div>
 				</form>
 				<div class="menu-footer">
-					<button><i class="ui-icon ui-icon-check"></i> Create!</button>
+					<button class="btn btn-success"><i class="icon-ok"></i> Start!</button>
 				</div>
 			</div>
 
-			<div id="join">
+			<div id="join" class="tab-pane">
 				<h1>Available games</h1>
 				<p>Sorry, online game browser is not yet implemented. :(</p>
 				<div class="menu-footer">
-					<button><i class="ui-icon ui-icon-check"></i> Join!</button>
+					<button class="btn btn-success disabled"><i class="icon-ok"></i> Join!</button>
 				</div>
 			</div>
 
-			<div id="settings">
+			<div id="settings" class="tab-pane">
 				<form>
 					<label for="particles">Particles</label>
-					<input id="particles" name="particles" type="range" min="1" max="4" value="3" />
-					<output for="particles"></output>
+					<input id="particles" name="particles" type="range" min="0" max="4" value="3" />
+					<output for="particles">Lots</output>
 				</form>
 				<div class="menu-footer">
-					<button><i class="ui-icon ui-icon-disk"></i> Save</button>
+					<button class="btn btn-success"><i class="icon-hdd"></i> Save</button>
 				</div>
 			</div>
+
+			</div>
 		</div>
-		<div class="fade"></div>
+		<div class="fade-overlay"></div>
 
 		<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
-		<script src="http://code.jquery.com/ui/1.10.1/jquery-ui.js"></script>
+		<script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.0/js/bootstrap.min.js"></script>
 		<script src="libs/three.js"></script>
 		<script src="libs/stats.min.js"></script>
 		<script src="js/menu.js"></script>

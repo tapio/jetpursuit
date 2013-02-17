@@ -112,7 +112,7 @@ canvas {
 	font-weight: bold;
 }
 
-.fade {
+.fade-overlay {
 	position: absolute;
 	top: 0%;
 	left: 0%;
@@ -131,15 +131,10 @@ canvas {
 	height: 60%;
 	padding: 16px;
 	border-radius: 10px;
-	background-color: black;
-	opacity: 0.9;
+	background-color: rgba(0, 0, 0, 0.9);
 	z-index:102;
 	overflow: auto;
 	text-align: left;
-}
-
-#menu > div {
-	padding: 5px;
 }
 
 .menu-footer {
