@@ -136,3 +136,9 @@ canvas {
 	z-index:102;
 	overflow: auto;
 }
+
+.menu-footer {
+	position: absolute;
+	bottom: 20px;
+	right: 20px;
+}
