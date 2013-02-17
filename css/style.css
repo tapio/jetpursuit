@@ -91,6 +91,7 @@ canvas {
 
 .hud-left {
 	left: 20px;
+	width: 250px;
 	text-align: left;
 	-webkit-transform: perspective(500px) rotateY(40deg);
 	-moz-transform: perspective(500px) rotateY(40deg);
@@ -100,6 +101,7 @@ canvas {
 
 .hud-right {
 	right: 20px;
+	width: 250px;
 	text-align: right;
 	-webkit-transform: perspective(500px) rotateY(-40deg);
 	-moz-transform: perspective(500px) rotateY(-40deg);

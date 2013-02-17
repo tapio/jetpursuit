@@ -13,6 +13,8 @@ JET.MaterialLib.factions = [
 JET.Plane = function(params) {
 	THREE.Object3D.call(this);
 	params = params || {};
+	if (!params.template)
+		throw "Error: Aircraft template required";
 	this.id = params.id || Math.floor(Math.random()*100000000).toString(36);
 	this.name = params.name || JET.BotNames[Math.floor(Math.random()*JET.BotNames.length)];
 	this.faction = params.faction || 0;
@@ -20,24 +22,25 @@ JET.Plane = function(params) {
 	this.position.z = 1520;
 	this.ping = 0;
 
-	this.minSpeed = 75;
-	this.maxSpeed = 500;
+	this.minSpeed = params.template.minSpeed;
+	this.maxSpeed = params.template.maxSpeed;
 	this.speed = this.minSpeed;
-	this.acceleration = 100;
+	this.acceleration = params.template.acceleration;
 	this.angSpeed = 0;
 	this.angle = 0;
-	this.turnRate = Math.PI / 2;
+	this.turnRate = params.template.turnRate;
 
-	this.fuel = 100;
 	this.maxFuel = 100;
-	this.hull = 100;
-	this.maxHull = 100;
+	this.fuel = this.maxFuel;
+	this.maxHull = params.template.maxHull;
+	this.hull = this.maxHull;
 
-	this.weapons = [
-		new JET.Weapon("Cannon", this, { ammo: 1000, flightTime: 1.5, damage: 10, speed: 200, delay: 0.1 }),
-		new JET.Weapon("SRAAM", this, { ammo: 20, flightTime: 10, damage: 35, speed: 100, delay: 0.2, guided: true, turnRate: Math.PI/3 }),
-		new JET.Weapon("MRAAM", this, { ammo: 6, flightTime: 15, damage: 60, speed: 100, delay: 1.0, guided: true, turnRate: Math.PI/2 })
-	];
+	this.weapons = [];
+	if (params.loadout) {
+		for (var w in params.loadout.ammo) {
+			this.weapons.push(new JET.Weapon(this, params.loadout.ammo[w], DATA.weapons[w]));
+		}
+	}
 	this.curWeapon = 0;
 	this.dirtyStatus = true;
 
@@ -47,8 +50,7 @@ JET.Plane = function(params) {
 
 	this.mesh = null;
 	var self = this;
-	var models = [ "F-15.js", "F-18.js", "F-22.js" ];
-	cache.loadModel("assets/" + models[Math.floor(Math.random()*models.length)], function(geometry) {
+	cache.loadModel("assets/" + params.template.mesh + ".js", function(geometry) {
 		self.mesh = new THREE.Mesh(geometry, JET.MaterialLib.factions[self.faction]);
 		self.add(self.mesh);
 	});

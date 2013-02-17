@@ -37,7 +37,11 @@ JET.Client = function(object, scene, host) {
 					var peer = game.findById(state.id);
 					if (!peer) { // New player?
 						addMessage("Player " + state.id + " joined.");
-						peer = new JET.Plane({ id: state.id, local: false });
+						peer = new JET.Plane({
+							id: state.id,
+							local: false,
+							template: DATA.aircrafts[(Math.random() * DATA.aircrafts.length)|0]
+						});
 						peer.position.set(state.pos[0], state.pos[1], state.pos[2]);
 						game.add(peer);
 					}
