@@ -27,8 +27,8 @@ JET.World = function(scene) {
 
 	// Clouds
 	var cloudsInCluster = 4;
-	var numClouds = 250 * cloudsInCluster;
-	var cloudDist = 1500;
+	var numClouds = 350 * cloudsInCluster;
+	var cloudDist = 1800;
 	var cloudTex = THREE.ImageUtils.loadTexture("assets/cloud1.png");
 	var cloudMat = new JET.CloudMaterial({
 		size: 256,
