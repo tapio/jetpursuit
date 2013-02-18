@@ -23,6 +23,20 @@ var pl = null;
 
 	var client = new JET.Client(pl, scene);
 
+	var rendererInfo = document.getElementById("renderer-info");
+	function formatRenderInfo(info) {
+		var report = [
+			"Prog:", info.memory.programs,
+			"Geom:", info.memory.geometries,
+			"Tex:", info.memory.textures,
+			"Calls:", info.render.calls,
+			"Verts:", info.render.vertices,
+			"Faces:", info.render.faces,
+			"Pts:", info.render.points
+		];
+		return report.join(' ');
+	}
+
 	function render() {
 		requestAnimationFrame(render);
 		var dt = clock.getDelta();
@@ -37,6 +51,7 @@ var pl = null;
 		camera.position.copy(pl.position);
 		camera.position.z += THREE.Math.mapLinear(pl.speed, pl.minSpeed, pl.maxSpeed, 100, 200);
 		renderer.render(scene, camera);
+		rendererInfo.innerHTML = formatRenderInfo(renderer.info);
 	}
 
 	function onWindowResize() {

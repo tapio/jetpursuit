@@ -17,6 +17,18 @@ canvas {
 	height: 100%;
 }
 
+#renderer-info {
+	position: absolute;
+	bottom: 0px;
+	left: 80px;
+	color: #f08;
+	text-align: left;
+	font-size: 10px;
+	line-height: 12px;
+	background-color: rgba(0, 0, 0, 0.33);
+	font-family: monospace;
+}
+
 #ping-container {
 	position: absolute;
 	bottom: 5px;
