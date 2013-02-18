@@ -1,9 +1,32 @@
-var scene = new THREE.Scene();
-var game = new JET.Game();
 var cache = new JET.Cache();
+var scene = new THREE.Scene();
+var world = new JET.World(scene);
+var renderer = new THREE.WebGLRenderer({ antialias: true });
+var game = new JET.Game();
+var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 5000);
 var pl = null;
 
-(function() {
+renderer.setSize(window.innerWidth, window.innerHeight);
+document.body.appendChild(renderer.domElement);
+
+
+// Menu background, moving clouds
+(function(scene, camera, world) {
+	camera.position.z = 1600;
+	var clock = new THREE.Clock();
+	function render(dt) {
+		if (pl !== null) return;
+		requestAnimationFrame(render);
+		var dt = clock.getDelta();
+		world.update(camera.position);
+		camera.position.x += 75 * dt;
+		renderer.render(scene, camera);
+	}
+	render();
+})(scene, camera, world);
+
+
+function start() {
 	var clock = new THREE.Clock();
 	pl = new JET.Plane({
 		name: "YOU",
@@ -12,15 +35,8 @@ var pl = null;
 	});
 	game.add(pl);
 
-	var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 5000);
 	var controls = new JET.Controls(pl);
 	var hud = new JET.HUD(pl);
-	var world = new JET.World(scene);
-
-	var renderer = new THREE.WebGLRenderer({ antialias: true });
-	renderer.setSize(window.innerWidth, window.innerHeight);
-	document.body.appendChild(renderer.domElement);
-
 	var client = new JET.Client(pl, scene);
 
 	var rendererInfo = document.getElementById("renderer-info");
@@ -82,5 +98,4 @@ var pl = null;
 	document.addEventListener('keypress', onKeyPress, false);
 
 	render();
-
-})();
+}

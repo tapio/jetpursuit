@@ -4,6 +4,7 @@
 		$("#menu").fadeOut();
 		$(".fade-overlay").fadeOut();
 		$(".hud").fadeIn();
+		start();
 	});
 
 	// Create

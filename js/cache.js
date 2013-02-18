@@ -8,6 +8,7 @@ JET.Cache = function() {
 	loader.statusDomElement = document.createElement("div");
 	loader.statusDomElement.id = "loading";
 	loader.statusDomElement.innerHTML = "Loading...";
+	loader.statusDomElement.style.display = "none";
 	document.body.appendChild(loader.statusDomElement);
 	var modelsPending = 0;
 
