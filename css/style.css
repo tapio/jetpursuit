@@ -97,6 +97,7 @@ canvas {
 	list-style-position: outside;
 	list-style-type: none;
 	opacity: 0.9;
+	display: none;
 }
 
 .hud li {

@@ -3,6 +3,7 @@
 	$("#instant").click(function() {
 		$("#menu").fadeOut();
 		$(".fade-overlay").fadeOut();
+		$(".hud").fadeIn();
 	});
 
 	// Create
