@@ -99,7 +99,10 @@ canvas {
 	opacity: 0.9;
 }
 
-.hud li { padding: 3px; }
+.hud li {
+	padding: 3px;
+	line-height: 1em;
+}
 
 .hud-left {
 	left: 20px;
