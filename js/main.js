@@ -26,15 +26,16 @@ document.body.appendChild(renderer.domElement);
 })(scene, camera, world);
 
 
-function start() {
+function start(params) {
 	var clock = new THREE.Clock();
+	params = params || {};
 	pl = new JET.Plane({
 		name: "YOU",
-		template: DATA.aircrafts[(Math.random() * DATA.aircrafts.length)|0],
-		loadout: DATA.loadouts[(Math.random() * DATA.loadouts.length)|0]
+		template: params.aircraft || DATA.aircrafts[(Math.random() * DATA.aircrafts.length)|0],
+		loadout: params.loadout || DATA.loadouts[(Math.random() * DATA.loadouts.length)|0]
 	});
 	game.add(pl);
-
+console.log(params);
 	var controls = new JET.Controls(pl);
 	var hud = new JET.HUD(pl);
 	var client = new JET.Client(pl, scene);

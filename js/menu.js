@@ -1,9 +1,13 @@
 (function() {
 
-	$("#instant").click(function() {
+	function exitMenu() {
 		$("#menu").fadeOut();
 		$(".fade-overlay").fadeOut();
 		$(".hud").fadeIn();
+	}
+
+	$("#instant").click(function() {
+		exitMenu();
 		start();
 	});
 
@@ -26,6 +30,17 @@
 
 	$("#to-create").click(function() { $('#menu a[href="#create"]').tab('show'); });
 	$("#to-join").click(function() { $('#menu a[href="#join"]').tab('show'); });
+
+	$("#start-game").click(function() {
+		params = {};
+		params.enemies = parseInt($("#enemies").val());
+		params.allies = parseInt($("#allies").val());
+		// TODO: These are rather horrible
+		params.aircraft = DATA.aircrafts[parseInt($("#plane-selector ul.nav li.active a").attr("href").split("-")[1]) - 1];
+		params.loadout = DATA.loadouts[parseInt($("#loadout-selector ul.nav li.active a").attr("href").split("-")[1]) - 1];
+		exitMenu();
+		start(params);
+	});
 
 	// Settings
 
