@@ -160,7 +160,7 @@ JET.HUD = function(object) {
 		dom.fuel.style.color = statusGradient.get(fuelRatio).getStyle();
 		dom.hull.style.color = statusGradient.get(hullRatio).getStyle();
 
-		dom.ping.innerHTML = object.ping;
+		dom.ping.innerHTML = object.ping.toFixed(0);
 
 		renderStats.update();
 	};

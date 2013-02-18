@@ -8,7 +8,7 @@ JET.Client = function(object, scene, host) {
 	this.socket = new WebSocket(host);
 	var client = this;
 	var pingInterval = null;
-	var pingTime = Date.now();
+	var pingTime = performance.now();
 	var v = new THREE.Vector3();
 
 	this.send = function(msg) {
@@ -20,7 +20,7 @@ JET.Client = function(object, scene, host) {
 		client.send({ type: "hello", id: client.obj.id });
 		this.connected = true;
 		pingInterval = window.setInterval(function() {
-			pingTime = Date.now();
+			pingTime = performance.now();
 			client.send({ type: "ping" });
 		}, 2000);
 	};
@@ -53,7 +53,7 @@ JET.Client = function(object, scene, host) {
 				}
 				break;
 			case "pong":
-				object.ping = Date.now() - pingTime;
+				object.ping = performance.now() - pingTime;
 				break;
 			// Someone left
 			case "leave":
