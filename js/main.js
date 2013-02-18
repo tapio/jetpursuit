@@ -27,15 +27,41 @@ document.body.appendChild(renderer.domElement);
 
 
 function start(params) {
-	var clock = new THREE.Clock();
 	params = params || {};
+	if (params.allies === undefined && params.enemies === undefined) {
+		var count = THREE.Math.randInt(1, 15);
+		params.enemies = count;
+		params.allies = count - 1;
+	}
+
 	pl = new JET.Plane({
 		name: "YOU",
 		template: params.aircraft || DATA.aircrafts[(Math.random() * DATA.aircrafts.length)|0],
 		loadout: params.loadout || DATA.loadouts[(Math.random() * DATA.loadouts.length)|0]
 	});
 	game.add(pl);
-console.log(params);
+
+	function spawnBot(faction) {
+		var bot = new JET.Plane({
+			faction: faction !== undefined ? faction : THREE.Math.randInt(0, 1),
+			template: DATA.aircrafts[(Math.random() * DATA.aircrafts.length)|0],
+			loadout: DATA.loadouts[(Math.random() * DATA.loadouts.length)|0]
+		});
+		bot.ai = {
+			missileDelay: 4.0,
+			missileTime: 0
+		};
+		var angle = Math.random() * Math.PI * 2;
+		bot.position.x = pl.position.x + Math.cos(angle) * 500;
+		bot.position.y = pl.position.y + Math.sin(angle) * 500;
+		game.add(bot);
+	}
+	var i;
+	for (i = 0; i < params.allies; ++i)
+		spawnBot(pl.faction);
+	for (i = 0; i < params.enemies; ++i)
+		spawnBot(pl.faction + 1);
+
 	var controls = new JET.Controls(pl);
 	var hud = new JET.HUD(pl);
 	var client = new JET.Client(pl, scene);
@@ -54,6 +80,7 @@ console.log(params);
 		return report.join(' ');
 	}
 
+	var clock = new THREE.Clock();
 	function render() {
 		requestAnimationFrame(render);
 		var dt = clock.getDelta();
@@ -80,19 +107,7 @@ console.log(params);
 
 	function onKeyPress(event) {
 		if (event.charCode == 43) { // Plus
-			var bot = new JET.Plane({
-				faction: THREE.Math.randInt(0, 1),
-				template: DATA.aircrafts[(Math.random() * DATA.aircrafts.length)|0],
-				loadout: DATA.loadouts[(Math.random() * DATA.loadouts.length)|0]
-			});
-			bot.ai = {
-				missileDelay: 4.0,
-				missileTime: 0
-			};
-			var angle = Math.random() * Math.PI * 2;
-			bot.position.x = pl.position.x + Math.cos(angle) * 500;
-			bot.position.y = pl.position.y + Math.sin(angle) * 500;
-			game.add(bot);
+			spawnBot();
 			addMessage("Bot added.");
 		}
 	}
