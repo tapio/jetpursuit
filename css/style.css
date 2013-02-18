@@ -161,7 +161,30 @@ h2 { font-size: 20px; }
 h3 { font-size: 16px; }
 h1, h2, h3 { line-height: 30px; }
 
-#loadout div ul { width: 140px; }
+#loadout div ul.nav { width: 140px; }
+#loadout li {
+	list-style-position: outside;
+	list-style-type: none;
+}
+
+.stars-5:before {
+	font-family: serif;
+	content: '\2605\2605\2605\2605\2605';
+	color: #00ff00;
+}
+
+.stars-4:before {
+	font-family: serif;
+	content: '\2605\2605\2605\2605\2606';
+	color: #aaff00;
+}
+
+.stars-3:before {
+	font-family: serif;
+	content: '\2605\2605\2605\2606\2606';
+	color: #ffff00;
+}
+
 
 .menu-footer {
 	position: absolute;
