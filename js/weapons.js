@@ -57,6 +57,9 @@ JET.Missile.prototype.update = function(dt) {
 		if (obj.testHit(this.position, weapon.radius)) {
 			this.flightTime = 0;
 			obj.hull -= weapon.damage;
+			weapon.stats.damage += weapon.damage;
+			if (obj.hull < 0) ++weapon.stats.kills; // FIXME: Error prone check?
+			++weapon.stats.hits;
 			addMessage("HIT!");
 		}
 	}
@@ -80,6 +83,12 @@ JET.Weapon = function(owner, ammo, params) {
 	this.speed = params.speed || 150;
 	this.guided  = params.guided || false;
 	this.lastTime = 0;
+	this.stats = {
+		kills: 0,
+		damage: 0,
+		shots: 0,
+		hits: 0,
+	}
 };
 
 JET.Weapon.prototype.shoot = function(shooter) {
@@ -94,5 +103,6 @@ JET.Weapon.prototype.shoot = function(shooter) {
 	bullet.speed = this.speed + shooter.speed;
 	if (this.guided) bullet.target = shooter.target;
 	game.addBullet(bullet);
+	++this.stats.shots;
 	return true;
 };
