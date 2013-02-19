@@ -167,15 +167,16 @@ JET.Emitter.prototype.update = function(dt) {
 
 
 // Create a simple jet trail emitter
-JET.createTrail = function(parent) {
+JET.createTrail = function(parent, particleMultiplier) {
 	var v = new THREE.Vector3();
 	var toCreate = 0;
 	var maxLife = 1.5;
+	var count = (400 * (particleMultiplier || 1))|0;
 	var emitter = new JET.Emitter({
-		maxParticles: 400,
+		maxParticles: count,
 		material: JET.MaterialLib.trail,
 		spawner: function(dt) {
-			toCreate += 400 / maxLife * dt;
+			toCreate += count / maxLife * dt;
 			var amount = toCreate|0;
 			toCreate -= amount;
 			return amount;

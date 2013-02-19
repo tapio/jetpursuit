@@ -56,7 +56,8 @@ JET.Plane = function(params) {
 		self.add(self.mesh);
 		self.radius = geometry.boundingSphere.radius;
 	});
-	this.trail = JET.createTrail(this);
+	var parMult = this.faction === game.playerFaction ? 1.0 : 0.5;
+	this.trail = JET.createTrail(this, parMult);
 	game.addEmitter(this.trail);
 };
 

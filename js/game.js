@@ -1,5 +1,6 @@
 /// Manages the combatants
 JET.Game = function() {
+	this.playerFaction = 0;
 	this.entities = {};
 	this.entityCache = [];
 	this.bullets = [];
