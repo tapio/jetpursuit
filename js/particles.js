@@ -2,7 +2,9 @@
 JET.ParticleMaterial = function(params) {
 	THREE.ShaderMaterial.call(this, params);
 
-	this.attributes = {};
+	this.attributes = {
+		"alpha": { type: "f", value: null }
+	};
 	params.color = params.color || 0xffffff;
 	this.uniforms = {
 		"psColor" : { type: "c", value: new THREE.Color(params.color) },
@@ -19,13 +21,14 @@ JET.ParticleMaterial = function(params) {
 	this.setValues(params);
 
 	this.vertexShader = [
+		"attribute float alpha;",
 		"uniform float size;",
 		"uniform float scale;",
 		THREE.ShaderChunk[ "color_pars_vertex" ],
 		"varying float vAlpha;",
 		"void main() {",
 			THREE.ShaderChunk[ "color_vertex" ],
-			"vAlpha = normal.x;",
+			"vAlpha = alpha;",
 			"vec4 mvPosition = modelViewMatrix * vec4( position, 1.0 );",
 			"#ifdef USE_SIZEATTENUATION",
 				"gl_PointSize = size * ( scale / length( mvPosition.xyz ) );",
@@ -118,10 +121,10 @@ JET.Emitter = function(params) {
 			array: new Float32Array(this.maxParticles * 3),
 			numItems: this.maxParticles * 3
 		},
-		normal: {
-			itemSize: 3,
-			array: new Float32Array(this.maxParticles * 3),
-			numItems: this.maxParticles * 3
+		alpha: {
+			itemSize: 1,
+			array: new Float32Array(this.maxParticles),
+			numItems: this.maxParticles
 		}
 	};
 	this.particles = new Array(this.maxParticles);
@@ -149,7 +152,7 @@ JET.Emitter.prototype.update = function(dt) {
 
 		var positions = this.geometry.attributes.position.array;
 		var colors = this.geometry.attributes.color.array;
-		var customs = this.geometry.attributes.normal.array;
+		var customs = this.geometry.attributes.alpha.array;
 		var i3 = i * 3;
 		positions[i3  ] = particle.position.x;
 		positions[i3+1] = particle.position.y;
@@ -157,11 +160,11 @@ JET.Emitter.prototype.update = function(dt) {
 		colors[i3  ] = particle.color.r;
 		colors[i3+1] = particle.color.g;
 		colors[i3+2] = particle.color.b;
-		customs[i3] = particle.alpha;
+		customs[i] = particle.alpha;
 	}
 	this.geometry.attributes.position.needsUpdate = true;
 	this.geometry.attributes.color.needsUpdate = true;
-	this.geometry.attributes.normal.needsUpdate = true;
+	this.geometry.attributes.alpha.needsUpdate = true;
 	return true;
 };
 
