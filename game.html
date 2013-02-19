@@ -49,15 +49,34 @@
 		<div id="menu">
 			<!--<button class="close">&times;</button>-->
 			<ul class="nav nav-tabs">
-				<li><a href="#" id="instant"><i class="icon-forward"></i> Instant Action!</a></li>
-				<li class="active"><a href="#loadout" data-toggle="tab"><i class="icon-plane"></i> Loadout</a></li>
-				<li><a href="#create" data-toggle="tab"><i class="icon-plus"></i> Create</a></li>
+				<li class="active"><a href="#mission" data-toggle="tab"><i class="icon-screenshot"></i> Mission</a></li>
+				<li><a href="#aircraft" data-toggle="tab"><i class="icon-plane"></i> Aircraft</a></li>
+				<li><a href="#loadout" data-toggle="tab"><i class="icon-wrench"></i> Loadout</a></li>
 				<li><a href="#settings" data-toggle="tab"><i class="icon-cog"></i> Settings</a></li>
+				<li><a href="#" id="start"><i class="icon-forward"></i> <em>Take off!</em></a></li>
 			</ul>
 			<div class="tab-content">
 
-			<!-- Loadout -->
-			<div id="loadout" class="tab-pane active">
+			<!-- Mission -->
+			<div id="mission" class="tab-pane active">
+				<form>
+					<fieldset>
+						<label for="enemies">Enemies</label>
+						<input id="enemies" name="enemies" type="range" min="1" max="30" value="1" />
+						<output for="enemies">1</output>
+						<label for="allies">Allies</label>
+						<input id="allies" name="allies" type="range" min="0" max="29" value="0" />
+						<output for="allies">0</output>
+					</fieldset>
+					<div id="players-warning" class="alert hide">
+						<i class="icon-warning-sign"></i>
+						Quite a lot of planes you got there, better have a good computer to handle that...
+					</div>
+				</form>
+			</div>
+
+			<!-- Aircraft -->
+			<div id="aircraft" class="tab-pane">
 				<div id="plane-selector" class="tabbable tabs-left">
 					<ul class="nav nav-tabs">
 						<li class="active"><a href="#aircraft-1" data-toggle="tab">Air superiority</a></li>
@@ -98,6 +117,10 @@
 						</div>
 					</div>
 				</div>
+			</div>
+
+			<!-- Loadout -->
+			<div id="loadout" class="tab-pane">
 				<div id="loadout-selector" class="tabbable tabs-left">
 					<ul class="nav nav-tabs">
 						<li class="active"><a href="#loadout-1" data-toggle="tab">Balanced</a></li>
@@ -130,30 +153,6 @@
 							</ul>
 						</div>
 					</div>
-				</div>
-				<div class="menu-footer">
-					<button id="to-create" data-target="create" class="btn btn-primary"><i class="icon-plus"></i> Create a game</button>
-				</div>
-			</div>
-
-			<!-- Create game -->
-			<div id="create" class="tab-pane">
-				<form>
-					<fieldset>
-						<label for="enemies">Enemies</label>
-						<input id="enemies" name="enemies" type="range" min="1" max="30" value="1" />
-						<output for="enemies">1</output>
-						<label for="allies">Allies</label>
-						<input id="allies" name="allies" type="range" min="0" max="29" value="0" />
-						<output for="allies">0</output>
-					</fieldset>
-					<div id="players-warning" class="alert hide">
-						<i class="icon-warning-sign"></i>
-						Quite a lot of planes you got there, better have a good computer to handle that...
-					</div>
-				</form>
-				<div class="menu-footer">
-					<button id="start-game" class="btn btn-success"><i class="icon-ok"></i> Start!</button>
 				</div>
 			</div>
 
