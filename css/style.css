@@ -21,6 +21,7 @@ body {
 	margin: 0 auto;
 	text-shadow: 0px 0px 10px #fa0;
 	line-height: 1em;
+	z-index: 105;
 	-webkit-animation-name: title-rotate;
 	-webkit-animation-iteration-count: infinite;
 	-webkit-animation-duration: 2s;
@@ -186,7 +187,7 @@ canvas {
 	border-radius: 10px;
 	color: #eeeeff;
 	background-color: rgba(0, 0, 0, 0.9);
-	z-index:102;
+	z-index: 110;
 	overflow: auto;
 	text-align: left;
 }

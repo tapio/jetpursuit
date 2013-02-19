@@ -1,6 +1,7 @@
 (function() {
 	function exitMenu() {
 		$("#menu").fadeOut();
+		$("#title").fadeOut();
 		$(".fade-overlay").fadeOut();
 		$(".hud").fadeIn();
 	}
