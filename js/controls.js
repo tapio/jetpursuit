@@ -8,10 +8,9 @@ JET.Controls = function(object) {
 
 		if (object.hull <= 0) return;
 
-		if (key == 38) { // Up
-			object.cycleWeapons(-1);
-		} else if (key == 40) { // Down
+		if (key == 9) { // Tab
 			object.cycleWeapons();
+			event.preventDefault();
 		} else if (key == 69) { // E
 			object.cycleTargets();
 		} else if (key == 81) { // Q
@@ -29,15 +28,15 @@ JET.Controls = function(object) {
 	this.update = function(dt) {
 		if (object.hull <= 0) return;
 		// Throttle
-		if (pressed[87]) { // W
+		if (pressed[87] || pressed[38]) { // W || Up
 			object.speed += object.acceleration * dt;
-		} else if (pressed[83]) { // S
+		} else if (pressed[83] || pressed[40]) { // S || Down
 			object.speed -= object.acceleration * dt;
 		}
 		// Steering
-		if (pressed[65]) { // A
+		if (pressed[65] || pressed[37]) { // A || Left
 			object.angSpeed = object.turnRate;
-		} else if (pressed[68]) { // D
+		} else if (pressed[68] || pressed[39]) { // D || Right
 			object.angSpeed = -object.turnRate;
 		}
 		// Shoot
