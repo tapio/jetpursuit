@@ -51,7 +51,9 @@ JET.Game.prototype.addEmitter = function(obj) {
 };
 
 JET.Game.prototype.update = function(dt) {
+	if (this.ended) return;
 	var i, l, rebuild = false;
+	var factionAlive = [ false, false ];
 	for (i = 0, l = this.entityCache.length; i < l; ++i) {
 		var obj = this.entityCache[i];
 		// AI
@@ -67,9 +69,19 @@ JET.Game.prototype.update = function(dt) {
 			obj.trail.lifeTime = 0;
 			this.remove(obj, false);
 			rebuild = true;
-		}
+		} else factionAlive[obj.faction] = true;
 	}
 	if (rebuild) this.rebuildCache();
+
+	// Check for game end
+	var factionsAlive = 0;
+	for (i = 0; i < factionAlive.length; ++i)
+		if (factionAlive[i]) ++factionsAlive;
+	if (factionsAlive <= 1) {
+		// TODO
+		addMessage("Game ended");
+		this.ended = true;
+	}
 
 	// Bullets
 	for (i = this.bullets.length-1; i >= 0; --i) {
