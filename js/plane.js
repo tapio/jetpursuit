@@ -47,12 +47,14 @@ JET.Plane = function(params) {
 	this.target = null;
 	this.targets = [];
 	this.curTarget = 0;
+	this.radius = 0; // For hit tests, set from boundingSphere
 
 	this.mesh = null;
 	var self = this;
 	cache.loadModel("assets/" + params.template.mesh + ".js", function(geometry) {
 		self.mesh = new THREE.Mesh(geometry, JET.MaterialLib.factions[self.faction]);
 		self.add(self.mesh);
+		self.radius = geometry.boundingSphere.radius;
 	});
 	this.trail = JET.createTrail(this);
 	game.addEmitter(this.trail);
@@ -99,7 +101,7 @@ JET.Plane.prototype.shoot = function() {
 
 JET.Plane.prototype.testHit = function(pos, radius) {
 	var distSq = this.position.distanceToSquared(pos);
-	var thresholdSq = radius + this.mesh.geometry.boundingSphere.radius;
+	var thresholdSq = radius + this.radius;
 	thresholdSq *= thresholdSq;
 	if (distSq < thresholdSq) return true;
 	else return false;
