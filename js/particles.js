@@ -82,10 +82,10 @@ JET.MaterialLib.explosion = new JET.ParticleMaterial({
 });
 
 JET.GradientLib = {
-	trail: new JET.ColorGradient(0xcccccc, 0xffcc99),
+	trail: new JET.ColorGradient(0xcccccc, 0xffcc88),
 	explosion: new JET.ColorGradient(0x777777, 0xffff00)
 };
-JET.GradientLib.trail.add(0.9, 0xff8888);
+JET.GradientLib.trail.add(0.9, 0xff7777);
 JET.GradientLib.trail.add(0.8, 0xbbbbbb);
 JET.GradientLib.explosion.add(0.5, 0xbb2200);
 
