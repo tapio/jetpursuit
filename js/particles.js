@@ -103,7 +103,7 @@ JET.Emitter = function(params) {
 	this.maxParticles = params.maxParticles;
 	this.lifeTime = params.lifeTime;
 	this.spawner = params.spawner;
-	this.onBorn = params.onBorn;
+	this.onBirth = params.onBirth;
 	this.onUpdate = params.onUpdate;
 	this.geometry = new THREE.BufferGeometry();
 	this.geometry.dynamic = true;
@@ -141,7 +141,7 @@ JET.Emitter.prototype.update = function(dt) {
 		var particle = this.particles[i];
 		particle.lifeTime -= dt;
 		if (particle.lifeTime <= 0 && spawnAmount > 0) {
-			this.onBorn(particle);
+			this.onBirth(particle);
 			--spawnAmount;
 		} else if (particle.lifeTime > 0)
 			this.onUpdate(particle, dt);
@@ -180,7 +180,7 @@ JET.createTrail = function(parent) {
 			toCreate -= amount;
 			return amount;
 		},
-		onBorn: function(particle) {
+		onBirth: function(particle) {
 			particle.lifeTime = maxLife;
 			var speed = -40 + Math.random() * 20 + parent.speed * 0.7;
 			var dx = Math.cos(parent.angle);
@@ -214,7 +214,7 @@ JET.createExplosion = function(pos) {
 		lifeTime: maxLife,
 		maxParticles: 10,
 		material: JET.MaterialLib.explosion,
-		onBorn: function(particle) {
+		onBirth: function(particle) {
 			particle.lifeTime = 0.5 * (maxLife * Math.random() + maxLife);
 			particle.position.copy(pos);
 			particle.position.z += 5;
