@@ -8,6 +8,41 @@ body {
 	overflow: hidden;
 }
 
+#title {
+	position: absolute;
+	top: 5%;
+	left: 10%;
+	right: 10%;
+	width: 500px;
+	color: #833;
+	font-family: 'Faster One', serif;
+	font-size: 72px;
+	text-align: center;
+	margin: 0 auto;
+	text-shadow: 0px 0px 10px #fa0;
+	line-height: 1em;
+	-webkit-animation-name: title-rotate;
+	-webkit-animation-iteration-count: infinite;
+	-webkit-animation-duration: 2s;
+	-webkit-animation-direction: alternate;
+	-webkit-animation-timing-function: ease-in-out;
+	animation-name: title-rotate;
+	animation-iteration-count: infinite;
+	animation-duration: 2s;
+	animation-direction: alternate;
+	animation-timing-function: ease-in-out;
+}
+
+@-webkit-keyframes title-rotate {
+	0% { -webkit-transform: perspective(500px) rotateY(10deg); }
+	100% { -webkit-transform: perspective(500px) rotateY(-10deg); }
+}
+@keyframes title-rotate {
+	0% { transform: perspective(500px) rotateY(10deg); }
+	100% { transform: perspective(500px) rotateY(-10deg); }
+}
+
+
 .hidden { display: none; }
 
 #container { width: 100%; }
