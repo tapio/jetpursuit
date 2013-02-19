@@ -99,8 +99,14 @@ function start(params) {
 		client.update(dt);
 		hud.update();
 
-		camera.position.copy(pl.position);
-		camera.position.z += THREE.Math.mapLinear(pl.speed, pl.minSpeed, pl.maxSpeed, 100, 200);
+		var camPos = camera.position;
+		camPos.copy(pl.position);
+		if (pl.speed >= pl.maxSpeed * 0.75) {
+			var shake = THREE.Math.mapLinear(pl.speed, pl.maxSpeed * 0.75, pl.maxSpeed, 0.0, 1.0);
+			camPos.x += Math.random() * shake;
+			camPos.y += Math.random() * shake;
+		}
+		camPos.z += THREE.Math.mapLinear(pl.speed, pl.minSpeed, pl.maxSpeed, 100, 200);
 		renderer.render(scene, camera);
 		rendererInfo.innerHTML = formatRenderInfo(renderer.info);
 	}
