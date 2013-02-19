@@ -95,8 +95,8 @@ JET.Plane.prototype.shoot = function() {
 	if (this.weapons[this.curWeapon].shoot(this)) {
 		this.dirtyStatus = true;
 		if (this.weapons[this.curWeapon].guided)
-			JET.SoundLibrary.missile.play();
-		else JET.SoundLibrary.cannon.play();
+			JET.SoundLibrary.missile.playSpatial(this.position, 500);
+		else JET.SoundLibrary.cannon.playSpatial(this.position, 500);
 	}
 };
 

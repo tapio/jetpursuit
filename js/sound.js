@@ -1,4 +1,6 @@
 
+JET.listener = new THREE.Object3D();
+
 JET.Sound = function(samples, minPlayers) {
 	if (typeof samples === "string") samples = [ samples ];
 	minPlayers = minPlayers || 1;
@@ -22,6 +24,14 @@ JET.Sound = function(samples, minPlayers) {
 			this.sampleIndex = (this.sampleIndex + 1) % this.samples.length;
 		} catch(e) {}
 	};
+
+	this.playSpatial = function(position, radius) {
+		// Hack: Should have an update method instead of using a global reference
+		// Doppler would probably be nice too
+		var distance = JET.listener.position.distanceTo(position);
+		if (distance < radius)
+			this.play(1 - distance / radius);
+	}
 };
 
 JET.SoundLibrary = {

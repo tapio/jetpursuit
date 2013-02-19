@@ -46,6 +46,7 @@ function start(params) {
 		loadout: params.loadout || DATA.loadouts[(Math.random() * DATA.loadouts.length)|0]
 	});
 	game.add(pl);
+	JET.listener = pl;
 
 	function spawnBot(faction) {
 		var bot = new JET.Plane({
