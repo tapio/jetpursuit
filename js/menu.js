@@ -1,5 +1,4 @@
 (function() {
-
 	function exitMenu() {
 		$("#menu").fadeOut();
 		$(".fade-overlay").fadeOut();
@@ -8,6 +7,7 @@
 
 	$("#start").click(function() {
 		params = {};
+		params.gamemode = $("#gamemode").val();
 		params.enemies = parseInt($("#enemies").val());
 		params.allies = parseInt($("#allies").val());
 		// TODO: These are rather horrible
@@ -33,6 +33,10 @@
 		$(this).next("output").html($(this).val());
 		checkGameVars();
 	});
+	$("#gamemode").change(function() {
+		$(".gamemode-desc").hide();
+		$("#gamemode-" + $(this).val()).show();
+	});
 
 	// Settings
 
@@ -41,4 +45,8 @@
 		$(this).next("output").html(particleLegend[$(this).val()]);
 	});
 
+
+	var randCount = Math.floor(Math.random() * 8) + 1;
+	$("#enemies").val(randCount).trigger("change");
+	$("#allies").val(randCount-1).trigger("change");
 })();

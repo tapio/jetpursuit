@@ -60,14 +60,32 @@
 			<!-- Mission -->
 			<div id="mission" class="tab-pane active">
 				<form>
-					<fieldset>
+					<fieldset class="pull-left" style="width: 50%;">
+						<label for="gamemode">Game mode</label>
+						<select id="gamemode">
+							<option value="singlebattle">Single battle</option>
+							<option value="teamdeathmatch">Team deathmatch</option>
+							<option value="deathmatch">Deathmatch</option>
+						</select>
+						<p id="gamemode-singlebattle" class="gamemode-desc">
+							You and your wingmen try to shoot down the opposing side. The game ends when either side is obliterated.
+						</p>
+						<p id="gamemode-teamdeathmatch" class="gamemode-desc hide">
+							Like a single battle, but with multiple "lives", i.e. players respawn after death.
+						</p>
+						<p id="gamemode-deathmatch" class="gamemode-desc hide">
+							Everyone against everyone, with respawns.
+						</p>
+					</fieldset>
+					<fieldset class="pull-right">
 						<label for="enemies">Enemies</label>
 						<input id="enemies" name="enemies" type="range" min="1" max="30" value="1" />
 						<output for="enemies">1</output>
-						<label for="allies">Allies</label>
+						<label for="allies">Wingmen</label>
 						<input id="allies" name="allies" type="range" min="0" max="29" value="0" />
 						<output for="allies">0</output>
 					</fieldset>
+					<div class="clearfix"></div>
 					<div id="players-warning" class="alert hide">
 						<i class="icon-warning-sign"></i>
 						Quite a lot of planes you got there, better have a good computer to handle that...
