@@ -4,7 +4,7 @@ JET.Client = function(object, scene, host) {
 	this.gaming = false;
 	this.connected = false;
 	host = host || "ws://" + window.location.hostname + ":10666";
-	addMessage("Attempting connection to " + host + "...");
+	console.log("Attempting connection to " + host + "...");
 	this.socket = new WebSocket(host);
 	var client = this;
 	var pingInterval = null;
@@ -74,7 +74,8 @@ JET.Client = function(object, scene, host) {
 	this.socket.onclose = function() {
 		this.connected = false;
 		if (pingInterval) window.clearInterval(pingInterval);
-		addMessage("Connection terminated!", "error");
+		if (client.gaming) addMessage("Connection terminated!", "error");
+		else console.log("No connection");
 	};
 
 };

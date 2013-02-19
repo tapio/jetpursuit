@@ -119,6 +119,8 @@ JET.HUD = function(object) {
 		radarGeo.colorsNeedUpdate = true;
 	}
 
+	addMessage("Weapons ready");
+
 	this.update = function() {
 		// Radar
 		updateRadar();
