@@ -110,7 +110,9 @@ function start(params) {
 		camPos.z += THREE.Math.mapLinear(pl.speed, pl.minSpeed, pl.maxSpeed, 100, 200);
 
 		renderer.render(scene, camera);
-		rendererInfo.innerHTML = formatRenderInfo(renderer.info);
+
+		if (JET.CONFIG.showStats)
+			rendererInfo.innerHTML = formatRenderInfo(renderer.info);
 	}
 
 	function onKeyPress(event) {

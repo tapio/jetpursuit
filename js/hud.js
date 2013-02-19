@@ -35,10 +35,12 @@ JET.HUD = function(object) {
 		dom[elems[i]] = document.getElementById(elems[i]);
 
 	// FPS counter
-	var renderStats = new Stats();
-	renderStats.domElement.style.position = 'absolute';
-	renderStats.domElement.style.bottom = '0px';
-	document.getElementById("container").appendChild(renderStats.domElement);
+	if (JET.CONFIG.showStats) {
+		var renderStats = new Stats();
+		renderStats.domElement.style.position = 'absolute';
+		renderStats.domElement.style.bottom = '0px';
+		document.getElementById("container").appendChild(renderStats.domElement);
+	}
 
 	// Gradients
 	var statusGradient = new JET.ColorGradient(0xcc0000, 0x005500);
@@ -164,6 +166,7 @@ JET.HUD = function(object) {
 
 		dom.ping.innerHTML = object.ping.toFixed(0);
 
-		renderStats.update();
+		if (JET.CONFIG.showStats)
+			renderStats.update();
 	};
 };

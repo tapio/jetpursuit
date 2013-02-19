@@ -79,10 +79,10 @@
 					</fieldset>
 					<fieldset class="pull-right">
 						<label for="enemies">Enemies</label>
-						<input id="enemies" name="enemies" type="range" min="1" max="30" value="1" />
+						<input id="enemies" type="range" min="1" max="30" value="1" />
 						<output for="enemies">1</output>
 						<label for="allies">Wingmen</label>
-						<input id="allies" name="allies" type="range" min="0" max="29" value="0" />
+						<input id="allies" type="range" min="0" max="29" value="0" />
 						<output for="allies">0</output>
 					</fieldset>
 					<div class="clearfix"></div>
@@ -178,12 +178,17 @@
 			<div id="settings" class="tab-pane">
 				<form>
 					<label for="particles">Particles</label>
-					<input id="particles" name="particles" type="range" min="0" max="4" value="3" />
-					<output for="particles">Lots</output>
+					<select id="particles">
+						<option value="0.3">Few</option>
+						<option value="0.6">Some</option>
+						<option value="1.0" selected>Lots</option>
+						<option value="1.5">Insane</option>
+					</select>
+					<br/><br/>
+					<label for="showStats">
+						<input type="checkbox" id="showStats" /> Show FPS and render stats
+					</label>
 				</form>
-				<div class="menu-footer">
-					<button class="btn btn-success"><i class="icon-hdd"></i> Save</button>
-				</div>
 			</div>
 
 			</div>
@@ -195,8 +200,8 @@
 		<script src="libs/three.js"></script>
 		<script src="libs/stats.min.js"></script>
 		<script src="js/data.js"></script>
-		<script src="js/menu.js"></script>
 		<script src="js/jet.js"></script>
+		<script src="js/menu.js"></script>
 		<script src="js/cache.js"></script>
 		<script src="js/particles.js"></script>
 		<script src="js/weapons.js"></script>

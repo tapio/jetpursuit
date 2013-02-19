@@ -171,7 +171,7 @@ JET.createTrail = function(parent, particleMultiplier) {
 	var v = new THREE.Vector3();
 	var toCreate = 0;
 	var maxLife = 1.5;
-	var count = (400 * (particleMultiplier || 1))|0;
+	var count = (400 * (particleMultiplier || 1) * JET.CONFIG.particles)|0;
 	var emitter = new JET.Emitter({
 		maxParticles: count,
 		material: JET.MaterialLib.trail,

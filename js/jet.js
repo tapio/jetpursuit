@@ -1,6 +1,11 @@
 
 var JET = JET || {};
 
+JET.CONFIG = {
+	particles: 1.0,
+	showStats: true
+};
+
 JET.Math = {
 	v1: new THREE.Vector2(),
 	angleBetween: function(obj1, obj2) {

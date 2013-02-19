@@ -34,6 +34,11 @@
 		$(this).next("output").html($(this).val());
 		checkGameVars();
 	});
+
+	var randCount = Math.floor(Math.random() * 8) + 1;
+	$("#enemies").val(randCount).trigger("change");
+	$("#allies").val(randCount-1).trigger("change");
+
 	$("#gamemode").change(function() {
 		$(".gamemode-desc").hide();
 		$("#gamemode-" + $(this).val()).show();
@@ -41,13 +46,12 @@
 
 	// Settings
 
-	var particleLegend = [ "None", "Few", "Some", "Lots", "Insane" ];
 	$("#particles").change(function() {
-		$(this).next("output").html(particleLegend[$(this).val()]);
+		JET.CONFIG.particles = parseFloat($(this).val());
 	});
+	$("#showStats").change(function() {
+		JET.CONFIG.showStats = this.checked;
+	});
+	$("#showStats")[0].checked = JET.CONFIG.showStats;
 
-
-	var randCount = Math.floor(Math.random() * 8) + 1;
-	$("#enemies").val(randCount).trigger("change");
-	$("#allies").val(randCount-1).trigger("change");
 })();
