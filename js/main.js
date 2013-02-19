@@ -99,6 +99,7 @@ function start(params) {
 		client.update(dt);
 		hud.update();
 
+		// Camera position handling, including speed-dependent effects
 		var camPos = camera.position;
 		camPos.copy(pl.position);
 		if (pl.speed >= pl.maxSpeed * 0.75) {
@@ -107,6 +108,7 @@ function start(params) {
 			camPos.y += Math.random() * shake;
 		}
 		camPos.z += THREE.Math.mapLinear(pl.speed, pl.minSpeed, pl.maxSpeed, 100, 200);
+
 		renderer.render(scene, camera);
 		rendererInfo.innerHTML = formatRenderInfo(renderer.info);
 	}
