@@ -117,8 +117,8 @@ JET.HUD = function(object) {
 		}
 		for (i = j, l = maxContacts * 3; i < l; i += 3)
 			vertices[i+2] = 100000;
-		radarGeo.verticesNeedUpdate = true;
-		radarGeo.colorsNeedUpdate = true;
+		radarGeo.attributes.position.needsUpdate = true;
+		radarGeo.attributes.color.needsUpdate = true;
 	}
 
 	addMessage("Weapons ready");

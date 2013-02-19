@@ -77,11 +77,11 @@ JET.World = function(scene) {
 			v.set(cloudPositions[i] - position.x, cloudPositions[i+1] - position.y, 0);
 			if (Math.abs(v.x) > cloudDist) {
 				cloudPositions[i] -= THREE.Math.sign(v.x) * cloudDist * 2;
-				cloudGeo.verticesNeedUpdate = true;
+				cloudGeo.attributes.position.needsUpdate = true;
 			}
 			if (Math.abs(v.y) > cloudDist) {
 				cloudPositions[i+1] -= THREE.Math.sign(v.y) * cloudDist * 2;
-				cloudGeo.verticesNeedUpdate = true;
+				cloudGeo.attributes.position.needsUpdate = true;
 			}
 		}
 	};

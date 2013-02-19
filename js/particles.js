@@ -159,9 +159,9 @@ JET.Emitter.prototype.update = function(dt) {
 		colors[i3+2] = particle.color.b;
 		customs[i3] = particle.alpha;
 	}
-	this.geometry.verticesNeedUpdate = true;
-	this.geometry.colorsNeedUpdate = true;
-	this.geometry.normalsNeedUpdate = true;
+	this.geometry.attributes.position.needsUpdate = true;
+	this.geometry.attributes.color.needsUpdate = true;
+	this.geometry.attributes.normal.needsUpdate = true;
 	return true;
 };
 
