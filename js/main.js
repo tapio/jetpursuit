@@ -8,6 +8,12 @@ var pl = null;
 
 renderer.setSize(window.innerWidth, window.innerHeight);
 document.body.appendChild(renderer.domElement);
+window.addEventListener('resize', function() {
+	camera.aspect = window.innerWidth / window.innerHeight;
+	camera.updateProjectionMatrix();
+	renderer.setSize(window.innerWidth, window.innerHeight);
+}, false);
+
 
 
 // Menu background, moving clouds
@@ -97,13 +103,6 @@ function start(params) {
 		renderer.render(scene, camera);
 		rendererInfo.innerHTML = formatRenderInfo(renderer.info);
 	}
-
-	function onWindowResize() {
-		camera.aspect = window.innerWidth / window.innerHeight;
-		camera.updateProjectionMatrix();
-		renderer.setSize(window.innerWidth, window.innerHeight);
-	}
-	window.addEventListener('resize', onWindowResize, false);
 
 	function onKeyPress(event) {
 		if (event.charCode == 43) { // Plus
