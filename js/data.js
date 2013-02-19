@@ -39,13 +39,13 @@ var DATA = {
 		},
 		"sraam": {
 			"name": "SRAAM",
-			"flightTime": 10,
-			"damage": 35,
+			"flightTime": 7,
+			"damage": 40,
 			"delay": 0.2,
 			"radius": 5,
 			"speed": 100,
 			"guided": true,
-			"turnRate": 1.6
+			"turnRate": 2.0
 		},
 		"mraam": {
 			"name": "MRAAM",
@@ -55,7 +55,7 @@ var DATA = {
 			"radius": 5,
 			"speed": 100,
 			"guided": true,
-			"turnRate": 1.0
+			"turnRate": 1.4
 		}
 	},
 	"loadouts": [
