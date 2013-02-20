@@ -49,9 +49,9 @@
 	$("#particles").change(function() {
 		JET.CONFIG.particles = parseFloat($(this).val());
 	});
-	$("#showStats").change(function() {
-		JET.CONFIG.showStats = this.checked;
-	});
+	$("#showStats").change(function() { JET.CONFIG.showStats = this.checked; });
+	$("#sounds").change(function() { JET.CONFIG.sounds = this.checked; });
 	$("#showStats")[0].checked = JET.CONFIG.showStats;
+	$("#sounds")[0].checked = JET.CONFIG.sounds;
 
 })();

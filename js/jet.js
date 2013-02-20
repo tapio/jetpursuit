@@ -3,7 +3,8 @@ var JET = JET || {};
 
 JET.CONFIG = {
 	particles: 1.0,
-	showStats: true
+	showStats: true,
+	sounds: true
 };
 
 JET.Math = {
