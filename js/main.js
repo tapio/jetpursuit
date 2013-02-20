@@ -20,7 +20,7 @@ window.addEventListener('resize', function() {
 (function(scene, camera, world) {
 	camera.position.z = 1600;
 	var clock = new THREE.Clock();
-	function render(dt) {
+	function render() {
 		if (pl !== null) return;
 		requestAnimationFrame(render);
 		var dt = clock.getDelta();

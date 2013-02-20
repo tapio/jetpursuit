@@ -1,6 +1,7 @@
 {
-	"predef": [ "console", "requestAnimationFrame", "THREE", "Stats", "JET", "game", "cache", "scene", "addMessage" ],
+	"predef": [ "console", "requestAnimationFrame", "THREE", "Stats", "JET", "DATA", "game", "cache", "scene", "addMessage" ],
 	"browser": true,
+	"jquery": true,
 	"newcap": true,
 	"unused": true,
 	"undef": true,

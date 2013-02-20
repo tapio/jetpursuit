@@ -213,7 +213,6 @@ JET.createTrail = function(parent, particleMultiplier) {
 // Spawn a one-shot explosion
 JET.createExplosion = function(pos) {
 	var maxLife = 1.5;
-	var time = Date.now();
 	var emitter = new JET.Emitter({
 		lifeTime: maxLife,
 		maxParticles: 10,

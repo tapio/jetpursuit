@@ -32,7 +32,7 @@ JET.Sound = function(samples, minPlayers) {
 		var distance = JET.listener.position.distanceTo(position);
 		if (distance < radius)
 			this.play(1 - distance / radius);
-	}
+	};
 };
 
 JET.SoundLibrary = {

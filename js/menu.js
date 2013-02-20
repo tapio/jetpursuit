@@ -7,7 +7,7 @@
 	}
 
 	$("#start").click(function() {
-		params = {};
+		var params = {};
 		params.gamemode = $("#gamemode").val();
 		params.enemies = parseInt($("#enemies").val());
 		params.allies = parseInt($("#allies").val());

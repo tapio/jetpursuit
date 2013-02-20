@@ -24,7 +24,7 @@ var DATA = {
 			"turnRate": 1.6,
 			"acceleration": 90,
 			"maxHull": 135
-		},
+		}
 	],
 	"weapons": {
 		"cannon": {

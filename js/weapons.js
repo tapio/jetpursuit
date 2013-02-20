@@ -22,7 +22,7 @@ JET.Missile = function(weapon) {
 	var material = this.weapon.guided ? JET.MaterialLib.missile : JET.MaterialLib.bullet;
 	this.mesh = new THREE.Mesh(geometry, material);
 	this.add(this.mesh);
-	if (weapon.guided && weapon.faction !== pl.faction) {
+	if (weapon.guided && weapon.faction !== game.playerFaction) {
 		this.reticle = new THREE.Sprite(JET.MaterialLib.warningReticle);
 		this.reticle.scale.set(40,40,40);
 		this.add(this.reticle);
@@ -87,8 +87,8 @@ JET.Weapon = function(owner, ammo, params) {
 		kills: 0,
 		damage: 0,
 		shots: 0,
-		hits: 0,
-	}
+		hits: 0
+	};
 };
 
 JET.Weapon.prototype.shoot = function(shooter) {
