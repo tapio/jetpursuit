@@ -1,0 +1,40 @@
+Jet Pursuit
+===========
+
+A top-down action game with supersonic jet fighters, missiles and explosions!
+
+Features:
+
+* Rendered in 3D with WebGL and Three.js
+* Different aircrafts and loadouts to choose from
+* Homing missiles and an autocannon for close quarters combat
+* Various game modes
+* AI
+* Sound effects
+* Lots of particles
+* No plugins required, just up-to-date Chrome or Firefox
+
+
+License
+-------
+
+Assets are licensed under their respective licenses, stated in `assets/credits.txt`.
+
+Libraries in `libs/` and their associated css in `css/`, if present, are under their own licenses.
+
+The rest of the project is licensed as follows:
+
+	Copyright 2013 Tapio Vierros
+
+	Licensed under the Apache License, Version 2.0 (the "License");
+	you may not use this file except in compliance with the License.
+	You may obtain a copy of the License at
+
+		http://www.apache.org/licenses/LICENSE-2.0
+
+	Unless required by applicable law or agreed to in writing, software
+	distributed under the License is distributed on an "AS IS" BASIS,
+	WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+	See the License for the specific language governing permissions and
+	limitations under the License.
+
