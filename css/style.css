@@ -187,7 +187,7 @@ canvas {
 	opacity: 0.2;
 }
 
-#menu {
+.overlay {
 	position: absolute;
 	top: 20%;
 	left: 20%;

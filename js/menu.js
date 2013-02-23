@@ -1,4 +1,9 @@
 (function() {
+	$("#play").click(function() {
+		$("#home").hide();
+		$("#menu").show();
+	});
+
 	function exitMenu() {
 		$("#menu").fadeOut();
 		$("#title").fadeOut();
