@@ -43,6 +43,11 @@ body {
 	100% { transform: perspective(500px) rotateY(-10deg); }
 }
 
+#play {
+	position: absolute;
+	bottom: 25px;
+	right: 25px;
+}
 
 .hidden { display: none; }
 
