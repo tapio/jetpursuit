@@ -23,6 +23,7 @@ JET.Client = function(object, scene, host) {
 			pingTime = performance.now();
 			client.send({ type: "ping" });
 		}, 2000);
+		document.getElementById("ping-container").className = "";
 	};
 
 	this.socket.onmessage = function(event) {
