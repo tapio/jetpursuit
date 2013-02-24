@@ -8,12 +8,12 @@ JET.Controls = function(object) {
 
 		if (object.hull <= 0) return;
 
-		if (key == 9) { // Tab
+		if (key == 9 || key == 16) { // Tab || Shift
 			object.cycleWeapons();
 			event.preventDefault();
-		} else if (key == 69) { // E
+		} else if (key == 69 || key == 13) { // E || Enter
 			object.cycleTargets();
-		} else if (key == 81) { // Q
+		} else if (key == 81 || key == 8) { // Q || Backspace
 			object.scanTargets();
 		}
 	}
@@ -40,7 +40,7 @@ JET.Controls = function(object) {
 			object.angSpeed = -object.turnRate;
 		}
 		// Shoot
-		if (pressed[32]) { // Space
+		if (pressed[32] || pressed[17]) { // Space || Ctrl
 			object.shoot();
 		}
 	};
