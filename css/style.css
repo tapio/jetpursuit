@@ -92,6 +92,7 @@ canvas {
 
 #instructions { color: #f80; }
 #instructions td { width: 120px; }
+#instructions thead { text-align: left; border-bottom: 1px white solid; }
 
 #messages {
 	top: 10px;
