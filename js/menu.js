@@ -1,4 +1,10 @@
 (function() {
+	var hasWebGL;
+	try {
+		hasWebGL = !!window.WebGLRenderingContext && !!document.createElement('canvas').getContext('experimental-webgl');
+	} catch( e ) { hasWebGL = false; }
+	if (!hasWebGL) $("#webgl-error").show();
+
 	$("#play").click(function() {
 		$("#home").hide();
 		$("#menu").show();
