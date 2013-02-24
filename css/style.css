@@ -90,28 +90,8 @@ canvas {
 	z-index: 1000;
 }
 
-#info {
-	position: absolute;
-	top: 10px;
-	right: 10px;
-	width: 20px;
-	height: 20px;
-	color: #ec9;
-	background-color: rgba(0, 0, 0, 0.0);
-	border-radius: 10px;
-	font-size: 14px;
-	text-align: left;
-	overflow: hidden;
-	z-index: 200;
-	padding: 10px;
-}
-#info:hover {
-	width: 200px;
-	height: 300px;
-	background-color: rgba(0, 0, 0, 0.85);
-}
 #instructions { color: #f80; }
-#instructions td { width: 100px; }
+#instructions td { width: 120px; }
 
 #messages {
 	top: 10px;
