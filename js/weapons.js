@@ -60,7 +60,6 @@ JET.Missile.prototype.update = function(dt) {
 			weapon.stats.damage += weapon.damage;
 			if (obj.hull < 0) ++weapon.stats.kills; // FIXME: Error prone check?
 			++weapon.stats.hits;
-			addMessage("HIT!");
 			game.addEmitter(JET.createExplosion(this.position));
 		}
 	}
