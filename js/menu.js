@@ -66,3 +66,8 @@
 	$("#sounds")[0].checked = JET.CONFIG.sounds;
 
 })();
+
+function endScreen(results) {
+	$(".fade-overlay").fadeIn();
+	$("#results").fadeIn();
+}

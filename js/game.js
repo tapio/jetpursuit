@@ -81,6 +81,7 @@ JET.Game.prototype.update = function(dt) {
 		// TODO
 		addMessage("Game ended");
 		this.ended = true;
+		endScreen();
 	}
 
 	// Bullets
