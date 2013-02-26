@@ -43,12 +43,6 @@ body {
 	100% { transform: perspective(500px) rotateY(-10deg); }
 }
 
-#play {
-	position: absolute;
-	bottom: 25px;
-	right: 25px;
-}
-
 .hidden { display: none; }
 
 #container { width: 100%; }
@@ -197,6 +191,20 @@ h1, h2, h3 { line-height: 30px; }
 	font-size: 18px;
 }
 
+#version {
+	position: absolute;
+	top: 25px;
+	right: 25px;
+	color: green;
+	font-size: 80%;
+}
+
+#play {
+	position: absolute;
+	bottom: 25px;
+	right: 25px;
+}
+
 .stars-5:before {
 	font-family: serif;
 	content: '\2605\2605\2605\2605\2605';
@@ -215,12 +223,6 @@ h1, h2, h3 { line-height: 30px; }
 	color: #ffff00;
 }
 
-
-.menu-footer {
-	position: absolute;
-	bottom: 20px;
-	right: 20px;
-}
 
 input {
 	margin-bottom: 1em;
