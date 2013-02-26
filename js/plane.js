@@ -63,6 +63,24 @@ JET.Plane = function(params) {
 
 JET.Plane.prototype = Object.create(THREE.Object3D.prototype);
 
+JET.Plane.prototype.prettyStats = function() {
+	// TODO: Refactor
+	var kills = 0, damage = 0, shots = 0, hits = 0;
+	for (var i = 0; i < this.weapons.length; ++i) {
+		var w = this.weapons[i].stats;
+		kills += w.kills;
+		damage += w.damage;
+		shots += w.shots;
+		hits += w.hits;
+	}
+	return {
+		"Kills": kills,
+		"Damage": damage,
+		"Shots": shots,
+		"Hits": hits
+	};
+}
+
 JET.Plane.prototype.scanTargets = function() {
 	this.targets = [];
 	for (var i = 0, l = game.entityCache.length; i < l; ++i) {

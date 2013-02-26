@@ -73,7 +73,16 @@
 
 })();
 
-function endScreen(results) {
+function endScreen(pl) {
+	$("#outcome").html(pl.hull > 0 ? "Victory!" : "Defeat");
+	var stats = pl.prettyStats();
+	var statItemTempl = '<ul>%NAME: %VALUE</ul>';
+	var html = "";
+	for (var i in stats) {
+		html += statItemTempl.replace("%NAME", i).replace("%VALUE", stats[i]);
+	}
+	$("#results-stats").html(html);
+
 	$(".fade-overlay").fadeIn();
 	$("#results").fadeIn();
 }
