@@ -27,7 +27,7 @@ var addMessage = (function() {
 })();
 
 
-JET.HUD = function(object) {
+JET.HUD = function(pl) {
 	var dom = {};
 	var i;
 	var elems = [ "ping", "messages", "weapons", "speed", "fuel", "hull", "distance" ];
@@ -92,15 +92,15 @@ JET.HUD = function(object) {
 		var colors = radarGeo.attributes.color.array;
 		for (i = 0, j = 0, l = game.entityCache.length; i < l; ++i) {
 			var contact = game.entityCache[i];
-			if (contact.id === object.id) continue;
+			if (contact.id === pl.id) continue;
 			if (j >= maxContacts * 3) break;
 			var renderDist = radarRenderDist;
 			// Determine color and other attributes based on faction
-			if (object.target && contact.id === object.target.id) {
+			if (pl.target && contact.id === pl.target.id) {
 				// Target
 				colors[j] = 1.0; colors[j+1] = 0.0; colors[j+2] = 0.0;
 				renderDist *= 1.1;
-			} else if (contact.faction !== object.faction) {
+			} else if (contact.faction !== pl.faction) {
 				// Enemy
 				colors[j] = 1.0; colors[j+1] = 0.5; colors[j+2] = 0;
 			} else {
@@ -109,10 +109,10 @@ JET.HUD = function(object) {
 				renderDist *= 0.9;
 			}
 			// Set position based on direction
-			var angle = JET.Math.angleBetween(object, contact);
-			vertices[j  ] = object.position.x + Math.cos(angle) * renderDist;
-			vertices[j+1] = object.position.y + Math.sin(angle) * renderDist;
-			vertices[j+2] = object.position.z;
+			var angle = JET.Math.angleBetween(pl, contact);
+			vertices[j  ] = pl.position.x + Math.cos(angle) * renderDist;
+			vertices[j+1] = pl.position.y + Math.sin(angle) * renderDist;
+			vertices[j+2] = pl.position.z;
 			j += 3;
 		}
 		for (i = j, l = maxContacts * 3; i < l; i += 3)
@@ -128,35 +128,35 @@ JET.HUD = function(object) {
 		updateRadar();
 
 		// Reticle & target properties
-		if (object.target) {
+		if (pl.target) {
 			reticle.visible = true;
-			reticle.position.copy(object.target.position);
-			dom.distance.innerHTML = (Math.sqrt(JET.Math.distSq(object, object.target)) / 1000).toFixed(1) + " km";
+			reticle.position.copy(pl.target.position);
+			dom.distance.innerHTML = (Math.sqrt(JET.Math.distSq(pl, pl.target)) / 1000).toFixed(1) + " km";
 		} else {
 			reticle.visible = false;
 			dom.distance.innerHTML = "n/a";
 		}
 
 		// Weapons
-		if (object.dirtyStatus) {
+		if (pl.dirtyStatus) {
 			var html = "";
-			for (var i = 0; i < object.weapons.length; ++i) {
-				var weapon = object.weapons[i];
+			for (var i = 0; i < pl.weapons.length; ++i) {
+				var weapon = pl.weapons[i];
 				var ammoRatio = weapon.ammo / weapon.maxAmmo;
-				var sel = i == object.curWeapon ? '<li class="selected">' : '<li>';
+				var sel = i == pl.curWeapon ? '<li class="selected">' : '<li>';
 				html += sel + weapon.name + ': <span style="color:' +
 					statusGradient.get(ammoRatio).getStyle() +
 					'">' + weapon.ammo + '</span></li>';
 			}
 			dom.weapons.innerHTML = html;
-			object.dirtyStatus = false;
+			pl.dirtyStatus = false;
 		}
 
 		// Plane status
-		var speedRatio = (object.speed - object.minSpeed) / (object.maxSpeed - object.minSpeed);
-		var fuelRatio = object.fuel / object.maxFuel;
-		var hullRatio = object.hull / object.maxHull;
-		dom.speed.innerHTML = (object.speed / 340).toFixed(1) + " Ma";
+		var speedRatio = (pl.speed - pl.minSpeed) / (pl.maxSpeed - pl.minSpeed);
+		var fuelRatio = pl.fuel / pl.maxFuel;
+		var hullRatio = pl.hull / pl.maxHull;
+		dom.speed.innerHTML = (pl.speed / 340).toFixed(1) + " Ma";
 		dom.fuel.innerHTML = (fuelRatio * 100).toFixed(0) + " %";
 		dom.hull.innerHTML = (hullRatio * 100).toFixed(0) + " %";
 		// Colors
@@ -164,7 +164,7 @@ JET.HUD = function(object) {
 		dom.fuel.style.color = statusGradient.get(fuelRatio).getStyle();
 		dom.hull.style.color = statusGradient.get(hullRatio).getStyle();
 
-		dom.ping.innerHTML = object.ping.toFixed(0);
+		dom.ping.innerHTML = pl.ping.toFixed(0);
 
 		if (JET.CONFIG.showStats)
 			renderStats.update();
