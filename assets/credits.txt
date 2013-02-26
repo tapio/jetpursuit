@@ -12,4 +12,7 @@
 	- http://opengameart.org/content/texture-water
 * sounds/*
 	- Public Domain
+* smoke.png target-reticle.png warning-reticle.png
+	- Tapio Vierros
+	- CC0
 
