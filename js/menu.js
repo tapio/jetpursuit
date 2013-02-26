@@ -46,7 +46,7 @@
 	// Mission
 
 	function checkGameVars() {
-		if (parseInt($("#enemies").val()) + parseInt($("#allies").val()) > 40)
+		if (parseInt($("#enemies").val()) + parseInt($("#allies").val()) > 30)
 			$("#players-warning").fadeIn();
 		else $("#players-warning").fadeOut();
 	}
