@@ -94,21 +94,23 @@ function start(params) {
 		var dt = clock.getDelta();
 		if (dt > 0.05) dt = 0.05; // Limit delta to 20 FPS
 
-		controls.update(dt);
-		game.update(dt);
-		world.update(pl.position);
-		client.update(dt);
-		hud.update();
+		if (!game.ended) {
+			controls.update(dt);
+			game.update(dt);
+			world.update(pl.position);
+			client.update(dt);
+			hud.update();
 
-		// Camera position handling, including speed-dependent effects
-		var camPos = camera.position;
-		camPos.copy(pl.position);
-		if (pl.speed >= pl.maxSpeed * 0.75) {
-			var shake = THREE.Math.mapLinear(pl.speed, pl.maxSpeed * 0.75, pl.maxSpeed, 0.0, 1.0);
-			camPos.x += Math.random() * shake;
-			camPos.y += Math.random() * shake;
+			// Camera position handling, including speed-dependent effects
+			var camPos = camera.position;
+			camPos.copy(pl.position);
+			if (pl.speed >= pl.maxSpeed * 0.75) {
+				var shake = THREE.Math.mapLinear(pl.speed, pl.maxSpeed * 0.75, pl.maxSpeed, 0.0, 1.0);
+				camPos.x += Math.random() * shake;
+				camPos.y += Math.random() * shake;
+			}
+			camPos.z += THREE.Math.mapLinear(pl.speed, pl.minSpeed, pl.maxSpeed, 100, 200);
 		}
-		camPos.z += THREE.Math.mapLinear(pl.speed, pl.minSpeed, pl.maxSpeed, 100, 200);
 
 		renderer.render(scene, camera);
 
