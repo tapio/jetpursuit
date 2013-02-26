@@ -223,8 +223,7 @@ h1, h2, h3 { line-height: 30px; }
 	color: #ffff00;
 }
 
-
-input {
+fieldset, input {
 	margin-bottom: 1em;
 }
 
