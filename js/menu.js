@@ -5,10 +5,14 @@
 	} catch( e ) { hasWebGL = false; }
 	if (!hasWebGL) $("#webgl-error").show();
 
+	// Home
+
 	$("#play").click(function() {
 		$("#home").hide();
 		$("#menu").show();
 	});
+
+	// Menu shared
 
 	function exitMenu() {
 		$("#menu").fadeOut();
@@ -33,8 +37,8 @@
 
 	function checkGameVars() {
 		if (parseInt($("#enemies").val()) + parseInt($("#allies").val()) > 40)
-			$("#players-warning").show();
-		else $("#players-warning").hide();
+			$("#players-warning").fadeIn();
+		else $("#players-warning").fadeOut();
 	}
 
 	$("#enemies").change(function() {
@@ -52,7 +56,7 @@
 
 	$("#gamemode").change(function() {
 		$(".gamemode-desc").hide();
-		$("#gamemode-" + $(this).val()).show();
+		$("#gamemode-" + $(this).val()).fadeIn();
 	});
 
 	// Settings
