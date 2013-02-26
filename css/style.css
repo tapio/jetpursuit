@@ -3,7 +3,8 @@ body {
 	font-family: 'Black Ops One', serif;
 	font-size: 13px;
 	text-align: center;
-	background-color: #33e;
+	background-color: #27f;
+	background-image: url("../assets/water.jpg");
 	margin: 0px;
 	overflow: hidden;
 }
