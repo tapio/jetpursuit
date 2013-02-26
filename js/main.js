@@ -15,7 +15,6 @@ window.addEventListener('resize', function() {
 }, false);
 
 
-
 // Menu background, moving clouds
 (function(scene, camera, world) {
 	camera.position.z = 1600;
@@ -49,10 +48,12 @@ function start(params) {
 	JET.listener = pl;
 
 	function spawnBot(faction) {
+		var template = params.identicalAircrafts ? params.aircraft : DATA.aircrafts[(Math.random() * DATA.aircrafts.length)|0];
+		var loadout = params.identicalLoadouts ? params.loadout : DATA.loadouts[(Math.random() * DATA.loadouts.length)|0];
 		var bot = new JET.Plane({
 			faction: faction !== undefined ? faction : THREE.Math.randInt(0, 1),
-			template: DATA.aircrafts[(Math.random() * DATA.aircrafts.length)|0],
-			loadout: DATA.loadouts[(Math.random() * DATA.loadouts.length)|0]
+			template: template,
+			loadout: loadout
 		});
 		bot.ai = {
 			missileDelay: 4.0,

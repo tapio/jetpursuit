@@ -29,6 +29,8 @@
 		// TODO: These are rather horrible
 		params.aircraft = DATA.aircrafts[parseInt($("#plane-selector ul.nav li.active a").attr("href").split("-")[1]) - 1];
 		params.loadout = DATA.loadouts[parseInt($("#loadout-selector ul.nav li.active a").attr("href").split("-")[1]) - 1];
+		params.identicalAircrafts = $("#identicalAircrafts")[0].checked;
+		params.identicalLoadouts = $("#identicalLoadouts")[0].checked;
 		exitMenu();
 		start(params);
 	});
