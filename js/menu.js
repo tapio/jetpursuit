@@ -5,12 +5,20 @@
 	} catch( e ) { hasWebGL = false; }
 	if (!hasWebGL) $("#webgl-error").show();
 
+	$("#again").click(function() {
+		window.location.hash = "#new";
+		window.location.reload();
+	});
+
 	// Home
 
 	$("#play").click(function() {
 		$("#home").hide();
 		$("#menu").show();
 	});
+
+	if (window.location.hash == "#new")
+		$("#play").trigger("click");
 
 	// Menu shared
 
