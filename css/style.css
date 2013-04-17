@@ -97,6 +97,9 @@ canvas {
 #instructions td { width: 120px; }
 #instructions thead { text-align: left; border-bottom: 1px white solid; }
 
+#results-stats { color: #f80; }
+#results-stats td { width: 120px; }
+
 #messages {
 	top: 10px;
 	left: 10px;

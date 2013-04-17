@@ -86,7 +86,7 @@ function endScreen(pl) {
 	$("#outcome").html(victory ? "Victory!" : "Defeat");
 	$("#outcome").addClass(victory ? "good-caption" : "bad-caption");
 	var stats = pl.prettyStats();
-	var statItemTempl = '<ul>%NAME: %VALUE</ul>';
+	var statItemTempl = '<tr><td>%NAME</td><td>%VALUE</td></tr>';
 	var html = "";
 	for (var i in stats) {
 		html += statItemTempl.replace("%NAME", i).replace("%VALUE", stats[i]);
