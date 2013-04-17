@@ -82,7 +82,9 @@
 })();
 
 function endScreen(pl) {
-	$("#outcome").html(pl.hull > 0 ? "Victory!" : "Defeat");
+	var victory = pl.hull > 0;
+	$("#outcome").html(victory ? "Victory!" : "Defeat");
+	$("#outcome").addClass(victory ? "good-caption" : "bad-caption");
 	var stats = pl.prettyStats();
 	var statItemTempl = '<ul>%NAME: %VALUE</ul>';
 	var html = "";

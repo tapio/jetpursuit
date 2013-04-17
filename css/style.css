@@ -44,6 +44,14 @@ body {
 	100% { transform: perspective(500px) rotateY(-10deg); }
 }
 
+.good-caption { text-shadow: 0px 0px 20px #0d0; }
+.bad-caption { text-shadow: 0px 0px 20px #d00; }
+.neutral-caption { text-shadow: 0px 0px 30px #fc0; }
+label, h2 { text-shadow: 0px 0px 10px #fc0; }
+a[data-toggle="tab"], #start { text-shadow: 0px 0px 30px #fff; }
+
+#outcome { font-size: 40px; margin-bottom: 40px; }
+
 .hidden { display: none; }
 
 #container { width: 100%; }
