@@ -72,7 +72,7 @@ function start(params) {
 
 	var controls = new JET.Controls(pl);
 	var hud = new JET.HUD(pl);
-	var client = new JET.Client(pl, scene);
+	//var client = new JET.Client(pl, scene);
 
 	var rendererInfo = document.getElementById("renderer-info");
 	function formatRenderInfo(info) {
@@ -98,7 +98,7 @@ function start(params) {
 			controls.update(dt);
 			game.update(dt);
 			world.update(pl.position);
-			client.update(dt);
+			//client.update(dt);
 			hud.update();
 
 			// Camera position handling, including speed-dependent effects

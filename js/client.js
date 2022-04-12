@@ -3,6 +3,7 @@ JET.Client = function(object, scene, host) {
 	this.obj = object;
 	this.gaming = false;
 	this.connected = false;
+	// TODO: Https/wss handling
 	host = host || "ws://" + window.location.hostname + ":10666";
 	console.log("Attempting connection to " + host + "...");
 	this.socket = new WebSocket(host);
